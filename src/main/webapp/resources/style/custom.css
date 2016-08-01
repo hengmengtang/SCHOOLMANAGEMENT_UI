@@ -1,0 +1,33 @@
+.logodash{/*logo dashaboard*/
+	width: 71%;
+    margin-left: 71px;
+}
+.bgcolor{
+	background-color: #B2DFDB;
+}
+.main-header{
+	background-color: #66BB6A;
+}
+
+.list{
+	display: inline-block;
+}
+.page{
+	margin-top: -21px;
+	margin-left: 90px;
+}
+.select{
+	width: 60px;
+	margin-top: -37px;
+    margin-left: 39px;
+}
+.search{
+	width: 30px;
+}
+sup{
+	color: red;
+	font-weight: 90;
+}
+.arrow{
+	color: blue;
+}
