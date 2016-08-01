@@ -11,4 +11,21 @@ public class SchoolManagementController {
 			System.out.println("Hello");
 			return "/admin/view"; 
 		}
+		@RequestMapping(value={"/course"})
+		public String course(){
+			return "/admin/course";
+		}
+		@RequestMapping(value={"/generation"})
+		public String generation(){
+			return "/admin/generation";
+		}
+		@RequestMapping(value={"/dashboard"})
+		public String dashboard(){
+			return "/admin/dashboard";
+		}
+		@RequestMapping(value={"/register"})
+		public String register(){
+			return "/admin/register";
+		}
+		
 }

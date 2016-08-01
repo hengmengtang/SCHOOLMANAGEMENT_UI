@@ -20,9 +20,7 @@
 <!-- CUSTOM STYLE CSS -->
 <link href="${pageContext.request.contextPath }/resources/assets/css/style.css" rel="stylesheet" />
 <!-- Google	Fonts -->
-<link
-	href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300'
-	rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' /> 
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top " id="menu">
@@ -54,7 +52,7 @@
                       </a></li>
                       <li>
 
-                      <a href="index.html" class="btn btn-info" style="top: 21px;padding: 8px;">Sign
+                      <a href="#" class="btn btn-info" style="top: 21px;padding: 8px;">Sign
                       In</a>
 
                       </li>
@@ -81,7 +79,7 @@
                         <li>     
                           <h3>មជ្ឈមណ្ឌលកូរ៉េ សហ្វវែរ អេច អ ឌី</h3>
                           <h1></h1>
-                        </li>
+                        </li>  
                         <!-- End Slider 01 -->
                         
                         <!-- Slider 02 -->
