@@ -27,5 +27,9 @@ public class SchoolManagementController {
 		public String register(){
 			return "/admin/register";
 		}
+		@RequestMapping(value={"/me"})
+		public String me(){
+			return "/admin/register";
+		}
 		
 }
