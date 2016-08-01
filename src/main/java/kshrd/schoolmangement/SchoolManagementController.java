@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SchoolManagementController {
 
-		@RequestMapping(value={"/"})
+		@RequestMapping(value={"/","/view"})
 		public String view(){
 			System.out.println("Hello");
 			return "/admin/view"; 
