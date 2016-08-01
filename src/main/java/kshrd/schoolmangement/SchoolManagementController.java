@@ -32,4 +32,9 @@ public class SchoolManagementController {
 			return "/admin/register";
 		}
 		
+		private void sysout() {
+			// TODO Auto-generated method stub
+
+		}
+		
 }
