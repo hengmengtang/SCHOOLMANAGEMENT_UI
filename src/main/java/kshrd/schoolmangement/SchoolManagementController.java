@@ -31,6 +31,10 @@ public class SchoolManagementController {
 		public String me(){
 			return "/admin/register";
 		}
+		@RequestMapping(value={"/index"})
+		public String index(){
+			return "/admin/index";
+		}
 		
 		private void sysout() {
 			// TODO Auto-generated method stub
