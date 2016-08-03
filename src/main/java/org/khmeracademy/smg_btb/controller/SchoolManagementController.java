@@ -1,4 +1,4 @@
-package kshrd.schoolmangement;
+package org.khmeracademy.smg_btb.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +30,6 @@ public class SchoolManagementController {
 		@RequestMapping(value={"/me"})
 		public String me(){
 			return "/admin/register";
-		}
-		@RequestMapping(value={"/index"})
-		public String index(){
-			return "/admin/index";
 		}
 		
 		private void sysout() {
