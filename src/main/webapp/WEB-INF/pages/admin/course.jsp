@@ -8,20 +8,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>School Management System</title>
-  <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/bootstrap/css/bootstrap.min.css">
-  <script src="${pageContext.request.contextPath }/resources/bootstrap/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/font-awesome-4.6.3/css/font-awesome.min.css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/dist/css/AdminLTE.min.css">
-  <script src="${pageContext.request.contextPath }/resources/jquery/jquery.js"></script>
-  <script src="${pageContext.request.contextPath }/resources/jquery/jquery.min.js"></script>
-  <script src ="${pageContext.request.contextPath }/resources/jquery-ui/jquery-ui.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/resources/datetimepicker/jquery.datetimepicker.css"/ >
-  <script src="${pageContext.request.contextPath }/resources/datetimepicker/jquery.js"></script>
-  <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/style/custom.css">
-  <script src="${pageContext.request.contextPath }/resources/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+  <jsp:include page="../include/headCourse.jsp"/>
+  <jsp:include page="../include/headDashboard.jsp"/>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body>
+<!-- index is menu -->
+<jsp:include page="index.jsp"/>
 
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" >
 <section class="content-header">
   <h1>
     Advanced Form Elements
@@ -216,9 +211,12 @@
 <!-- End Main content -->
 </div>         
 </div>
-<!-- End Content-->    
- 
-  </div>
+<!-- End Content-->
+</div>
+</div>   
+<div>
+	<jsp:include page="../include/footer.jsp"/>
+</div> 
 <!--Add Script-->
 <script>
 $( document ).ready(function() {
@@ -260,6 +258,10 @@ $( document ).ready(function() {
    });
 
 });
+</script>
+<jsp:include page="../include/footDashboard.jsp"/>
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
 </script>
 <!--End Script-->
 </body>

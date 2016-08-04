@@ -39,3 +39,19 @@ sup{
   	color: green;
   	font-size: 25px;
 }
+/* generation */
+.small-box>.inner {
+    height: 100px;
+}
+/* generation */
+ol, ul {
+    margin-top: -15px;
+}
+/* hieght logo */
+.heightlogo {
+	height: 135px !important;
+}
+.rightst{
+	width: 82%;
+    margin-left: -28px;
+}
