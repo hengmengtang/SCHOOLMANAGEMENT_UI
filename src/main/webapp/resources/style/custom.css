@@ -1,6 +1,6 @@
 .logodash{/*logo dashaboard*/
 	width: 71%;
-    margin-left: 71px;
+    margin-left: 10px;
 }
 .bgcolor{
 	background-color: #B2DFDB;
@@ -47,11 +47,10 @@ sup{
 ol, ul {
     margin-top: -15px;
 }
-/* hieght logo */
-.heightlogo {
-	height: 135px !important;
-}
 .rightst{
-	width: 82%;
-    margin-left: -28px;
+	width: 81%;
+ /*    margin-left: -28px; */
+}
+.small-box>.inner {
+    height: auto;
 }

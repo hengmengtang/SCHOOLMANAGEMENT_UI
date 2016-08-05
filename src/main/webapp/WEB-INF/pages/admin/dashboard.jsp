@@ -11,12 +11,13 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <jsp:include page="../include/headDashboard.jsp"/>
 </head>
+
 <body>
 <!-- index is menu -->
 <jsp:include page="index.jsp"/>
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" >
+<div class="content-wrapper">
 	 <section class="content-header">
       <h1>
         Dashboard
@@ -30,13 +31,13 @@
     <!-- Main content-->
     <section class="content">
       <div class="row" style="margin: 0px;">
-          <div class="small-box heightlogo" style="background-color: #e0f2f2;">
+          <div class="small-box" style="background-color: #e0f2f2;">
             <div class="inner">
               <div class="row">
-                <div class="col-md-2">
+                <div class="col-sm-3 col-md-3 col-md-offset-0 col-xs-8 col-xs-offset-2">
                   <img src="${pageContext.request.contextPath }/resources/images/logo.png" class="logodash">
                 </div>
-                <div class="col-md-10" style="color: black; text-align: center;">
+                <div class="col-sm-9 col-md-7 col-xs-12" style="color: black; text-align: center; top: 25px; font-size: 19px;">
                   <b>#12, St 323, Sangkat Boeung Kak II, Khan Toul Kork, Phnom Penh<br/>
                   Tel:(855)23 99 13 14, Fax(855)23 99 14 15<br/>
                   Email: info.kshrd@gmail.com, phirum gm@gmail.com<br/>
@@ -50,29 +51,46 @@
       <!--statistic-->
       <div class="row">
 
-        <div class="col-md-8">
+        <div class="col-md-8 col-sm-10 col-xs-10">
           <div class="small-box bg-aqua">
             
           </div>
         </div>
 
-        <div class="col-md-4 bgcolor" style="width: 32%;">
+        <div class="col-md-4 col-sm-8 col-xs-8 bgcolor">
           <h5>Student summary</h5>        
           <hr style="height:2px; background:#e0f2f2">
           <!-- Generation 1 -->
           <div class="row">
 
-            <div class="col-md-3 left">
+            <div class="col-md-3 col-sm-3 col-xs-5 left">
               <div class="small-box bg-aqua lineleft">
-                <div class="inner innerheight">    
+                <div class="inner" style="height: 97px !important">    
                   <h2>1<sup>st</sup></h2>
                 </div>
               </div>
             </div>
+            <div class="col-md-9">
+            	<div  style="background: #FF5722 !important;">
+            		<div class="inner" >    
+                    1<sup>st</sup> GENERATION &nbsp&nbsp&nbsp&nbsp56
+                    <div class="progress" style="margin-top:11px;">
+                      <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                        60%
+                      </div>
+                    </div>
+                    <ul class="nav nav-pills" role="tablist">
+                      <li role="presentation">Male<span class="badge">50</span></li>
+                      <li role="presentation">&nbsp&nbsp&nbsp&nbspFemale<span class="badge">6</span></li>
+                    </ul>
+                </div>
+            	</div>
+            	
+            </div>
 			<!-- Generation -->
-            <div class="col-md-9 rightst"> 
+            <!-- <div class="col-md-9 col-sm-9 col-xs-9 rightst"> 
               <div class="small-box bg-aqua" style="background: #FF5722 !important;">
-                <div class="inner ">    
+                <div class="inner">    
                     1<sup>st</sup> GENERATION &nbsp&nbsp&nbsp&nbsp56
                     <div class="progress" style="margin-top:11px;">
                       <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
@@ -87,7 +105,7 @@
               </div>
             </div>
 
-          </div>
+          </div> -->
          <!-- End Generation -->
         </div>
         <!-- Generation Summary -->

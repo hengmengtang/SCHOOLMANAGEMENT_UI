@@ -13,7 +13,7 @@
 <jsp:include page="../include/headView.jsp"/>
 </head>
 <body>
-<h1>hello</h1>
+
 	<div class="navbar navbar-inverse navbar-fixed-top " id="menu">
         <div class="container">
             <div class="navbar-header">
