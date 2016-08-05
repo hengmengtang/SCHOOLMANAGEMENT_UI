@@ -1,0 +1,18 @@
+.page {
+    margin-top: 0; 
+    margin-left: 0; 
+    float: right;
+}
+ol, ul {
+    margin-top: 0;
+}
+.pagination {
+    margin: 0 0; 
+}
+.select {
+    margin-top: 0;
+    margin-left: 0;
+}
+.toptable{
+	margin-bottom: 25px;
+}

@@ -18,22 +18,37 @@ public class SchoolManagementController {
 		public String generation(){
 			return "/admin/generation";
 		}
-		@RequestMapping(value={"/index"})
-		public String dashboard(){
-			return "/admin/index";
+		@RequestMapping(value={"/class"})
+		public String classs(){
+			return "/admin/class";
 		}
 		@RequestMapping(value={"/register"})
 		public String register(){
 			return "/admin/register";
 		}
-		@RequestMapping(value={"/view"})
-		public String me(){
-			return "/admin/view";
+		@RequestMapping(value={"/studentlist"})
+		public String studentList(){
+			return "/admin/studentlist";
 		}
-		
-		private void sysout() {
-			// TODO Auto-generated method stub
-
+		@RequestMapping(value={"/subject"})
+		public String subject(){
+			return "/admin/subject";
+		}
+		@RequestMapping(value={"/staff"})
+		public String staff(){
+			return "/admin/staff";
+		}
+		@RequestMapping(value={"/studentenroll"})
+		public String studentenroll(){
+			return "/admin/studentenroll";
+		}
+		@RequestMapping(value={"/instructorenroll"})
+		public String instructorenroll(){
+			return "/admin/instructorenroll";
+		}
+		@RequestMapping(value={"/promote"})
+		public String promote(){
+			return "/admin/promote";
 		}
 		
 }

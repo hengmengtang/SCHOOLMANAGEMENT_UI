@@ -17,7 +17,6 @@
 	margin-left: 90px;
 }
 .select{
-	width: 60px;
 	margin-top: -37px;
     margin-left: 39px;
 }
@@ -53,4 +52,21 @@ ol, ul {
 }
 .small-box>.inner {
     height: auto;
+}
+.generation{
+	padding: 10px;
+}
+.first{
+	padding:17px;
+}
+.boxcontent{
+	height: 1171px;
+}
+.footerbg{
+	background-color: #e0f2f2;
+}
+.page {
+    margin-top: 0; 
+    margin-left: 0; 
+    float: right;
 }

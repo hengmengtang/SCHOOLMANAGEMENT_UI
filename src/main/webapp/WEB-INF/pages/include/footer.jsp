@@ -1,6 +1,6 @@
-<footer class="main-footer">
+<footer class="main-footer footerbg">
     <div class="pull-right hidden-xs">
       <b>BTB HRD Shool Management v</b> 0.1
     </div>
-     All rights reserved.
+     <div>All rights reserved.</div>
 </footer>
