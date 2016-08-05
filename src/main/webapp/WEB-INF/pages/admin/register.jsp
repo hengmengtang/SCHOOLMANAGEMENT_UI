@@ -121,6 +121,7 @@
 						</div>
 					</div>
 
+<<<<<<< Upstream, based on branch 'master' of https://github.com/hengmengtang/SCHOOLMANAGEMENT_UI.git
 					<div class="row">
 						<div class="form-group col-md-4">
 							<label for="exampleInputEmail2">Email <span class="star">
@@ -158,6 +159,82 @@
 								<option>NPIC</option>
 								<option>Asia Europe</option>
 								<option>Other</option>
+=======
+              </div>
+            </div>
+            
+             <div class="row">
+                <div class="form-group col-md-4">
+                  <label for="ITYear">IT Year<span class="star"> * </span></label>
+                  <select class="form-control" id="ITYear" name="it_year">
+                  	 <option>Year 1</option>
+                     <option>Year 2</option>
+                     <option>Year 3</option>
+                     <option>Year 4</option>
+          			 <option>Year 5</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="Graduated">Graduated</label>
+                  <input type="text" class="form-control" id="Graduated" name="it_year">
+                   
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="exampleInputUniversity">University</label>
+                  <select class="form-control" id="exampleInputPosition" name="university">
+                     <option>RUPP</option>
+                     <option>RULE</option>
+                     <option>SETEC</option>
+                     <option>BBU</option>
+                     <option>ITC</option>
+                     <option>Norton</option>
+                     <option>NTTI</option>
+                     <option>NPIC</option>
+                     <option>Asia Europe</option>
+                     <option>Other</option>
+          
+                  </select>
+                </div>
+            </div>
+            <div class="row">
+                
+                <div class="form-group col-md-3">
+                  <label for="Status">Status</label>
+                  <select class="form-control" id="Status" name="status">
+                     <option>Single</option>
+                     <option>Married</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="exampleInputAddress">Phone <span class="star"> * </span></label>
+                  <input type="text" class="form-control" id="exampleInputPhone" placeholder="Phone" name="phone">
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="exampleInputNationality">Nationality</label>
+                  <input type="text" class="form-control" id="exampleInputNationality" placeholder="Nationality" name="nationality">
+                </div>
+                  <div class="form-group col-md-3">
+                  <label for="exampleInputSocialID">Social ID</label>
+                  <input type="text" class="form-control" id="exampleInputSocialID" placeholder="Social id" name="social_id">
+                </div>
+            </div>
+        
+            <div class="row">
+              <div class="col-md-4" style="font-size:22px;">
+                <span class="label label-success">Parent's Information</span>
+              </div>
+            </div> <br>
+            <div class="row">
+              <div class="form-group col-md-6">
+                  <label for="exampleInputFatherName">Father's Khmer Name</label>
+                  <input type="text" class="form-control" id="exampleInputFatherName" placeholder="Father's Name" name="father_name">
+              </div>
+              <div class="form-group col-md-6">
+                  <label for="exampleInputFatherLName">Father's Latin Name</label>
+                  <input type="text" class="form-control" id="exampleInputFatherLName" placeholder="Father's Latin Name" name="father_latin_name">
+              </div>
+            </div>
+>>>>>>> 4ae9bdd add new register form
 
 							</select>
 						</div>
