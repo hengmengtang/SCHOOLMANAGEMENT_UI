@@ -6,7 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>HRD Student Management</title>
 <jsp:include page="../include/headDashboard.jsp"></jsp:include>
-
+<link
+	href="${pageContext.request.contextPath }/resources/style/customSubject.css"
+	rel="stylesheet" />
 </head>
 <body>
 	<!-- index is menu -->
@@ -183,7 +185,8 @@
 			<!--End Add Student-->
 
 			<!--Input for gen, stu, class-->
-			<div class="row">
+			<div id="hide">
+			<div class="row" >
 				<div class="col-md-3">
 					Generation<sup style="color: red">*</sup>
 				</div>
@@ -197,14 +200,16 @@
 
 			<div class="row">
 				<div class="col-md-3">
-					<select class="form-control select" id="add-gen"
+					<!-- <select class="form-control select" id="add-gen"
 						style="margin-top: 15px; display: none;">
 						<option>Select Generation</option>
 						<option value="gen1">Generation 1</option>
 						<option value="gen2">Generation 2</option>
 						<option value="gen3">Generation 3</option>
 						<option value="gen4">Generation 4</option>
-					</select>
+					</select> -->
+					<label class="form-control select" id="add-gen"
+						style="margin-top: 15px; display: none;">Generation4th</label>
 				</div>
 				<div class="col-md-3">
 					<select class="form-control select" id="add-course"
@@ -244,11 +249,12 @@
 			<div class="row" style="margin-bottom: 7px;">
 				<div class="col-md-12">
 					<div class="pull-right" id="add-btn" style="display: none;">
-						<button type="button" class="btn btn-success">Save</button>
-						<button type="button" class="btn btn-danger">Cancel</button>
+						<button type="button" class="btn btn-success" id="btnSave">Save</button>
+						<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 					</div>
 				</div>
 			</div>
+		</div>
 		</div>
 		<!-- End Page --> </section>
 		<!-- /.content-wrapper -->
@@ -261,10 +267,19 @@
 						function() {
 							//--Add Generation--//
 							$("#btn-add").click(function() {
-								$("#add-gen").fadeToggle("slow", function() {
+								$("#hide").fadeIn();
+								$("#add-gen").fadeIn("slow", function() {
 								});
+								$("#add-course").fadeIn();
 							});
-
+							$("#btnCancel").click(function(){
+								$("#add-course").val("Select Course").fadeOut("fast");
+								$("#add-class").val("Select Class").fadeOut("fast");
+								$("#add-gen").val("Select Generation").fadeOut("fast");
+								$("#add-stu").val("").fadeOut("fast");
+								$("#add-btn").fadeOut("fast");
+								$("#hide").fadeOut("fast");
+							});
 							//--Add Course--//
 							$("#add-gen")
 									.change(

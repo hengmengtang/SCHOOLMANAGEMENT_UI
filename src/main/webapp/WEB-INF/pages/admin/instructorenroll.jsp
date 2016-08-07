@@ -228,14 +228,16 @@
 			<div class="row">
 
 				<div class="col-md-3">
-					<select class="form-control select" id="add-gen"
+					<!-- <select class="form-control select" id="add-gen"
 						style="display: none;">
 						<option>Select Generation</option>
 						<option value="gen1" id="gen1">Generation 1</option>
 						<option value="gen2" id="gen2">Generation 2</option>
 						<option value="gen3" id="gen3">Generation 3</option>
 						<option value="gen4" id="gen4">Generation 4</option>
-					</select>
+					</select> -->
+					<label class="form-control select" id="add-gen"
+						style="display: none;">Generation4th</label>
 				</div>
 
 				<div class="col-md-4">
@@ -277,8 +279,8 @@
 			<div class="row">
 				<div class="pull-right" id="add-btn"
 					style="margin: 7px; display: none;">
-					<button type="button" class="btn btn-success">Save</button>
-					<button type="button" class="btn btn-danger">Cancel</button>
+					<button type="button" class="btn btn-success" id="btnSave">Save</button>
+					<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 				</div>
 			</div>
 
@@ -295,10 +297,18 @@
 						function() {
 							//--Add Generation--//
 							$("#btn-add").click(function() {
+								$("#hide").fadeIn();
 								$("#add-gen").fadeToggle("slow", function() {
 								});
+								$("#add-course").fadeIn();
 							});
-
+							$("#btnCancel").click(function(){
+								$("#add-course").fadeOut("fast");
+								$("#add-class").fadeOut("fast");
+								$("#add-stu").fadeOut("fast");
+								$("#add-btn").fadeOut("fast");
+								$("#add-gen").fadeOut("fast");
+							});
 							//--Add Course--//
 							$("#add-gen")
 									.change(

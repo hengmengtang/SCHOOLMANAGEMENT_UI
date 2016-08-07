@@ -193,8 +193,8 @@
 	</div>
 	<!-- End page -->
 	</section>
-	<!-- End Main content -->
-	<!-- /.content-wrapper -->
+</div>
+	<!-- .content-wrapper -->
 	<div>
 		<jsp:include page="../include/footer.jsp" />
 	</div>
@@ -215,10 +215,10 @@
 					
 					//-- bottom cancel --//
 					$("#btnCancel").click(function(){
-						$("#start-date").fadeOut();
-						$("#end-date").fadeOut();
-						$("#button").fadeOut();
-						$("#hide").fadeOut();
+						$("#start-date").fadeOut("fast");
+						$("#end-date").fadeOut("fast");
+						$("#button").fadeOut("fast");
+						$("#hide").fadeOut("fast");
 					});
 					//--Add Course--//
 					$("#gen").click(function() {

@@ -176,32 +176,34 @@
 			<!--End Add Student-->
 			<!-- Start Add Generation -->
 			<div class="row">
-
+				<div id="hide">				
 				<div class="col-md-3" id="add-gen" style="display: none;">
-					<span>Generation<span class="star">*</span></span> <select
-						class="form-control select" id="selection"
+					<span>Generation<span class="star">*</span></span> <!-- <select
+						class="form-control select controlBottom" id="selection"
 						style="margin-top: 5px;">
 						<option>Select Generation</option>
 						<option value="gen1">Generation 1</option>
 						<option value="gen2">Generation 2</option>
 						<option value="gen3">Generation 3</option>
 						<option value="gen4">Generation 4</option>
-					</select>
+					</select> -->
+					<lebel class="form-control select controlBottom" id="selection"
+						style="margin-top: 5px;">Generation4th</lebel>
 				</div>
 
 				<div class="col-md-3" id="add-course" style="display: none;">
 					<span>Course<span class="star">*</span></span> <select
-						class="form-control select" id="course" style="margin-top: 5px;">
+						class="form-control select controlBottom" id="course" style="margin-top: 5px;">
 						<option>Select Course</option>
 						<option value="basic">Basic</option>
 						<option value="advance">Advance</option>
 					</select>
 				</div>
 
-				<div class="col-md-6" id="add-class" style="display: none;">
+				<div class="col-md-5" id="add-class" style="display: none;">
 					<span>Class<span class="star">*</span></span>
 					<div>
-						<input type="text" class="form-control" placeholder="Class"
+						<input type="text" class="form-control select controlBottom" placeholder="Class"
 							style="margin-top: 5px;">
 					</div>
 				</div>
@@ -210,9 +212,10 @@
 
 			<div class="row" style="margin: 5px;">
 				<div class="pull-right" id="add-btn" style="display: none;">
-					<button type="button" class="btn btn-success">Save</button>
-					<button type="button" class="btn btn-danger">Cancel</button>
+					<button type="button" class="btn btn-success" id="btnSave">Save</button>
+					<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 				</div>
+			</div>
 			</div>
 			<!-- End Row -->
 		</div>
@@ -229,9 +232,17 @@
   $(document).ready(function(){
     //--Add Generation--//
     $( "#btn-add" ).click(function() {
-      $( "#add-gen" ).fadeToggle( "slow");
+    	$("#hide").fadeIn();
+      $( "#add-gen" ).fadeIn( "slow");
+      $("#add-course").fadeIn('slow');
     });
-
+    $("#btnCancel").click(function(){
+		$("#add-gen").fadeOut("fast");
+		$("#add-course").fadeOut("fast");
+		$("#add-class").fadeOut("fast");
+		$("#add-btn").fadeOut("fast");
+		$("#hide").fadeOut("fast");
+	});
     //--Add Course--//
     $( "#selection" ).change(function() {
       var gen=$(this).val();

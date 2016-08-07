@@ -181,7 +181,7 @@
 			</div>
 			<!-- End Table -->
 
-			<!--Start Add Student-->
+			<!--Start Add Staff-->
 			<div class="row" style="margin: 5px;">
 
 				<div class="pull-left" style="color: black;">
@@ -302,8 +302,8 @@
 					</div>
 					<div class="row pull-right" style="margin: 7px;">
 						<div id="button">
-							<button type="button" class="btn btn-success">Save</button>
-							<button type="button" class="btn btn-danger">Cancel</button>
+							<button type="button" class="btn btn-success" id="btnSave">Save</button>
+							<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 						</div>
 					</div>
 
@@ -319,8 +319,11 @@
 	<script>
   $(document).ready(function(){
     $( "#btn-sub" ).click(function() {
-      $( "#form-add" ).fadeToggle("slow");
+      $( "#form-add" ).fadeIn();
     });
+    $("#btnCancel").click(function(){
+    	$( "#form-add" ).fadeOut("fast");
+	});
   });
 </script>
 </body>

@@ -18,7 +18,7 @@
 }
 .select{
 	margin-top: -37px;
-    margin-left: 39px;
+    margin-left: 15px;
 }
 .search{
 	width: 30px;
@@ -69,4 +69,7 @@ ol, ul {
     margin-top: 0; 
     margin-left: 0; 
     float: right;
+}
+.pull-right {
+    margin-bottom: 15px;
 }

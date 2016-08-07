@@ -55,7 +55,6 @@
 						<li><a href="#">Last</a></li>
 					</ul>
 				</div>
-
 			</div>
 			<!-- End Row 1 -->
 			<!-- Start Selection -->
@@ -156,7 +155,7 @@
 			</div>
 			<!-- Start Add Generation -->
 			<div class="row" style="margin: 5px;">
-
+				<div id="hide">
 				<div class="col-md-5" style="display: none;" id="add-sub">
 					<span>Subject<span class="star">*</span></span><br> <input
 						type="text" class="form-control" placeholder="Subject"
@@ -172,12 +171,12 @@
 			</div>
 
 			<div class="row pull-right" style="margin: 0px; margin-bottom: 7px;">
-				<div id="button" style="display: none;">
-					<button type="button" class="btn btn-success">Save</button>
-					<button type="button" class="btn btn-danger">Cancel</button>
+				<div id="btn" style="display: none;">
+					<button type="button" class="btn btn-success" id="btnSave">Save</button>
+					<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 				</div>
 			</div>
-
+			</div>
 		</div>
 		</section>
 		<!-- /.content -->
@@ -192,16 +191,22 @@
 $( document ).ready(function() {
 
   $("#btn-sub").click (function(){
-    $("#add-sub").fadeToggle();
+	  $("#hide").fadeIn();
+    $("#add-sub").fadeIn();
   });
-
+  $("#btnCancel").click(function(){
+		$("#add-sub").fadeOut("fast");
+		$("#des").fadeOut("fast");
+		$("#btn").fadeOut("fast");
+		$("#hide").fadeOut("fast");
+	});
   //--Add Course--//
   $( "#add-sub" ).click(function() {
     $("#des").fadeIn( "slow");
   });
 
   $( "#des" ).click(function() {
-    $("#button").fadeIn( "slow");
+    $("#btn").fadeIn( "slow");
   });
 
 });
