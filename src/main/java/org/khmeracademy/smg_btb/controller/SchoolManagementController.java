@@ -50,5 +50,13 @@ public class SchoolManagementController {
 		public String promote(){
 			return "/admin/promote";
 		}
+		@RequestMapping(value={"/student"})
+		public String student(){
+			return "/student/dashboard";
+		}
+		@RequestMapping(value={"/instructor"})
+		public String instructor(){
+			return "/instructor/dashboard";
+		}
 		
 }

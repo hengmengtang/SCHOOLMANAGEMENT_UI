@@ -53,7 +53,7 @@
 				<li class="active treeview"><a href="dashboard"> <i
 						class="fa fa-dashboard"></i><span>Dashboard</span>
 				</a></li>
-				<li class="treeview"><a href="#"> <i class="fa fa-files-o"></i>
+				<li class="treeview"><a href="#"> <i class="fa fa-graduation-cap"></i>
 						<span>Students</span> <span class="label label-primary pull-right"></span>
 						<i class="fa fa-angle-left pull-right"></i>
 				</a>
@@ -65,7 +65,7 @@
 						<li><a href="promote"><i class="fa fa-circle-o"></i>
 								Student Promotion</a></li>
 					</ul></li>
-				<li class="treeview"><a href="#"> <i class="fa fa-files-o"></i>
+				<li class="treeview"><a href="#"> <i class="fa fa-table"></i>
 						<span>Study Management</span> <span
 						class="label label-primary pull-right"></span> <i
 						class="fa fa-angle-left pull-right"></i>
@@ -79,9 +79,9 @@
 						<li><a href="subject"><i class="fa fa-circle-o"></i>
 								Subject</a></li>
 					</ul></li>
-				<li><a href="staff"> <i class="fa fa-th"></i> <span>Staff</span>
+				<li><a href="staff"> <i class="fa fa-user"></i> <span>Staff</span>
 				</a></li>
-				<li class="treeview"><a href="#"> <i class="fa fa-laptop"></i>
+				<li class="treeview"><a href="#"> <i class="fa fa-pencil-square-o"></i>
 						<span>Enroll</span> <i class="fa fa-angle-left pull-right"></i>
 				</a>
 					<ul class="treeview-menu">
@@ -111,10 +111,10 @@
 						<li><a href="#"><i class="fa fa-circle-o"></i> Subject
 								List</a></li>
 					</ul></li> -->
-				<li class="treeview"><a href="#"> <i class="fa fa-laptop"></i>
+				<li class="treeview"><a href="#"> <i class="fa fa-list-alt"></i>
 						<span>Monthly Result</span>
 				</a></li>
-				<li class="treeview"><a href="#"> <i class="fa fa-laptop"></i>
+				<li class="treeview"><a href="#"> <i class="fa fa-book"></i>
 						<span>Documentation</span>
 				</a></li>
 			</ul>
