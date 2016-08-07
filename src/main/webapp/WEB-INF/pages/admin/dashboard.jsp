@@ -12,6 +12,18 @@
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
 <jsp:include page="../include/headDashboard.jsp" />
+<jsp:include page="../include/headChart.jsp" />
+<style>
+	.row{
+		    margin-right: 0;
+    		margin-left: 0;
+	}
+	@media only screen and (max-width: 500px) {
+	    .boxcontent {
+	       height: 1500px;
+	    }
+    }
+</style>
 </head>
 
 <body>
@@ -19,7 +31,7 @@
 	<jsp:include page="index.jsp" />
 
 	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper boxcontent">
+	<div class="content-wrapper boxcontent" style="padding-left:15px; padding-right:15px">
 		<section class="content-header">
 		<h1>Dashboard</h1>
 		<ol class="breadcrumb">
@@ -30,7 +42,7 @@
 
 		<!-- Main content-->
 		<section class="content">
-		<div class="row" style="margin: 0px;">
+		<div class="row" style="margin: 0 !important">
 			<div class="small-box" style="background-color: #e0f2f2;">
 				<div class="inner">
 					<div class="row">
@@ -55,8 +67,10 @@
 		<!--statistic-->
 		<div class="row">
 
-			<div class="col-md-8 col-sm-10 col-xs-10">
-				<div class="small-box bg-aqua"></div>
+			<div class="col-md-8 col-sm-12 col-xs-12" style="padding-left:0">
+				<div class="small-box bgcolor">
+					<div style="width:100%; height:365px" class="ct-chart"></div>
+				</div>
 			</div>
 
 			<div class="col-md-4 col-sm-8 col-xs-8 bgcolor"
@@ -92,27 +106,7 @@
 									class="badge">6</span></li>
 							</ul>
 						</div>
-
 					</div>
-					<!-- Generation -->
-					<!-- <div class="col-md-9 col-sm-9 col-xs-9 rightst"> 
-              <div class="small-box bg-aqua" style="background: #FF5722 !important;">
-                <div class="inner">    
-                    1<sup>st</sup> GENERATION &nbsp&nbsp&nbsp&nbsp56
-                    <div class="progress" style="margin-top:11px;">
-                      <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                        60%
-                      </div>
-                    </div>
-                    <ul class="nav nav-pills" role="tablist">
-                      <li role="presentation">Male<span class="badge">50</span></li>
-                      <li role="presentation">&nbsp&nbsp&nbsp&nbspFemale<span class="badge">6</span></li>
-                    </ul>
-                </div>
-              </div>
-            </div>
-
-          </div> -->
 					<!-- End Generation -->
 				</div>
 				<!-- Generation Summary -->
@@ -130,5 +124,53 @@
   $.widget.bridge('uibutton', $.ui.button);
 </script>
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<!-- chart script -->
+<script>
+new Chartist.Bar('.ct-chart', {
+  labels: ['KSP', 'PP', 'SRP', 'BTB'],
+  series: [
+    [5, 4, 3, 7],
+    [30, 2, 9, 5],
+    [10, 5, 8, 4],
+    [20, 3, 4, 6]
+  ]
+}, {
+  // Default mobile configuration
+  stackBars: true,
+  axisX: {
+    labelInterpolationFnc: function(value) {
+      return value.split(/\s+/).map(function(word) {
+        return word[0];
+      }).join('');
+    }
+  },
+  axisY: {
+    offset: 20
+  }
+}, [
+  // Options override for media > 400px
+  ['screen and (min-width: 400px)', {
+    reverseData: true,
+    horizontalBars: true,
+    axisX: {
+      labelInterpolationFnc: Chartist.noop
+    },
+    axisY: {
+      offset: 60
+    }
+  }],
+  // Options override for media > 800px
+  ['screen and (min-width: 800px)', {
+    stackBars: false,
+    seriesBarDistance: 10
+  }],
+  // Options override for media > 1000px
+  ['screen and (min-width: 800px)', {
+    reverseData: false,
+    horizontalBars: false,
+    seriesBarDistance: 38
+  }]
+]);
+</script>
 </body>
 </html>
