@@ -74,9 +74,7 @@
 				<li><a href="#"> <i class="fa fa-list-alt"></i>
 						<span>Monthly Result</span>
 				</a></li>
-				<!-- <li><a href="#"> <i class="fa fa-book"></i>
-						<span>Documentation</span>
-				</a></li> -->
+				
 			</ul>
 		</section>
 	</aside>
