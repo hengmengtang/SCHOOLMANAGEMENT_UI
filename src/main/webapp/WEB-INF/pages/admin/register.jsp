@@ -50,6 +50,7 @@
 						</div>
 					</div>
 
+<<<<<<< Upstream, based on branch 'master' of https://github.com/hengmengtang/SCHOOLMANAGEMENT_UI.git
 					<div class="row">
 						<div class="col-md-4" style="font-size: 22px;">
 							<span class="label label-success">Student's Information</span>
@@ -64,6 +65,47 @@
 								placeholder="Enter ID" name="stu_id">
 						</div>
 					</div>
+=======
+            <div class="form-group col-md-2 pull-right">
+              <div class="form-group ">
+              <center><label for="exampleInputFile "></label></center>
+                <img id="img" src="${pageContext.request.contextPath }/resources/images/user.ico" alt="" class="img-circle img-responsive " style="width: 180px; height: 180px; border:1px solid black;"> 
+             
+              </div>
+              <div class="form-group">
+              <label for="photo"> </label>
+                <input type="file" name="photo" id="photo" accept="images/*"> 
+              
+              </div>
+            </div>
+          </div>
+        
+          <div class="row">
+            <div class="col-md-4" style="font-size:22px;">
+              <span class="label label-success">Student's Information</span>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+              <div class="form-group col-md-3">
+                  <label for="exampleInputStuID">Student ID: <span class="star"> * </span></label>
+                  <span class="glyphicons glyphicons-user"></span>
+                  <input type="text" class="form-control " id="exampleInputStuID" placeholder="Enter ID" name="stu_id">
+              </div>
+          </div>
+          
+            <div class="row">
+              <div class="form-group col-md-6">
+                  <label for="exampleInputFName">First Name <span class="star"> * </span></label>
+                  <span class="glyphicons glyphicons-user"></span>
+                  <input type="text" class="form-control " id="exampleInputFName" placeholder="Enter Your First Name" name="fname">
+              </div>
+              <div class="form-group col-md-6">
+                  <label for="exampleInputLName">Last Name <span class="star"> * </span></label>
+                  <input type="text" class="form-control" id="exampleInputLName" placeholder="Enter Your Last Name" name="lname">
+              </div>
+            </div>
+>>>>>>> 0845241 Add register img
 
 					<div class="row">
 						<div class="form-group col-md-6">
@@ -324,6 +366,28 @@
 	<jsp:include page="../include/footDashboard.jsp" />
 	<script>
   $.widget.bridge('uibutton', $.ui.button);
+</script>
+<script type="text/javascript">
+// click on image
+$('#img').click(function() {
+	// call photo for browse file
+	$("#photo").click();
+});
+
+$("#photo").change(function(e) {
+	readURL(this);
+});
+
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function(e) {
+			$('#img').attr('src', e.target.result).fadeIn('slow');
+		};
+		reader.readAsDataURL(input.files[0]);
+	}
+}
 </script>
 </body>
 </html>

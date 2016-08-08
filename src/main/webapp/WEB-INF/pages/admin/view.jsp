@@ -45,6 +45,7 @@
 
                       <a href="#" class="btn btn-info" style="top: 21px;padding: 8px;">Sign
                       In</a>
+                      <a href="#" class="btn btn-info" style="top:-17px;padding: 8px;left:80px" id="check">Check</a>
 
                       </li>
 
@@ -281,6 +282,37 @@
         </div>
       </div>
     </div>
+    
+    <!-- Model -->
+    <div id="check" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h3 class="modal-title">Operation</h3>
+		      </div>
+		      <div class="modal-body form-horizontal">
+		        <div class="form-group">
+				    <label for="Name" class="col-sm-2 control-label">Name:</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="Name" placeholder="Input Name" ng-model="name" required>
+				    </div>
+				  </div>
+				<div class="form-group">
+				    <label for="Age" class="col-sm-2 control-label">Age: </label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" name="age" placeholder="Input age" ng-model="age" ng-pattern="/^[0-9]{1,3}$/" required>
+				    </div>
+ 			 	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="add()" ng-disabled="!name ||  !age || name.$invalid ">Sumbit</button>
+		      </div>
+		    </div>
+
+  		  </div>
+		</div>
      <!-- CONTACT SECTION END-->
     <div id="footer">
         <div class="row">

@@ -53,6 +53,7 @@ ol, ul {
 .small-box>.inner {
     height: auto;
 }
+<<<<<<< Upstream, based on branch 'master' of https://github.com/hengmengtang/SCHOOLMANAGEMENT_UI.git
 .generation{
 	padding: 10px;
 }
@@ -73,3 +74,8 @@ ol, ul {
 .pull-right {
     margin-bottom: 15px;
 }
+=======
+input[type="file"]{
+  		display: none;
+  }	
+>>>>>>> 0845241 Add register img
