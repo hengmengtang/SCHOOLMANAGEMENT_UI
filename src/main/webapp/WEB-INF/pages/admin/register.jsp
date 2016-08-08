@@ -228,6 +228,7 @@
                 <span class="label label-success">Parent's Information</span>
               </div>
             </div> <br>
+            <!-- Father Info -->
             <div class="row">
               <div class="form-group col-md-6">
                   <label for="exampleInputFatherName">Father's Khmer Name</label>
@@ -256,22 +257,36 @@
               </div>
              
             </div>
+            
+            <!-- Mother Info -->
             <div class="row">
-                <div class="form-group col-md-12">
-                  <label for="FAddress">Address</label>
-                  <input type="text" class="form-control" id="FAddress" placeholder="Address" name="f_address">
-                </div>
-            </div>
-             <div class="row">
               <div class="form-group col-md-6">
                   <label for="MotherName">Mother's Khmer Name</label>
                   <input type="text" class="form-control" id="MName" placeholder="Mother's Name" name="mother_name">
               </div>
               <div class="form-group col-md-6">
                   <label for="FatherLName">Mother's Latin Name</label>
-                  <input type="text" class="form-control" id="FatherLName" placeholder="Mother's Latin Name" name="mother_latin_name">
+                  <input type="text" class="form-control" id="MotherLName" placeholder="Mother's Latin Name" name="mother_latin_name">
               </div>
             </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                  <label for="FAddress">Address</label>
+                  <input type="text" class="form-control" id="MAddress" placeholder="Address" name="m_address">
+                </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                  <label for="FOccupation">Occupation</label>
+                  <input type="text" class="form-control" id="MOccupation" placeholder="Mother Occupation" name="mother_phone">
+              </div>
+              <div class="form-group col-md-6">
+                  <label for="FPhone">Mother's Phone</label>
+                  <input type="text" class="form-control" id="MPhone" placeholder="Mother's Phone " name="mother_phone">
+              </div>
+             
+            </div>
+             
 
 
 					<div class="row pull-right" style="margin: 7px;">

@@ -66,12 +66,12 @@
 						<i class="fa fa-angle-left pull-right"></i>
 				</a>
 					<ul class="treeview-menu" style="display: none;">
-						<li><a href="register"><i class="fa fa-circle-o"></i>
+						<li><a href="addscore"><i class="fa fa-circle-o"></i>
 								Add</a></li>
 						<li><a href="studentlist"><i class="fa fa-circle-o"></i>
 								View</a></li>
 					</ul></li>
-				<li><a href="#"> <i class="fa fa-list-alt"></i>
+				<li><a href="monthlyresult"> <i class="fa fa-list-alt"></i>
 						<span>Monthly Result</span>
 				</a></li>
 				
