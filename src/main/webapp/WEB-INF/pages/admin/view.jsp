@@ -14,7 +14,7 @@
 </head>
 
 <!-- Modal Center Screen -->
-<!-- <style>
+ <style>
 .modal {
   text-align: center;
   padding: 0!important;
@@ -33,10 +33,10 @@
   text-align: left;
   vertical-align: middle;
 }
-</style>-->
-<style>
+</style>
+ <style>
 	.modal-header, h4, .close {
-      background-color: #5cb85c;
+      background-color: #26A69A;
       color:white !important;
       text-align: center;
       font-size: 30px;
@@ -45,7 +45,7 @@
       background-color: #FAFAFA;
  	}
 
-</style>
+</style> 
 </head>
 <body>
 

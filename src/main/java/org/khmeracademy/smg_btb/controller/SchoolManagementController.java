@@ -58,5 +58,10 @@ public class SchoolManagementController {
 		public String instructor(){
 			return "/instructor/dashboard";
 		}
+		@RequestMapping(value={"/view"})
+		public String viewIndexPage(){
+			return "/admin/view";
+		}
+		
 		
 }
