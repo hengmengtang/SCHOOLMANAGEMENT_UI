@@ -14,7 +14,7 @@
 <jsp:include page="../include/headDashboard.jsp" />
 </head>
 
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 

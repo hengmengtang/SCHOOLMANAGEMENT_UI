@@ -16,7 +16,7 @@
 	rel="stylesheet" />
  <script src="${pageContext.request.contextPath }/resources/bootstrapcheckbox/bootstrap-checkbox.min.js"></script>
 </head>
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 

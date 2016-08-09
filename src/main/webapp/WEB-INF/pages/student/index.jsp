@@ -22,7 +22,7 @@
 		</nav>
 	</header>
 	<!-- Left side column. contains the logo and sidebar -->
-	<aside class="main-sidebar" style="height: 1272px; !important">
+	<aside class="main-sidebar"!important">
 		<!-- sidebar: style can be found in sidebar.less -->
 		<section class="sidebar">
 			<!-- Sidebar user panel -->
@@ -53,18 +53,13 @@
 				<li class="active treeview"><a href="dashboard"> <i
 						class="fa fa-dashboard"></i><span>Dashboard</span>
 				</a></li>
-				<li ><a href="myprofile"> <i class="fa fa-user"></i>
-						<span>My Profile</span>
+				<li><a href="myprofile"> <i class="fa fa-user"></i> <span>My
+							Profile</span>
 				</a></li>
-				<!--  <li ><a href="#"> <i class="fa fa-calendar-check-o"></i>
-						<span>Attendence</span> <span
-						class="label label-primary pull-right"></span>
-				</a></li>-->
-				<li><a href="#"> <i class="fa fa-list-alt"></i>
-						<span>Monthly Result</span>
+				<li><a href="monthlyresults"> <i class="fa fa-list-alt"></i> <span>Monthly
+							Result</span>
 				</a></li>
-				<li><a href="documents"> <i class="fa fa-book"></i>
-						<span>Documentation</span>
+				<li><a href="documents"> <i class="fa fa-book"></i> <span>Documentation</span>
 				</a></li>
 			</ul>
 		</section>

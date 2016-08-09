@@ -58,14 +58,6 @@ public class SchoolManagementController {
 		public String mothlyResult(){
 			return "/admin/monthlyresult";
 		}
-		@RequestMapping(value={"/student"})
-		public String student(){
-			return "/student/dashboard";
-		}
-		@RequestMapping(value={"/documents"})
-		public String documents(){
-			return "/student/documents";
-		}
 		@RequestMapping(value={"/instructor"})
 		public String instructor(){
 			return "/instructor/dashboard";
@@ -85,6 +77,18 @@ public class SchoolManagementController {
 		@RequestMapping(value={"/myprofile"})
 		public String myprofile(){
 			return "/student/myprofile";
+		}
+		@RequestMapping(value={"/monthlyresults"})
+		public String monthlyresults(){
+			return "/student/monthlyresults";
+		}
+		@RequestMapping(value={"/student"})
+		public String student(){
+			return "/student/dashboard";
+		}
+		@RequestMapping(value={"/documents"})
+		public String documents(){
+			return "/student/documents";
 		}
 		@RequestMapping(value={"/view"})
 		public String viewIndexPage(){

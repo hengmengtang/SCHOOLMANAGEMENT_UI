@@ -13,24 +13,24 @@
 <script src="jquery.datetimepicker.min.js"></script>
 
 </head>
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" >
-	<!-- Main content-->
-	 <section class="content-header" >
-      <h1 >
-        Student <small>Management</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">My Profile</li>
-      </ol>
-    </section>
-	<section class="content"> <!--/.content-->
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Main content-->
+		<section class="content-header">
+		<h1>
+			Student <small>Management</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li class="active">My Profile</li>
+		</ol>
+		</section>
+		<section class="content"> <!--/.content-->
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
 			<form method="post" action="#">
@@ -81,7 +81,8 @@
 							<label for="exampleInputStuID">Student ID: <span
 								class="star"> * </span></label> <span class="glyphicons glyphicons-user"></span>
 							<input type="text" class="form-control " id="exampleInputStuID"
-								placeholder="Enter ID" name="stu_id" readonly="readonly" value="">
+								placeholder="Enter ID" name="stu_id" readonly="readonly"
+								value="">
 						</div>
 					</div>
 
@@ -325,7 +326,7 @@
 							Add</button>
 					</div>
 				</fieldset>
-				</div>
+		</div>
 		</form>
 		</section>
 	</div>

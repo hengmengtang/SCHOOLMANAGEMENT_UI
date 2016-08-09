@@ -14,12 +14,13 @@
 <jsp:include page="../include/headDashboard.jsp" />
 </head>
 
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
 	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper boxcontent" style="padding-left:15px; padding-right:15px">
+	<div class="content-wrapper boxcontent"
+		style="padding-left: 15px; padding-right: 15px">
 		<section class="content-header">
 		<h1>Dashboard</h1>
 		<ol class="breadcrumb">
@@ -94,25 +95,7 @@
 						</div>
 
 					</div>
-					<!-- Generation -->
-					<!-- <div class="col-md-9 col-sm-9 col-xs-9 rightst"> 
-              <div class="small-box bg-aqua" style="background: #FF5722 !important;">
-                <div class="inner">    
-                    1<sup>st</sup> GENERATION &nbsp&nbsp&nbsp&nbsp56
-                    <div class="progress" style="margin-top:11px;">
-                      <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                        60%
-                      </div>
-                    </div>
-                    <ul class="nav nav-pills" role="tablist">
-                      <li role="presentation">Male<span class="badge">50</span></li>
-                      <li role="presentation">&nbsp&nbsp&nbsp&nbspFemale<span class="badge">6</span></li>
-                    </ul>
-                </div>
-              </div>
-            </div>
 
-          </div> -->
 					<!-- End Generation -->
 				</div>
 				<!-- Generation Summary -->
@@ -127,8 +110,8 @@
 	<jsp:include page="../include/footDashboard.jsp" />
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 	<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
+		$.widget.bridge('uibutton', $.ui.button);
+	</script>
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 </body>
 </html>

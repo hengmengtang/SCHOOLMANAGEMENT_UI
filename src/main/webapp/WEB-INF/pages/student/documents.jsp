@@ -31,8 +31,9 @@
 		float: left;
 	}
 }
-select{
-	width:300px;
+
+select {
+	width: 300px;
 }
 
 iframe {
@@ -48,7 +49,7 @@ iframe {
 
 </head>
 
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
@@ -64,116 +65,111 @@ iframe {
 
 		<!-- Main content-->
 		<section class="content">
-				<div class="row">
-					<section class="col-lg-12 connectedSortable ui-sortable">
-						<!-- staff -->
-						<div class="box box-primary">
-							<div class="box-header ui-sortable-handle" style="cursor: move;">
-								<i class="fa fa-book"></i>
-								<h3 class="box-title">Transcript</h3>
-								<div class="box-tools pull-right">
-									<button class="btn btn-box-tool" data-widget="collapse">
-										<i class="fa fa-minus"></i>
-									</button>
+		<div class="row">
+			<section class="col-lg-12 connectedSortable ui-sortable"> <!-- staff -->
+			<div class="box box-primary">
+				<div class="box-header ui-sortable-handle" style="cursor: move;">
+					<i class="fa fa-book"></i>
+					<h3 class="box-title">Transcript</h3>
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+					<br> <br>
+
+					<!-- form search -->
+					<form class="form-inline" role="form">
+						<!-- course -->
+						<div class="form-group">
+							<div class="input-group" style="width: 230px">
+								<div class="input-group-addon"
+									style="color: white; background-color: green">
+									<span>Course</span>
 								</div>
-								<br> <br>
-
-								<!-- form search -->
-								<form class="form-inline" role="form">
-									<!-- course -->
-									<div class="form-group">
-										<div class="input-group" style="width:230px">
-											<div class="input-group-addon" style="color:white;background-color: green">
-												<span>Course</span>
-											</div>
-											<select class="form-control" id="courseFilter"
-												ng-model="courseFilter">
-												<option value="0">Select Course</option>
-												<option ng-repeat="c in student_course" value=""></option>
-											</select>
-										</div>
-										<!-- /.input group -->
-									</div>
-									<div class="form-group">
-										<div class="form-inline">
-											<div class="input-group">
-												<input type="hidden" id="stu_id">
-													<!--value="%=((Student) session.getAttribute("stu")).getStu_id()%>"-->
-												
-												<div class="input-group-btn">
-													<button type="button" class="btn btn-warning"
-														id="btn-preview">Print</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</form>
-
-								<!-- end form search -->
+								<select class="form-control" id="courseFilter"
+									ng-model="courseFilter">
+									<option value="0">Select Course</option>
+									<option ng-repeat="c in student_course" value=""></option>
+								</select>
 							</div>
-							<!-- /.box-header -->
-							<div class="box-body">
-								<div class="table-responsive">
-									<iframe id="box-preview"> </iframe>
+							<!-- /.input group -->
+						</div>
+						<div class="form-group">
+							<div class="form-inline">
+								<div class="input-group">
+									<input type="hidden" id="stu_id">
+									<!--value="%=((Student) session.getAttribute("stu")).getStu_id()%>"-->
+
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-warning" id="btn-preview">Print</button>
+									</div>
 								</div>
 							</div>
 						</div>
-						<!-- end staff list -->
+					</form>
 
-					</section>
-
-					<section class="col-lg-12 connectedSortable ui-sortable">
-						<!-- staff -->
-						<div class="box box-success">
-							<div class="box-header ui-sortable-handle" style="cursor: move;">
-								<i class="fa fa-book"></i>
-								<h3 class="box-title">Certificate</h3>
-								<div class="box-tools pull-right">
-									<button class="btn btn-box-tool" data-widget="collapse">
-										<i class="fa fa-minus"></i>
-									</button>
-								</div>
-								<br> <br>
-								<!-- form search -->
-								<div class="form-inline">
-									<!-- course -->
-									<div class="form-group">
-										<div class="input-group" style="width:230px">
-											<div class="input-group-addon" style="color:white;background-color: green">
-												<span>Course</span>
-											</div>
-											<select class="form-control" id="courseFilter_"
-												ng-model="courseFilter_">
-												<option value="0">Select Course</option>
-												<option ng-repeat="c in student_course" value="{{c.cou_id}}">{{c.cou_name}}</option>
-											</select>
-										</div>
-										<!-- /.input group -->
-									</div>
-									<div class="form-group">
-										<div class="form-inline">
-											<div class="input-group">
-												<div class="input-group-btn">
-													<button type="button" class="btn btn-warning"
-														id="btn-preview_">Print</button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- /.box-header -->
-							<div class="box-body">
-								<div class="table-responsive">
-									<iframe id="box-preview_"> </iframe>
-								</div>
-							</div>
-						</div>
-						<!-- end staff list -->
-
-					</section>
+					<!-- end form search -->
 				</div>
-			</section>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+						<iframe id="box-preview"> </iframe>
+					</div>
+				</div>
+			</div>
+			<!-- end staff list --> </section>
+
+			<section class="col-lg-12 connectedSortable ui-sortable"> <!-- staff -->
+			<div class="box box-success">
+				<div class="box-header ui-sortable-handle" style="cursor: move;">
+					<i class="fa fa-book"></i>
+					<h3 class="box-title">Certificate</h3>
+					<div class="box-tools pull-right">
+						<button class="btn btn-box-tool" data-widget="collapse">
+							<i class="fa fa-minus"></i>
+						</button>
+					</div>
+					<br> <br>
+					<!-- form search -->
+					<div class="form-inline">
+						<!-- course -->
+						<div class="form-group">
+							<div class="input-group" style="width: 230px">
+								<div class="input-group-addon"
+									style="color: white; background-color: green">
+									<span>Course</span>
+								</div>
+								<select class="form-control" id="courseFilter_"
+									ng-model="courseFilter_">
+									<option value="0">Select Course</option>
+									<option ng-repeat="c in student_course" value="{{c.cou_id}}">{{c.cou_name}}</option>
+								</select>
+							</div>
+							<!-- /.input group -->
+						</div>
+						<div class="form-group">
+							<div class="form-inline">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-warning"
+											id="btn-preview_">Print</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+						<iframe id="box-preview_"> </iframe>
+					</div>
+				</div>
+			</div>
+			<!-- end staff list --> </section>
+		</div>
+		</section>
 	</div>
 	<div>
 		<jsp:include page="../include/footer.jsp" />
@@ -185,7 +181,7 @@ iframe {
   $.widget.bridge('uibutton', $.ui.button);
 </script>
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script type="text/javascript">
+	<script type="text/javascript">
 		$(function() {
 
 			//Initialize Select2 Elements
