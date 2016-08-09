@@ -53,13 +53,13 @@
 				<li class="active treeview"><a href="dashboard"> <i
 						class="fa fa-dashboard"></i><span>Dashboard</span>
 				</a></li>
-				<li ><a href="#"> <i class="fa fa-user"></i>
+				<li ><a href="myprofile"> <i class="fa fa-user"></i>
 						<span>My Profile</span>
 				</a></li>
-				<li ><a href="#"> <i class="fa fa-calendar-check-o"></i>
+				<!--  <li ><a href="#"> <i class="fa fa-calendar-check-o"></i>
 						<span>Attendence</span> <span
 						class="label label-primary pull-right"></span>
-				</a></li>
+				</a></li>-->
 				<li><a href="#"> <i class="fa fa-list-alt"></i>
 						<span>Monthly Result</span>
 				</a></li>
