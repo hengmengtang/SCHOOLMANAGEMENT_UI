@@ -1,3 +1,4 @@
+@CHARSET "ISO-8859-1";
 .logodash{/*logo dashaboard*/
 	width: 71%;
     margin-left: 10px;
@@ -32,7 +33,7 @@ sup{
 }
 .star{
       color: red;
-      font-size: 18px;
+      font-size: 14px;
   }
 .arrow1{
   	color: green;
@@ -53,6 +54,7 @@ ol, ul {
 .small-box>.inner {
     height: auto;
 }
+
 .generation{
 	padding: 10px;
 }
@@ -73,3 +75,11 @@ ol, ul {
 .pull-right {
     margin-bottom: 15px;
 }
+
+input[type="file"]{
+  		display: none;
+  }	
+.center{
+	align: center;
+}
+

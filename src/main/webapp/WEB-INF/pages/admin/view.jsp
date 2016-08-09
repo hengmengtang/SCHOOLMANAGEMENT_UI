@@ -12,6 +12,134 @@
 <title>School Management</title>
 <jsp:include page="../include/headView.jsp"/>
 </head>
+
+<!-- Modal Center Screen -->
+ <style>
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+</style>
+ <style>
+	.modal-header, h4, .close {
+      background-color: #26A69A;
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+	}
+	.modal-footer {
+      background-color: #FAFAFA;
+ 	}
+
+</style> 
+</head>
+<body>
+
+	<!-- Modal Check -->
+	<div class="container">
+
+		<!-- Modal -->
+		<div class="modal fade" id="check" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header" style="padding: 5px 30px;">
+						<h4>Check Position</h4>
+					</div>
+					<div class="modal-body" style="padding: 30px 50px;">
+						<form role="form">
+							<div class="form-group">
+								<label for="usrname"><span
+									class="glyphicon glyphicon-user"></span> Username</label> <input
+									type="text" class="form-control" id="usrname"
+									placeholder="Enter email" name="name">
+							</div>
+							<div class="form-group">
+								<label for="psw"><span
+									class="glyphicon glyphicon-earphone"></span> Phone</label> <input
+									type="text" class="form-control" id="phone"
+									placeholder="Enter password" name="phone">
+							</div>
+						
+						</form>
+					</div>
+					<div class="modal-footer" style="padding: 10px 20px;">
+							<button type="submit"
+								class="btn btn-danger btn-default pull-right"
+								data-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary pull-right" data-dismiss="modal" data-toggle="modal" href="#lost" data-target="#register">Check</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<!-- End Check Modal -->
+	
+<!-- Modal For Set User and Password -->
+ <div class="container">
+ 
+  <!-- Modal -->
+  <div class="modal fade" id="register" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:10px 20px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><i class="fa fa-registered" aria-hidden="true" style="font-size:34px;""></i> Register</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form">
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+              <input type="text" class="form-control" id="usrname" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="text" class="form-control" id="psw" placeholder="Enter password">
+            </div>
+            <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Re-Enter Password</label>
+              <input type="text" class="form-control" id="psw" placeholder="Enter re- enter password">
+            </div>
+        </div>
+        <div class="modal-footer" style="padding: 10px 20px;">
+         	<button type="submit"
+								class="btn btn-danger btn-default pull-right"
+								data-dismiss="modal">Cancel</button>
+			<button type="submit" class="btn btn-primary pull-right" data-dismiss="modal" data-toggle="modal" href="#lost" data-target="#register" name="register">Submit</button>
+					
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+<script>
+$(document).ready(function(){
+    $("#myBtn").click(function(){
+        $("#myModal").modal();
+    });
+});
+</script>
+
 <body>
 	<h1>hello</h1>
 	<div class="navbar navbar-inverse navbar-fixed-top " id="menu">
@@ -43,8 +171,9 @@
                       </a></li>
                       <li>
 
-                      <a href="#" class="btn btn-info" style="top: 21px;padding: 8px;">Sign
+                      <a class="btn btn-info" style="top: 21px;padding: 8px;">Sign
                       In</a>
+                      <a href="#" class="btn btn-info" style="top:-17px;padding: 8px;left:80px"  data-toggle="modal" data-target="#check">Sign Up</a>
 
                       </li>
 
@@ -281,7 +410,38 @@
         </div>
       </div>
     </div>
-     <!-- CONTACT SECTION END-->
+    
+    <!-- Model -->
+   <!--  <div id="check" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+			Sign up
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h3 class="modal-title ">Operation</h3>
+		      </div>
+		      <div class="modal-body form-horizontal">
+		        <div class="form-group">
+				    <label  class="col-sm-2 control-label " style="color:black">Name:</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" id="Name" placeholder="Input Name" ng-model="name" required>
+				    </div>
+				  </div>
+				<div class="form-group">
+				    <label for="Age" class="col-sm-2 control-label black">Age: </label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" name="age" placeholder="Input age" ng-model="age" ng-pattern="/^[0-9]{9,10}$/" required>
+				    </div>
+ 			 	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="add()" ng-disabled="!name ||  !age || name.$invalid ">Sumbit</button>
+		      </div>
+		    </div>
+
+  		  </div>
+		</div>
+     CONTACT SECTION END
     <div id="footer">
         <div class="row">
           <div class="col-lg-9 col-md-9 col-sm-9">
@@ -294,7 +454,7 @@
             <a href="#"> <i class="fa fa-youtube fa-2x"></i></a>
           </div>
       </div>   
-    </div>
+    </div> -->
      <!-- FOOTER SECTION END-->
    
     <!--  Jquery Core Script -->

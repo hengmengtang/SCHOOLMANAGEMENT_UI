@@ -13,7 +13,7 @@
 <script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
 <style>
 	.main-sidebar {
-	height: 1828px !important;
+	height: 1726px !important;
 	}
 </style>
 </head>
@@ -141,10 +141,7 @@
                   <label for="exampleInputEmail2">Email <span class="star"> * </span></label>
                   <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Your_email@gmail.com" ng-model="email">
               </div>
-              <div class="form-group col-md-4">
-                  <label for="exampleInputPassWord">Password <span class="star"> * </span></label>
-                  <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" ng-model="password">
-              </div> 
+              
             </div>
             
              <div class="row">

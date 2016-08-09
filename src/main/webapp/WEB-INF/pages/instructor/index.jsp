@@ -56,18 +56,26 @@
 				<li ><a href="#"> <i class="fa fa-user"></i>
 						<span>My Profile</span>
 				</a></li>
+<<<<<<< HEAD
 							
+=======
+				<!--  <li ><a href="#"> <i class="fa fa-calendar-check-o"></i>
+						<span>Attendence</span> <span
+						class="label label-primary pull-right"></span>
+				</a></li>-->
+			
+>>>>>>> branch 'master' of https://github.com/hengmengtang/SCHOOLMANAGEMENT_UI.git
 				<li class="treeview"><a href="staff"> <i class="fa fa-star-o"></i> <span>Score</span>
 					<span class="label label-primary pull-right"></span>
 						<i class="fa fa-angle-left pull-right"></i>
 				</a>
 					<ul class="treeview-menu" style="display: none;">
-						<li><a href="register"><i class="fa fa-circle-o"></i>
+						<li><a href="addscore"><i class="fa fa-circle-o"></i>
 								Add</a></li>
 						<li><a href="studentlist"><i class="fa fa-circle-o"></i>
 								View</a></li>
 					</ul></li>
-				<li><a href="#"> <i class="fa fa-list-alt"></i>
+				<li><a href="monthlyresult"> <i class="fa fa-list-alt"></i>
 						<span>Monthly Result</span>
 				</a></li>
 				

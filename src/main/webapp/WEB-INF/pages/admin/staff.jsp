@@ -98,18 +98,17 @@
 					<table class="table table-hover">
 						<thead>
 							<tr style="font-size: 16px;">
-								<th>Staff ID</th>
-								<!-- <th>Khmer Full Name&#x2191;&#x2193;</th> -->
-								<th>English Full Name&#x2191;&#x2193;</th>
+								<th ng-click="sort('id')">Staff ID&#x2191;&#x2193;</th>
+								<th ng-click="sort('khmerName')">English Full Name&#x2191;&#x2193;</th>
 								<th><center>Gender</center></th>
-								<th>Position&#x2191;&#x2193;</th>
-								<th>Email&#x2191;&#x2193;</th>
-								<th>Drop&#x2191;&#x2193;</th>
+								<th>Position</th>
+								<th>Email</th>
+								<th>Drop</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr dir-paginate="staff in staffs|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
-								<td>{{staff.STUDENT_ID}}</td> 
+								<td>{{staff.STAFF_ID}}</td> 
 								<!-- <td>{{student.KHMER_FULL_NAME}}</td> -->
 								<td>{{staff.ENGLIST_FULL_NAME}}</td>
 								
