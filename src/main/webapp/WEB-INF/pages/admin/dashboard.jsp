@@ -18,19 +18,10 @@
 		    margin-right: 0;
     		margin-left: 0;
 	}
-	@media only screen and (max-width: 500px) {
-	    .boxcontent {
-	       height: 1500px;
-	    }
-	    .inner{
-	    	height: 500px;
-	    }
-    }
-    
 </style>
 </head>
 
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
@@ -48,7 +39,7 @@
 		<section class="content">
 		<div class="row" style="margin: 0 !important">
 			<div class="small-box" style="background-color: #e0f2f2;">
-				<div class="inner">
+				<div class="inner" style="padding-bottom: 35px">
 					<div class="row">
 						<div
 							class="col-sm-3 col-md-3 col-md-offset-0 col-xs-8 col-xs-offset-2">

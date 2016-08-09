@@ -11,13 +11,8 @@
 <jsp:include page="../include/headRegister.jsp" />
 <jsp:include page="../include/headDashboard.jsp" />
 <script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
-<style>
-	.main-sidebar {
-	height: 1726px !important;
-	}
-</style>
 </head>
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 

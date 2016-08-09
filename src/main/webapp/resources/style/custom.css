@@ -61,8 +61,8 @@ ol, ul {
 .first{
 	padding:17px;
 }
-.boxcontent{
-	height: 1171px;
+.bg{
+	background: #008d4c;
 }
 .footerbg{
 	background-color: #e0f2f2;
