@@ -26,7 +26,7 @@ public class SchoolManagementController {
 		public String register(){
 			return "/admin/register";
 		}
-		@RequestMapping(value={"/studentlist"})
+		@RequestMapping(value={"/student-list"})
 		public String studentList(){
 			return "/admin/studentlist";
 		}
@@ -38,17 +38,25 @@ public class SchoolManagementController {
 		public String staff(){
 			return "/admin/staff";
 		}
-		@RequestMapping(value={"/studentenroll"})
+		@RequestMapping(value={"/student-enroll"})
 		public String studentenroll(){
 			return "/admin/studentenroll";
 		}
-		@RequestMapping(value={"/instructorenroll"})
+		@RequestMapping(value={"/instructor-enroll"})
 		public String instructorenroll(){
 			return "/admin/instructorenroll";
 		}
 		@RequestMapping(value={"/promote"})
 		public String promote(){
 			return "/admin/promote";
+		}
+		@RequestMapping(value={"/student-promote"})
+		public String studentPromote(){
+			return "/admin/studentpromotion";
+		}
+		@RequestMapping(value={"/monthly-result"})
+		public String mothlyResult(){
+			return "/admin/monthlyresult";
 		}
 		@RequestMapping(value={"/student"})
 		public String student(){
@@ -57,6 +65,10 @@ public class SchoolManagementController {
 		@RequestMapping(value={"/instructor"})
 		public String instructor(){
 			return "/instructor/dashboard";
+		}
+		@RequestMapping(value={"/add-score"})
+		public String addscore(){
+			return "/instructor/addscore";
 		}
 		
 }

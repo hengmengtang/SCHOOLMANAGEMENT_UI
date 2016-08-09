@@ -22,7 +22,11 @@
 	    .boxcontent {
 	       height: 1500px;
 	    }
+	    .inner{
+	    	height: 500px;
+	    }
     }
+    
 </style>
 </head>
 
@@ -165,7 +169,7 @@ new Chartist.Bar('.ct-chart', {
     seriesBarDistance: 10
   }],
   // Options override for media > 1000px
-  ['screen and (min-width: 800px)', {
+  ['screen and (min-width: 1000px)', {
     reverseData: false,
     horizontalBars: false,
     seriesBarDistance: 38

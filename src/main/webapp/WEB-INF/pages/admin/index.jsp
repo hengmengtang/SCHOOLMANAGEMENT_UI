@@ -22,7 +22,7 @@
 		</nav>
 	</header>
 	<!-- Left side column. contains the logo and sidebar -->
-	<aside class="main-sidebar" style="height: 1272px; !important">
+	<aside class="main-sidebar" style="height: 1272px;">
 		<!-- sidebar: style can be found in sidebar.less -->
 		<section class="sidebar">
 			<!-- Sidebar user panel -->
@@ -60,10 +60,8 @@
 					<ul class="treeview-menu" style="display: none;">
 						<li><a href="register"><i class="fa fa-circle-o"></i>
 								Student Register</a></li>
-						<li><a href="studentlist"><i class="fa fa-circle-o"></i>
+						<li><a href="student-list"><i class="fa fa-circle-o"></i>
 								Student List</a></li>
-						<li><a href="promote"><i class="fa fa-circle-o"></i>
-								Student Promotion</a></li>
 					</ul></li>
 				<li class="treeview"><a href="#"> <i class="fa fa-table"></i>
 						<span>Study Management</span> <span
@@ -85,33 +83,13 @@
 						<span>Enroll</span> <i class="fa fa-angle-left pull-right"></i>
 				</a>
 					<ul class="treeview-menu">
-						<li class="active"><a href="studentenroll"> <i
+						<li class="active"><a href="student-enroll"> <i
 								class="fa fa-circle-o"></i> Student Enroll
 						</a></li>
-						<li><a href="instructorenroll"><i class="fa fa-circle-o"></i>
+						<li><a href="instructor-enroll"><i class="fa fa-circle-o"></i>
 								Instructor Enroll</a></li>
 					</ul></li>
-				<!-- <li class="treeview"><a href="#"> <i
-						class="fa fa-pie-chart"></i> <span>Class</span> <i
-						class="fa fa-angle-left pull-right"></i>
-				</a>
-					<ul class="treeview-menu">
-						<li><a href="#"><i class="fa fa-circle-o"></i> Manage
-								Class</a></li>
-						<li><a href="#"><i class="fa fa-circle-o"></i> Manage
-								Section</a></li>
-						<li><a href="#"><i class="fa fa-circle-o"></i> Academic</a></li>
-					</ul></li>
-				<li class="treeview"><a href="#"> <i class="fa fa-laptop"></i>
-						<span>Subjects</span> <i class="fa fa-angle-left pull-right"></i>
-				</a>
-					<ul class="treeview-menu">
-						<li><a href="#"><i class="fa fa-circle-o"></i>Add Subject</a></li>
-
-						<li><a href="#"><i class="fa fa-circle-o"></i> Subject
-								List</a></li>
-					</ul></li> -->
-				<li class="treeview"><a href="#"> <i class="fa fa-list-alt"></i>
+				<li class="treeview"><a href="monthly-result"> <i class="fa fa-list-alt"></i>
 						<span>Monthly Result</span>
 				</a></li>
 				<li class="treeview"><a href="#"> <i class="fa fa-book"></i>

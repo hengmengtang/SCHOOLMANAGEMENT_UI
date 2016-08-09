@@ -14,6 +14,7 @@
 <link
 	href="${pageContext.request.contextPath }/resources/style/customSubject.css"
 	rel="stylesheet" />
+ <script src="${pageContext.request.contextPath }/resources/bootstrapcheckbox/bootstrap-checkbox.min.js"></script>
 </head>
 <body>
 	<!-- index is menu -->
@@ -35,7 +36,7 @@
 		<!-- Main content-->
 		<section class="content"> <!-- Start Container -->
 		<div class="container-fluid"
-			style="border: 2px solid green; background-color: #e0f2f2">
+			style="border: 2px solid green; background-color: #e0f2f2" ng-app="app" ng-controller="ctrl">
 			<!-- Start Row 1 -->
 			<div class="row">
 
@@ -94,87 +95,39 @@
 			<!-- Start Table -->
 			<div class="row" style="margin: 0px;">
 				<div class="table-responsive">
-					<table class="table">
+					<table class="table table-hover">
 						<thead>
 							<tr style="font-size: 16px;">
 								<th>Staff ID</th>
-								<th>Full Name&#x2191;&#x2193;</th>
-								<th>Gender&#x2191;&#x2193;</th>
+								<!-- <th>Khmer Full Name&#x2191;&#x2193;</th> -->
+								<th>English Full Name&#x2191;&#x2193;</th>
+								<th><center>Gender</center></th>
 								<th>Position&#x2191;&#x2193;</th>
 								<th>Email&#x2191;&#x2193;</th>
 								<th>Drop&#x2191;&#x2193;</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1011</td>
-								<td>Ke Visal</td>
-								<td><span class="label label-info" style="font-size: 13px;">M</span></td>
-								<td><span class="label label-success"
-									style="font-size: 13px;">Admin</span></td>
-								<td>Kevisal@gmail.com</td>
+							<tr dir-paginate="staff in staffs|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
+								<td>{{staff.STUDENT_ID}}</td> 
+								<!-- <td>{{student.KHMER_FULL_NAME}}</td> -->
+								<td>{{staff.ENGLIST_FULL_NAME}}</td>
+								
+									<td><center>
+										<span class="label label-danger" style="font-size: 13px;" ng-if="staff.GENDER=='f'">{{staff.GENDER | uppercase}}</span>
+										<span class="label label-info" style="font-size: 13px;" ng-if="staff.GENDER=='m'">{{staff.GENDER | uppercase}}</span>
+									</center></td>
+								
+								<td>{{staff.DATE_OF_BIRTH}}</td>
+								<td>{{staff.PLACE_OF_BIRTH}}</td>
+								<td>{{staff.EMAIL}}</td>
 								<td>
 									<button type="button" class="btn btn-success">
 										<i class="fa fa-check-circle" aria-hidden="true"></i>
 									</button>
+									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="update(student)"><i class="glyphicon glyphicon-refresh"></i></button>
 								</td>
 							</tr>
-							<tr>
-								<td>1007</td>
-								<td>Phang Pirang</td>
-								<td><span class="label label-info" style="font-size: 13px;">M</span></td>
-								<td><span class="label label-warning"
-									style="font-size: 13px;">Instructor</span></td>
-								<td>Phangpirang@gmail.com</td>
-								<td>
-									<button type="button" class="btn btn-success">
-										<i class="fa fa-check-circle" aria-hidden="true"></i>
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td>1035</td>
-								<td>Aing Teckchun</td>
-								<td><span class="label label-info" style="font-size: 13px;">M</span></td>
-								<td><span class="label label-warning"
-									style="font-size: 13px;">Instructor</span></td>
-								<td>Teckchun@gmail.com</td>
-								<td>
-									<button type="button" class="btn btn-success">
-										<i class="fa fa-check-circle" aria-hidden="true"></i>
-									</button>
-								</td>
-
-							</tr>
-							<tr>
-								<td>1019</td>
-								<td>Eath Manith</td>
-								<td><span class="label label-danger"
-									style="font-size: 13px;">F</span></td>
-								<td><span class="label label-warning"
-									style="font-size: 13px;">Instructor</span></td>
-								<td>Eathmanith@gmail.com</td>
-								<td>
-									<button type="button" class="btn btn-success">
-										<i class="fa fa-check-circle" aria-hidden="true"></i>
-									</button>
-								</td>
-
-							</tr>
-							<tr>
-								<td>1040</td>
-								<td>Pheng Tola</td>
-								<td><span class="label label-info" style="font-size: 13px;">M</span></td>
-								<td><span class="label label-warning"
-									style="font-size: 13px;">Instructor</span></td>
-								<td>tolapheng@gmail.com</td>
-								<td>
-									<button type="button" class="btn btn-success">
-										<i class="fa fa-check-circle" aria-hidden="true"></i>
-									</button>
-								</td>
-							</tr>
-
 						</tbody>
 					</table>
 				</div>
@@ -190,13 +143,15 @@
 				</div>
 
 				<div class="pull-right">
-					<button class="pull-right btn btn-success" id="btn-sub">
-						<span class="glyphicon glyphicon-plus"></span>
-					</button>
+					<div class="btn-group">
+					  <button type="button" class="btn btn-primary" id="btnpss">Promote student to staff <i class="glyphicon glyphicon-user"></i></button>
+					  <button type="button" class="btn btn-primary" id="other">Other <i class="glyphicon glyphicon-user"></i></button>
+					</div>
 				</div>
 
 			</div>
 			<!-- Start Form -->
+			
 			<form style="margin: 20px; display: none" id="form-add">
 				<fieldset>
 					<div class="row">
@@ -326,5 +281,36 @@
 	});
   });
 </script>
+<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
+	<script>
+		var app = angular.module('app', ['angularUtils.directives.dirPagination']);
+			app.controller('ctrl', function($scope, $http){
+				
+				getData();
+				
+				function getData(){
+						$http({
+								url:'http://localhost:8080/staff/find-all-staff',
+								method:'GET'
+							}).then(function(response){
+								$scope.staffs = response.data.DATA;
+									
+							}, function(response){
+								alert("error");
+							});
+				};
+				
+				$scope.update = function(data){
+					$scope.stu_id = data.STUDENT_ID;
+					$scope.khmerFName = data.KHMER_FULL_NAME;
+				}
+				
+				$scope.sort = function(keyname){
+			        $scope.sortKey = keyname;   //set the sortKey to the param passed
+			        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+			    }
+			});
+	</script>
 </body>
 </html>

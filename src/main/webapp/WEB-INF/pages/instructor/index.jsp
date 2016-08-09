@@ -56,11 +56,7 @@
 				<li ><a href="#"> <i class="fa fa-user"></i>
 						<span>My Profile</span>
 				</a></li>
-				<li ><a href="#"> <i class="fa fa-calendar-check-o"></i>
-						<span>Attendence</span> <span
-						class="label label-primary pull-right"></span>
-				</a></li>
-			
+							
 				<li class="treeview"><a href="staff"> <i class="fa fa-star-o"></i> <span>Score</span>
 					<span class="label label-primary pull-right"></span>
 						<i class="fa fa-angle-left pull-right"></i>

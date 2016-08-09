@@ -122,7 +122,7 @@
 			<!-- Start Table -->
 			<div class="row" style="margin: 0px;">
 				<div class="table-responsive">
-					<table class="table">
+					<table class="table table-hover">
 						<thead>
 							<tr style="font-size: 16px;">
 								<th>N <sup>o</sup></th>

@@ -19,7 +19,7 @@
 	<jsp:include page="index.jsp" />
 
 	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper boxcontent">
+	<div class="content-wrapper boxcontent" style="padding-left:15px; padding-right:15px">
 		<section class="content-header">
 		<h1>Dashboard</h1>
 		<ol class="breadcrumb">
@@ -53,7 +53,7 @@
 			</div>
 		</div>
 		<!--statistic-->
-		<div class="row">
+		<div class="row" style="margin: 0px;">
 
 			<div class="col-md-8 col-sm-10 col-xs-10">
 				<div class="small-box bg-aqua"></div>

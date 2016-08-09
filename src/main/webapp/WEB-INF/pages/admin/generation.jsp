@@ -94,7 +94,7 @@
 			<!-- Start Table -->
 			<div class="row" style="margin-left: 0px;">
 				<div class="table-responsive">
-					<table class="table">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th>N <sup>o</sup></th>
