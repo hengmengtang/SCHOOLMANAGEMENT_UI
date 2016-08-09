@@ -11,7 +11,7 @@
 <jsp:include page="../include/headRegister.jsp" />
 <jsp:include page="../include/headDashboard.jsp" />
 <script src="jquery.datetimepicker.min.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/plugins/iCheck/all.css"/>
+
 </head>
 <body>
 	<!-- index is menu -->
@@ -36,17 +36,25 @@
 			<form method="post" action="#">
 				<fieldset>
 
-					<div class="row" style="margin: 3px;">
-
-						<div class="col-md-10 pull-left">
-							<i class="fa fa-pencil-square-o" style="font-size: 20px;"></i> <span
-								style="font-size: 16px;">Add Student's Information</span>
+					<br>
+					<div class="row">
+						<div class="col-sm-12 col-md-3 ">
+							<img
+								src="${pageContext.request.contextPath }/resources/images/logo.png"
+								class="logodash" width="240px" height="190px">
+						</div>
+						<div class="col-sm-7 col-md-7 col-xs-12"
+							style="color: black; text-align: center; top: 25px; font-size: 15px;">
+							<b>#12, St 323, Sangkat Boeung Kak II, Khan Toul Kork, Phnom
+								Penh<br /> Tel:(855)23 99 13 14, Fax(855)23 99 14 15<br />
+								Email: info.kshrd@gmail.com, phirum.gm@gmail.com<br /> Website:
+								www.kshrd.com.kh, Facebook:facebook.com/ksignhrd
+							</b>
 						</div>
 						<!-- Add Photo -->
-						<div class="form-group col-md-2 pull-right">
-							<div class="form-group ">
-								<center>
-									<label for="exampleInputFile "> Select Profile Photo </label>
+						<div class="form-group col-md-2 col-sm-12 col-xs-12 pull-right">
+							<div class="form-group cente ">
+								<label for="exampleInputFile "> </label>
 								</center>
 								<img id="img"
 									src="${pageContext.request.contextPath }/resources/images/user.ico"
@@ -64,7 +72,7 @@
 
 					<div class="row">
 						<div class="col-md-4" style="font-size: 22px;">
-							<span class="label label-success">Student's Information</span>
+							<span class="label label-success">Personal Information</span>
 						</div>
 					</div>
 					<br>
@@ -73,7 +81,7 @@
 							<label for="exampleInputStuID">Student ID: <span
 								class="star"> * </span></label> <span class="glyphicons glyphicons-user"></span>
 							<input type="text" class="form-control " id="exampleInputStuID"
-								placeholder="Enter ID" name="stu_id">
+								placeholder="Enter ID" name="stu_id" readonly="readonly" value="">
 						</div>
 					</div>
 
@@ -232,71 +240,82 @@
 						</div>
 					</div>
 					<br>
-					<!-- Parent Information -->
-            <div class="row">
-              <div class="col-md-4" style="font-size:22px;">
-                <span class="label label-success">Parent's Information</span>
-              </div>
-            </div> <br>
-            <!-- Father Info -->
-            <div class="row">
-              <div class="form-group col-md-6">
-                  <label for="exampleInputFatherName">Father's Khmer Name</label>
-                  <input type="text" class="form-control" id="exampleInputFatherName" placeholder="Father's Name" name="father_name">
-              </div>
-              <div class="form-group col-md-6">
-                  <label for="exampleInputFatherLName">Father's Latin Name</label>
-                  <input type="text" class="form-control" id="exampleInputFatherLName" placeholder="Father's Latin Name" name="father_latin_name">
-              </div>
-            </div>
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label for="Address">Address</label> <input
-							type="text" class="form-control" id="Address"
-							placeholder="Address" name="address">
-				</div>
-			</div>
-            <div class="row">
-              <div class="form-group col-md-6">
-                  <label for="FOccupation">Occupation</label>
-                  <input type="text" class="form-control" id="FOccupation" placeholder="Father Occupation" name="mother_phone">
-              </div>
-              <div class="form-group col-md-6">
-                  <label for="FPhone">Father's Phone</label>
-                  <input type="text" class="form-control" id="FPhone" placeholder="Father's Phone " name="father_phone">
-              </div>
-             
-            </div>
-            
-            <!-- Mother Info -->
-            <div class="row">
-              <div class="form-group col-md-6">
-                  <label for="MotherName">Mother's Khmer Name</label>
-                  <input type="text" class="form-control" id="MName" placeholder="Mother's Name" name="mother_name">
-              </div>
-              <div class="form-group col-md-6">
-                  <label for="FatherLName">Mother's Latin Name</label>
-                  <input type="text" class="form-control" id="MotherLName" placeholder="Mother's Latin Name" name="mother_latin_name">
-              </div>
-            </div>
-            <div class="row">
-                <div class="form-group col-md-12">
-                  <label for="FAddress">Address</label>
-                  <input type="text" class="form-control" id="MAddress" placeholder="Address" name="m_address">
-                </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-6">
-                  <label for="FOccupation">Occupation</label>
-                  <input type="text" class="form-control" id="MOccupation" placeholder="Mother Occupation" name="mother_phone">
-              </div>
-              <div class="form-group col-md-6">
-                  <label for="FPhone">Mother's Phone</label>
-                  <input type="text" class="form-control" id="MPhone" placeholder="Mother's Phone " name="mother_phone">
-              </div>
-             
-            </div>
-             
+					<!-- Parent Infomation -->
+					<div class="row">
+						<div class="col-md-4" style="font-size: 22px;">
+							<span class="label label-success">Parent's Information</span>
+						</div>
+					</div>
+					<br>
+					<!-- Father Info -->
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label for="exampleInputFatherName">Father's Khmer Name</label> <input
+								type="text" class="form-control" id="exampleInputFatherName"
+								placeholder="Father's Name" name="father_name">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="exampleInputFatherLName">Father's Latin Name</label>
+							<input type="text" class="form-control"
+								id="exampleInputFatherLName" placeholder="Father's Latin Name"
+								name="father_latin_name">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label for="Address">Address</label> <input type="text"
+								class="form-control" id="Address" placeholder="Address"
+								name="address">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label for="FOccupation">Occupation</label> <input type="text"
+								class="form-control" id="FOccupation"
+								placeholder="Father Occupation" name="mother_phone">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="FPhone">Father's Phone</label> <input type="text"
+								class="form-control" id="FPhone" placeholder="Father's Phone "
+								name="father_phone">
+						</div>
+
+					</div>
+
+					<!-- Mother Info -->
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label for="MotherName">Mother's Khmer Name</label> <input
+								type="text" class="form-control" id="MName"
+								placeholder="Mother's Name" name="mother_name">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="FatherLName">Mother's Latin Name</label> <input
+								type="text" class="form-control" id="MotherLName"
+								placeholder="Mother's Latin Name" name="mother_latin_name">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label for="FAddress">Address</label> <input type="text"
+								class="form-control" id="MAddress" placeholder="Address"
+								name="m_address">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-6">
+							<label for="FOccupation">Occupation</label> <input type="text"
+								class="form-control" id="MOccupation"
+								placeholder="Mother Occupation" name="mother_phone">
+						</div>
+						<div class="form-group col-md-6">
+							<label for="FPhone">Mother's Phone</label> <input type="text"
+								class="form-control" id="MPhone" placeholder="Mother's Phone "
+								name="mother_phone">
+						</div>
+
+					</div>
+
 
 
 					<div class="row pull-right" style="margin: 7px;">
@@ -306,33 +325,33 @@
 							Add</button>
 					</div>
 				</fieldset>
-		</div>
+				</div>
 		</form>
 		</section>
 	</div>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
 	<script type="text/javascript">
-	//click on image
-	$('#img').click(function() {
-		// call photo for browse file
-		$("#photo").click();
-	});
+		//click on image
+		$('#img').click(function() {
+			// call photo for browse file
+			$("#photo").click();
+		});
 
-	$("#photo").change(function(e) {
-		readURL(this);
-	});
+		$("#photo").change(function(e) {
+			readURL(this);
+		});
 
-	function readURL(input) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
 
-			reader.onload = function(e) {
-				$('#img').attr('src', e.target.result).fadeIn('slow');
-			};
-			reader.readAsDataURL(input.files[0]);
+				reader.onload = function(e) {
+					$('#img').attr('src', e.target.result).fadeIn('slow');
+				};
+				reader.readAsDataURL(input.files[0]);
+			}
 		}
-	}
 	</script>
 	<script>
 		$(function(){	

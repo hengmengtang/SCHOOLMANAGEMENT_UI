@@ -33,7 +33,7 @@ sup{
 }
 .star{
       color: red;
-      font-size: 18px;
+      font-size: 14px;
   }
 .arrow1{
   	color: green;
@@ -79,5 +79,7 @@ ol, ul {
 input[type="file"]{
   		display: none;
   }	
-
+.center{
+	align: center;
+}
 

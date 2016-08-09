@@ -70,6 +70,10 @@ public class SchoolManagementController {
 		public String monthlyresult(){
 			return "/instructor/monthlyresult";
 		}
+		@RequestMapping(value={"/myprofile"})
+		public String myprofile(){
+			return "/student/myprofile";
+		}
 		@RequestMapping(value={"/view"})
 		public String viewIndexPage(){
 			return "/admin/view";
