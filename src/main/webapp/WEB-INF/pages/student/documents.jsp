@@ -230,6 +230,8 @@ iframe {
 					"StudentCertificate.pdf?id=" + $('#stu_id').val()
 							+ "&cou_id=" + $('#courseFilter_').val());
 		}
+		function(){}
+		
 </script>
 </body>
 </html>
