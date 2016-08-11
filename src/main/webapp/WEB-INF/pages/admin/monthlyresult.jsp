@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../include/headDashboard.jsp"></jsp:include>
 </head>
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
@@ -34,6 +34,7 @@
 				<section class="content">
 				<div class="container-fluid"
 					style="border: 2px solid green; background-color: #e0f2f2">
+					<fieldset>
 					<div class="row">
 
 						<div class="col-md-2 pull-left" style="font-size: 18px;">
@@ -153,6 +154,7 @@
 						</div>
 					</div>
 					<!-- End Table(Row 3) -->
+				</fieldset>
 				</div>
 				<div class="row pull-right" style="margin: 7px;">
 					<div id="button">

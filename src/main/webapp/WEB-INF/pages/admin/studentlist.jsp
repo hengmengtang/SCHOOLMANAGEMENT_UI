@@ -14,7 +14,7 @@
 	rel="stylesheet" />
 <script src="${pageContext.request.contextPath }/resources/bootstrapcheckbox/bootstrap-checkbox.min.js"></script>
 </head>
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
@@ -53,18 +53,21 @@
 											Information</span>
 									</div>
 									<!-- Add Photo -->
-									<div class="form-group col-md-4 pull-right">
-										<div class="form-group ">
-											<center>
-												<label for="exampleInputFile "> Select Profile Photo
-												</label> <img id="img"
-													src="${pageContext.request.contextPath }/resources/images/user.ico"
-													alt="" class="img-circle img-responsive "
-													style="width: 180px; height: 180px; border: 1px solid black;">
+									<div class="form-group col-md-2 col-sm-12 col-xs-12 pull-right">
+										<div class="form-group cente ">
+											<label for="exampleInputFile "> </label>
 											</center>
-
+											<img id="img"
+												src="${pageContext.request.contextPath }/resources/images/user.ico"
+												alt="" class="img-circle img-responsive "
+												style="width: 180px; height: 180px; border: 1px solid black;">
+			
 										</div>
-
+										<div class="form-group">
+											<label for="photo"> </label> <input type="file" name="photo"
+												id="photo" accept="images/*">
+			
+										</div>
 									</div>
 								</div>
 
@@ -115,8 +118,8 @@
 									</div>
 									<div class="form-group col-md-6 required">
 										<label class="control-label" for="dob">Birth Date<span
-											class="star"> * </span></label> <input type="text"
-											class="form-control" id="dob" placeholder="Birth date">
+											class="star"> * </span></label> <input type="text" class="form-control"
+											name="dob" id="dob" placeholder="Birth date">
 									</div>
 								</div>
 								<div class="row">
@@ -332,6 +335,7 @@
 		<section class="content">
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
+			<fieldset>
 			<div class="row">
 
 				<div class="col-md-2 pull-left" style="font-size: 18px;">
@@ -440,6 +444,7 @@
 				</div>
 			</div>
 				<!-- End Table(Row 3) -->
+			</fieldset>
 			</div>
 		</section>
 	</div>
@@ -448,6 +453,7 @@
 	<jsp:include page="../include/footDashboard.jsp" />
 	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
+	
 	<script>
 		var app = angular.module('appListStu', ['angularUtils.directives.dirPagination']);
 			app.controller('ctrlListStu', function($scope, $http){
@@ -476,6 +482,28 @@
 			        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
 			    }
 			});
+	</script>
+	<script type="text/javascript">
+		//click on image
+		$('#img').click(function() {
+			// call photo for browse file
+			$("#photo").click();
+		});
+
+		$("#photo").change(function(e) {
+			readURL(this);
+		});
+
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#img').attr('src', e.target.result).fadeIn('slow');
+				};
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
 	</script>
 </body>
 </html>

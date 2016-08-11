@@ -18,7 +18,7 @@
 	href="${pageContext.request.contextPath }/resources/style/custominstructorenroll.css"
 	rel="stylesheet" />
 </head>
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
@@ -38,7 +38,7 @@
 		<section class="content"> <!-- Main content-->
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
-
+			<fieldset>
 			<div class="row">
 
 				<div class="col-md-2 pull-left" style="font-size: 18px;">
@@ -283,9 +283,8 @@
 					<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 				</div>
 			</div>
-
+		</fieldset>
 		</div>
-	</div>
 	</section>
 	<!-- /.content-wrapper -->
 	</div>

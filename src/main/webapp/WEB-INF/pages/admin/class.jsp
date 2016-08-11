@@ -16,7 +16,7 @@
 	href="${pageContext.request.contextPath }/resources/style/customClass.css"
 	rel="stylesheet" />
 </head>
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
@@ -39,6 +39,7 @@
 		<section class="content"> <!-- Main content -->
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
+			<fieldset>
 			<!-- Start Row 1(Titel and Pagination) -->
 			<div class="row">
 				<!-- pagination -->
@@ -218,6 +219,7 @@
 			</div>
 			</div>
 			<!-- End Row -->
+			</fieldset>
 		</div>
 		<!-- End Class --> </section>
 		<!-- /.content -->

@@ -11,7 +11,7 @@
 <jsp:include page="../include/headCourse.jsp" />
 <jsp:include page="../include/headDashboard.jsp" />
 </head>
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
@@ -33,6 +33,7 @@
 
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
+			<fieldset>
 			<div class="row">
 				<!----------- pagination ------------>
 				<div class="col-md-2 pull-left">
@@ -205,8 +206,10 @@
 			</div>
 			</div>
 			<!-- End Row -->
+			</fieldset>
 		</div>
 		<!-- End Panel-->
+		</section>
 	</div>
 	<!-- End Main content -->
 	</div>

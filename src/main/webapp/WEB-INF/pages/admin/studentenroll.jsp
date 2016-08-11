@@ -10,7 +10,7 @@
 	href="${pageContext.request.contextPath }/resources/style/customSubject.css"
 	rel="stylesheet" />
 </head>
-<body>
+<body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
@@ -29,6 +29,7 @@
 		<section class="content">
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
+			<fieldset>
 			<div class="row">
 
 				<div class="col-md-3" style="font-size: 18px;">
@@ -255,6 +256,7 @@
 				</div>
 			</div>
 		</div>
+		</fieldset>
 		</div>
 		<!-- End Page --> </section>
 		<!-- /.content-wrapper -->

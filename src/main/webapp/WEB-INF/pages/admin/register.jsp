@@ -10,16 +10,14 @@
 <title>School Management System</title>
 <jsp:include page="../include/headRegister.jsp" />
 <jsp:include page="../include/headDashboard.jsp" />
-<script src="jquery.datetimepicker.min.js"></script>
-
 </head>
 <body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper" >
+
 	<!-- Main content-->
 	 <section class="content-header" >
       <h1 >
@@ -30,12 +28,11 @@
         <li class="active">My Profile</li>
       </ol>
     </section>
-	<section class="content"> <!--/.content-->
+	<section class="content" ng-app="app" ng-controller="ctrl"> <!--/.content-->
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
-			<form method="post" action="#">
+			<form >
 				<fieldset>
-
 					<br>
 					<div class="row">
 						<div class="col-sm-12 col-md-3 ">
@@ -80,8 +77,8 @@
 						<div class="form-group col-md-3">
 							<label for="exampleInputStuID">Student ID: <span
 								class="star"> * </span></label> <span class="glyphicons glyphicons-user"></span>
-							<input type="text" class="form-control " id="exampleInputStuID"
-								placeholder="Enter ID" name="stu_id" readonly="readonly" value="">
+							<label class="form-control " id="stu_id"
+								placeholder="Enter ID" ng-bind="stu_id" readonly="readonly"></label>
 						</div>
 					</div>
 
@@ -89,28 +86,28 @@
 						<div class="form-group col-md-6">
 							<label for="exampleInputFName">First Name <span
 								class="star"> * </span></label> <span class="glyphicons glyphicons-user"></span>
-							<input type="text" class="form-control " id="exampleInputFName"
-								placeholder="Enter Your First Name" name="fname">
+							<input type="text" class="form-control " id="fname"
+								placeholder="Enter Your Khmer First Name" ng-model="fname">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="exampleInputLName">Last Name <span
 								class="star"> * </span></label> <input type="text" class="form-control"
-								id="exampleInputLName" placeholder="Enter Your Last Name"
-								name="lname">
+								id="lname" placeholder="Enter Your Khmer Last Name"
+								ng-model="lname">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-6">
 							<label for="exampleInputFLName">First Latin Name <span
 								class="star"> * </span></label> <span class="glyphicons glyphicons-user"></span>
-							<input type="text" class="form-control " id="exampleInputFLName"
-								placeholder="Enter Your First Latin Name" name="latin_fname">
+							<input type="text" class="form-control " id="latin_fname"
+								placeholder="Enter Your First Latin Name" ng-model="latin_fname">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="exampleInputLLName">Last Latin Name <span
 								class="star"> * </span></label> <input type="text" class="form-control"
-								id="exampleInputLLName" placeholder="Enter Your Last Latin Name"
-								name="latin_lname">
+								id="latin_lname" placeholder="Enter Your Last Latin Name"
+								ng-model="latin_lname">
 						</div>
 					</div>
 					<!--Radio-->
@@ -118,10 +115,10 @@
 						<div class="form-group col-md-3">
 							<label>Gender <span class="star"> * </span></label> <br> <label
 								class="radio-inline"> <input type="radio"
-								class="flat-red" name="gender" id="inlineRadio1" value="option1">
+								class="flat-red" name="gender" id="gender" value="M">
 								Male
 							</label> <label class="radio-inline"> <input type="radio"
-								class="flat-red" name="gender" id="inlineRadio2" value="option2">
+								class="flat-red" name="gender" id="gender" value="F">
 								Female
 							</label>
 						</div>
@@ -132,27 +129,27 @@
 						</div>
 						<div class="form-group col-md-3">
 							<label for="exampleInputNationality">Nationality</label> <input
-								type="text" class="form-control" id="exampleInputNationality"
-								placeholder="Nationality" name="nationality">
+								type="text" class="form-control" id="nationality"
+								placeholder="Nationality" ng-model="nationality">
 						</div>
 						<div class="form-group col-md-3">
 							<label for="exampleInputSocialID">Social ID</label> <input
-								type="text" class="form-control" id="exampleInputSocialID"
-								placeholder="Social id" name="social_id">
+								type="text" class="form-control" id="social_id"
+								placeholder="Social id" ng-model="social_id">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label for="exampleInputPOB">Place Of Birth</label> <input
-								type="text" class="form-control" id="exampleInputPOB"
-								placeholder="Address" name="address">
+								type="text" class="form-control" id="pob"
+								placeholder="Address" ng-model="pob">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label for="exampleInputAddress">Permanent Address</label> <input
-								type="text" class="form-control" id="exampleInputAddress"
-								placeholder="Address" name="address">
+								type="text" class="form-control" id="address"
+								placeholder="Address" ng-model="address">
 						</div>
 					</div>
 
@@ -160,18 +157,18 @@
 						<div class="form-group col-md-4">
 							<label for="exampleInputEmail2">Email <span class="star">
 									* </span></label> <input type="email" class="form-control"
-								id="exampleInputEmail2" placeholder="your_email@gmail.com"
-								name="email">
+								id="email" placeholder="Your_email@gmail.com"
+								ng-model="email">
 						</div>
 						<div class="form-group col-md-4">
 							<label for="Phone">Phone <span class="star"> * </span></label> <input
-								type="text" class="form-control" id="Phone" placeholder="Phone"
-								name="phone" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+								type="number" class="form-control" id="phone" placeholder="Phone"
+								ng-model="phone" data-inputmask='"mask": "(999) 999-9999"' data-mask>
 						</div>
 						<div class="form-group col-md-4">
 							<label for="exampleInputPosition">Position <span
 								class="star"> * </span></label> <input type="input" class="form-control"
-								id="exampleInputPosition" name="position" value="student"
+								id="position" value="student"
 								readonly="readonly">
 
 						</div>
@@ -180,7 +177,7 @@
 					<div class="row">
 						<div class="form-group col-md-4">
 							<label for="ITYear">IT Year<span class="star"> * </span></label>
-							<select class="form-control" id="ITYear" name="it_year">
+							<select class="form-control" id="it_year" name="it_year">
 								<option>Select - Option</option>
 								<option>Year 1</option>
 								<option>Year 2</option>
@@ -191,11 +188,11 @@
 						</div>
 						<div class="form-group col-md-4">
 							<label for="Graduated">Graduated</label> <input type="text"
-								class="form-control" id="Graduated" name="it_year">
+								class="form-control" id="graduated" placeholder="Graduation">
 						</div>
 						<div class="form-group col-md-4">
 							<label for="exampleInputUniversity">University</label> <select
-								class="form-control" id="exampleInputPosition" name="university">
+								class="form-control" id="university">
 								<option>Select - Option</option>
 								<option>RUPP</option>
 								<option>RULE</option>
@@ -214,7 +211,7 @@
 					<div class="row">
 						<div class="form-group col-md-4">
 							<label for="English">English Level</label> <select
-								class="form-control" id="English" name="english">
+								class="form-control" id="english" name="english">
 								<option>Select - Option</option>
 								<option>Primary</option>
 								<option>Intermediate</option>
@@ -232,7 +229,7 @@
 						</div>
 						<div class="form-group col-md-4">
 							<label for="Status">Status</label> <select class="form-control"
-								id="Status" name="status">
+								id="status" name="status">
 								<option>Select - Option</option>
 								<option>Single</option>
 								<option>Married</option>
@@ -251,33 +248,33 @@
 					<div class="row">
 						<div class="form-group col-md-6">
 							<label for="exampleInputFatherName">Father's Khmer Name</label> <input
-								type="text" class="form-control" id="exampleInputFatherName"
-								placeholder="Father's Name" name="father_name">
+								type="text" class="form-control" id="father_name"
+								placeholder="Father's Name" ng-model="father_name">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="exampleInputFatherLName">Father's Latin Name</label>
 							<input type="text" class="form-control"
-								id="exampleInputFatherLName" placeholder="Father's Latin Name"
-								name="father_latin_name">
+								id="father_latin_name" placeholder="Father's Latin Name"
+								ng-model="father_latin_name">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label for="Address">Address</label> <input type="text"
-								class="form-control" id="Address" placeholder="Address"
-								name="address">
+								class="form-control" id="address" placeholder="Address"
+								ng-model="faddress">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-6">
 							<label for="FOccupation">Occupation</label> <input type="text"
-								class="form-control" id="FOccupation"
-								placeholder="Father Occupation" name="mother_phone">
+								class="form-control" id="foccupation"
+								placeholder="Father Occupation" ng-model="foccupation">
 						</div>
 						<div class="form-group col-md-6">
-							<label for="FPhone">Father's Phone</label> <input type="text"
-								class="form-control" id="FPhone" placeholder="Father's Phone "
-								name="father_phone">
+							<label for="FPhone">Father's Phone</label> <input type="number"
+								class="form-control" id="fphone" placeholder="Father's Phone "
+								ng-model="fphone">
 						</div>
 
 					</div>
@@ -286,51 +283,140 @@
 					<div class="row">
 						<div class="form-group col-md-6">
 							<label for="MotherName">Mother's Khmer Name</label> <input
-								type="text" class="form-control" id="MName"
-								placeholder="Mother's Name" name="mother_name">
+								type="text" class="form-control" id="kmname"
+								placeholder="Mother's Name" ng-model="kmname">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="FatherLName">Mother's Latin Name</label> <input
-								type="text" class="form-control" id="MotherLName"
-								placeholder="Mother's Latin Name" name="mother_latin_name">
+								type="text" class="form-control" id="mlname"
+								placeholder="Mother's Latin Name" ng-model="mlname">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label for="FAddress">Address</label> <input type="text"
-								class="form-control" id="MAddress" placeholder="Address"
-								name="m_address">
+								class="form-control" id="maddress" placeholder="Address"
+								ng-model="maddress">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-6">
 							<label for="FOccupation">Occupation</label> <input type="text"
-								class="form-control" id="MOccupation"
-								placeholder="Mother Occupation" name="mother_phone">
+								class="form-control" id="moccupation"
+								placeholder="Mother Occupation" ng-model="moccupation">
 						</div>
 						<div class="form-group col-md-6">
-							<label for="FPhone">Mother's Phone</label> <input type="text"
-								class="form-control" id="MPhone" placeholder="Mother's Phone "
-								name="mother_phone">
+							<label for="FPhone">Mother's Phone</label> <input type="number"
+								class="form-control" id="mphone" placeholder="Mother's Phone "
+								ng-model="mphone">
 						</div>
 
 					</div>
 
-
-
 					<div class="row pull-right" style="margin: 7px;">
 						<!-- Contextual button for informational alert messages -->
-						<button type="submit" class="btn"
-							style="font-width: 20px; color: white; background-color: green;">
+						<button type="button" class="btn"
+							style="font-width: 20px; color: white; background-color: green;" ng-click="submit()">
 							Add</button>
 					</div>
 				</fieldset>
 				</div>
 		</form>
+			<!-- <div class="input-group col-xs-5">
+			  
+			  <input type="text" class="form-control" ng-bind="value" data-trigger="{{value}}" data-placement="right" data-type="info" data-container="body" placeholder="Focus to toggle tooltip"  bs-tooltip="tooltip">
+			</div> -->
+			
 		</section>
 	</div>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
+	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
+	<%-- <script src="${pageContext.request.contextPath }/resources/angularstrap/angular-strap.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/angularstrap/angular-strap.tpl.min.js"></script> --%>
+	<script>
+		var app = angular.module('app', ['angularUtils.directives.dirPagination'/* , 'mgcrea.ngStrap.modal', 'mgcrea.ngStrap.aside', 'mgcrea.ngStrap.tooltip' */]);
+			app.controller('ctrl', function($scope, $http){
+				
+				getID();
+				
+				function getID(){
+						
+						$http({
+								url:'http://localhost:8080/student/student-the-last-id',
+								method:'GET'
+							}).then(function(response){
+								$scope.id = response.data.DATA.maxStuId;
+								$scope.stu_id = $scope.id;	
+							}, function(response){
+								alert("error");
+							});
+				};
+				
+				$scope.submit = function(){
+					$scope.photo = $('#photo').val();
+					$scope.english = $('#english').val();
+					$scope.korean = $('#korean').val();
+					$scope.status = $('#status').val();
+					$scope.dob = $('#dob').val();
+					$http({
+						url:'http://localhost:8080/student/save',
+						data:{
+							  "DATE_OF_BIRTH": $scope.dob,
+							  "EDUCATION_LEVEL": $scope.it_year,
+							  "EMAIL": $scope.email,
+							  "ENGLISH_LEVEL": $scope.english,
+							  "ENGLIST_FULL_NAME": $scope.fname+" "+$scope.lname,
+							  "FATHER_ADDRESS": $scope.faddress,
+							  "FATHER_ENGLISH_NAME": $scope.father_name,
+							  "FATHER_KHMER_NAME": $scope.father_latin_name,
+							  "FATHER_OCCUPATION": foccupation,
+							  "FATHER_PHONE": $scope.fphone,
+							  "GENDER": $scope.gender,
+							  "GRADUATE": $scope.graduation,
+							  "KHMER_FULL_NAME": $scope.fname+" "+ $scope.lname,
+							  "KHMER_ID_NUMBER": $scope.social_id,
+							  "KOREAN_LEVEL": $scope.korean,
+							  "MOTHER_ADDRESS": $scope.maddress,
+							  "MOTHER_ENGLISH_NAME": $scope.mlname,
+							  "MOTHER_KHMER_NAME": $scope.mkname,
+							  "MOTHER_OCCUPATION": $scope.moccupation,
+							  "MOTHER_PHONE": $scope.mphone,
+							  "PERMANENT_ADDRESS": $scope.address,
+							  "PHONE": $scope.phone,
+							  "PHOTO": $scope.photo,
+							  "PLACE_OF_BIRTH": $scope.pob,
+							  "STATUS": true,
+							  "STUDENT_ID": $scope.stu_id,
+							  "STUDENT_STATUS": $scope.status,
+							  "UNIVERSITY": $scope.university
+						}
+						method:'POST'
+					}).then(function(response){
+						clearInputControll();	
+						/* getID(); */
+					}, function(response){
+						alert("error");
+					});
+					
+				}
+				
+				function clearInputControll(){
+					$('input').val("");
+					$("select").prop("selectedIndex",0);
+				}
+				
+				$scope.sort = function(keyname){
+			        $scope.sortKey = keyname;   //set the sortKey to the param passed
+			        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+			    }
+				
+				/* $scope.tooltip = {
+						  "title": "only character!",
+				}; */
+			});
+	</script>
 	<script type="text/javascript">
 		//click on image
 		$('#img').click(function() {
@@ -359,9 +445,8 @@
 		$("#dob").datepicker();
 		});
 	</script>
-	<script>
+<script>
   $.widget.bridge('uibutton', $.ui.button);
-	
 </script>
 </body>
 </html>

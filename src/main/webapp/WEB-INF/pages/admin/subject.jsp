@@ -36,6 +36,7 @@
 		<section class="content"> <!-- Main content --> <!-- Start Container -->
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
+			<fieldset>
 			<!-- Start Row 1 -->
 			<div class="row">
 
@@ -177,6 +178,7 @@
 				</div>
 			</div>
 			</div>
+			</fieldset>
 		</div>
 		</section>
 		<!-- /.content -->
