@@ -8,7 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>School Management System</title>
-<jsp:include page="../include/headCourse.jsp" />
 <jsp:include page="../include/headDashboard.jsp" />
 </head>
 <body class="bg">
@@ -29,187 +28,158 @@
 		</ol>
 		</section>
 		<!-- Main content -->
-		<section class="content">
+		<section class="content" ng-app="app" ng-controller="ctrl">
 
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
 			<fieldset>
-			<div class="row">
-				<!----------- pagination ------------>
-				<div class="col-md-2 pull-left">
-					<i class="fa fa-book" style="color: black;"></i> <small
-						style="color: black;"> Course</small>
-				</div>
-
-				<div class="col-md-10">
-					<ul class="pagination pull-right" style="margin-top: 2px;">
-						<li><a href="#">First</a></li>
-						<li><a href="#" aria-label="Previous"> <span
-								aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#" aria-label="Next"> <span
-								aria-hidden="true">&raquo;</span>
-						</a></li>
-						<li><a href="#">Last</a></li>
-					</ul>
-				</div>
-
-			</div>
-			<!-- End Row 1 -->
-			<!-- Start Row 2(Generation and Search) -->
-			<div class="row">
-				<!-- <div class="col-md-2"> -->
-				<div class="col-md-2">
-					<div class="input-group pull-left">
-						<span class="input-group-addon"
-							style="color: white; background-color: green;"> <i
-							class="fa fa-align-justify"></i>
-						</span> <select class="form-control selectionpicker">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
-						<!-- End Selection -->
+				<div class="row">
+					<!----------- pagination ------------>
+					<div class="col-md-2 pull-left">
+						<i class="fa fa-book" style="color: black;"></i> <small
+							style="color: black;"> Course</small>
 					</div>
-				</div>
-				<!--div class="col-md-3" -->
-				<div class="col-sm-3">
 
-					<div class="input-group pull-left">
-						<span class="input-group-addon"
-							style="color: white; background-color: green;"> Generation
-						</span> <select class="form-control selectpicker">
-							<option>All Generation</option>
-							<option>Generation 1st</option>
-							<option>Generation 2nd</option>
-							<option>Generation 3rd</option>
-							<option>Generation 4th</option>
-						</select>
+					<div class="col-md-10">
+						<ul class="pagination pull-right" style="margin-top: 2px;">
+							<dir-pagination-controls
+						       max-size="5"
+						       direction-links="true"
+						       boundary-links="true" >
+					    	</dir-pagination-controls>
+						</ul>
 					</div>
 
 				</div>
-				<!-- End Selection -->
-				<!-- Text Search -->
-				<div class="col-md-3">
-					<div class="input-group">
-						<span class="input-group-addon" style="background-color: green;"><i
-							class="fa fa-search" style="color: white;"></i> </span> <input
-							type="text" class="form-control" placeholder="Course">
+				<!-- End Row 1 -->
+				<!-- Start Row 2(Generation and Search) -->
+				<div class="row">
+					<!-- <div class="col-md-2"> -->
+					<div class="col-md-2">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: green;"> <i
+								class="fa fa-align-justify"></i>
+							</span> <select class="form-control selectionpicker" ng-init="select | select='No'" ng-model="select">
+								<option value="">No</option>
+								<option>5</option>
+								<option>10</option>
+							</select>
+							<!-- End Selection -->
+						</div>
+					</div>
+					<!--div class="col-md-3" -->
+					<div class="col-sm-3">
+
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: green;">
+								Generation </span> <select class="form-control selectpicker" ng-init="searchGeneration | searchGeneration='Generation'" ng-model="searchGeneration" ng-mouseleave="getGeneration()">
+								<option value="">Generation</option>
+								<option>1 Generation</option>
+								<option>2 Generation</option>
+								<option>3 Generation</option>
+								<option>4 Generation</option>
+							</select>
+						</div>
+
+					</div>
+					<!-- End Selection -->
+					<!-- Text Search -->
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon" style="background-color: green;"><i
+								class="fa fa-search" style="color: white;"></i> </span> <input
+								type="text" class="form-control" placeholder="Course" ng-model="searchCourse">
+						</div>
+					</div>
+					<!-- End Text Search -->
+				</div>
+				<!-- End Row 2 -->
+				<!-- Start Table -->
+				<div class="row" style="margin: 0px;">
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+									<tr>
+										<th ng-click="sort('id')">N <sup>o</sup><span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</th>
+										<th>Generation</th>
+										<th>Course</th>
+										<th>Start Date</th>
+										<th>End Date</th>
+										<th>Finish</th>
+									</tr>
+								</thead>
+							<tbody>
+									<tr dir-paginate="course in courses|orderBy:sortKey:reverse|filter:{'COURSE_NAME':searchCourse}|itemsPerPage:select">
+										<td>{{course.COURSE_ID}}</td>
+										<td>{{course.COURSE_NAME}}</td>
+										<td>3rd Generation</td>
+										<td>{{course.COURSE_START_DATE}}</td>
+										<td>{{course.COURSE_END_DATE}}</td>
+										<td>
+											<button type="button" class="btn btn-success">
+												<span class="glyphicon glyphicon-ok"></span>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+						</table>
 					</div>
 				</div>
-				<!-- End Text Search -->
-			</div>
-			<!-- End Row 2 -->
+					
+				<!-- End Table -->
+				<!-- Add subject and button -->
+				<div class="row" style="margin: 0px;">
+					<!-- <div class="col-md-2"> -->
+					<div class="pull-left" style="color: black;">
+						<i class="fa fa-plus-circle" style="color: green;"></i> <span>Add
+							Course</span>
+					</div>
 
-			<!-- Start Table -->
-			<div class="row" style="margin-left: 0px;">
-				<div class="table-responsive">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>N <sup>o</sup></th>
-								<th>Course<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
-								<th>Generation<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
-								<th>Start Date<span style="color: blue;">&#x2191;&#x2193;</span></th>
-								<th>End Date<span style="color: blue;">&#x2191;&#x2193;</span></th>
-								<th>Finish</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Basic</td>
-								<td>3rd Generation</td>
-								<td>2016-5-14</td>
-								<td>2016-5-20</td>
-								<td>
-									<button type="button" class="btn btn-success">
-										<span class="glyphicon glyphicon-ok"></span>
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>Basic</td>
-								<td>1st Generation</td>
-								<td>2016-5-14</td>
-								<td>2016-5-20</td>
-								<td>
-									<button type="button" class="btn btn-danger">Yes</button>
-								</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Advanced</td>
-								<td>3rd Generation</td>
-								<td>2016-5-14</td>
-								<td>2016-5-20</td>
-								<td>
-									<button type="button" class="btn btn-success">
-										<span class="glyphicon glyphicon-ok"></span>
-									</button>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<!-- End Table -->
-			<!-- Add subject and button -->
-			<div class="row" style="margin: 0px;">
-				<!-- <div class="col-md-2"> -->
-				<div class="pull-left" style="color: black;">
-					<i class="fa fa-plus-circle" style="color: green;"></i> <span>Add
-						Course</span>
-				</div>
+					<div class="pull-right">
+						<button class="pull-right btn btn-success" id="btn-plus">
+							<span class="glyphicon glyphicon-plus"></span>
+						</button>
+					</div>
 
-				<div class="pull-right">
-					<button class="pull-right btn btn-success" id="btn-plus">
-						<span class="glyphicon glyphicon-plus"></span>
-					</button>
 				</div>
+				<!-- end Add subject and button-->
 
-			</div>
-			<!-- end Add subject and button-->
+				<!-- Start Panel-->
+				<!-- Start Add Generation -->
+				<div class="row">
+					<div id="hide">
+						<div class="col-md-4" id="add-gen" style="display: none;">
+							<span>Subject<span class="star">*</span></span> <input
+								type="text" class="form-control" placeholder="Subject"
+								style="margin: 5px;" id="generation">
+						</div>
 
-			<!-- Start Panel-->
-			<!-- Start Add Generation -->
-			<div class="row">
-				<div id="hide">
-				<div class="col-md-4" id="add-gen" style="display: none;">
-					<span>Subject<span class="star">*</span></span> <input
-						type="text" class="form-control" placeholder="Subject"
-						style="margin: 5px;" id="generation">
+						<div class="col-md-4" id="start-date" style="display: none;">
+							<span>Start Date<span class="star">*</span></span> <input
+								type="text" id="datepicker1" class="form-control"
+								placeholder="Click here to select date" style="margin: 5px;">
+						</div>
+
+						<div class="col-md-4" style="display: none;" id="end-date">
+							<span>End Date<span class="star">*</span></span> <input
+								type="text" id="datepicker2" class="form-control"
+								placeholder="Click here to select date" style="margin: 5px;">
+						</div>
+
+					</div>
+					<div class="row" style="margin: 5px;">
+						<div class="pull-right" id='btn' style="display: none;">
+							<button class="btn btn-success" id="btnSave">Save</button>
+							<button class="btn btn-danger" id="btnCancel">Cancel</button>
+						</div>
+					</div>
 				</div>
-
-				<div class="col-md-4" id="start-date" style="display: none;">
-					<span>Start Date<span class="star">*</span></span> <input
-						type="text" id="datepicker1" class="form-control"
-						placeholder="Click here to select date" style="margin: 5px;">
-				</div>
-
-				<div class="col-md-4" style="display: none;" id="end-date">
-					<span>End Date<span class="star">*</span></span> <input type="text"
-						id="datepicker2" class="form-control"
-						placeholder="Click here to select date" style="margin: 5px;">
-				</div>
-
-			</div>
-			<div class="row" style="margin: 5px;">
-				<div class="pull-right" id='btn' style="display: none;">
-					<button class="btn btn-success" id="btnSave">Save</button>
-					<button class="btn btn-danger" id="btnCancel">Cancel</button>
-				</div>
-			</div>
-			</div>
-			<!-- End Row -->
+				<!-- End Row -->
 			</fieldset>
 		</div>
-		<!-- End Panel-->
-		</section>
+		<!-- End Panel--> </section>
 	</div>
 	<!-- End Main content -->
 	</div>
@@ -220,59 +190,92 @@
 	<div>
 		<jsp:include page="../include/footer.jsp" />
 	</div>
-	<!--Add Script-->
+	<jsp:include page="../include/footDashboard.jsp"/>
+	<script
+		src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script>
-$( document ).ready(function() {
+		var app = angular.module('app',
+				[ 'angularUtils.directives.dirPagination' ]);
+		app.controller('ctrl', function($scope, $http) {
+			
+			getData();
+			
+			$scope.getGeneration = function(){
+				getData();
+			}
 
-  $("#btn-plus").click (function(){
-	$("#hide").fadeIn();
-    $("#add-gen").fadeIn();
-  });
-  $("#btnCancel").click(function(){
-		$("#start-date").fadeOut("fast");
-		$("#end-date").fadeOut("fast");
-		$("#add-gen").fadeOut("fast");
-		$("#btn").fadeOut("fast");
-		$("#hide").fadeOut("fast");
-	});
-  //--Add Course--//
-  $( "#add-gen" ).click(function() {
-    $("#start-date").fadeIn( "slow");
-  });
-  //--Add Class--//
-  $( "#start-date" ).click(function() {
-    $("#end-date").fadeIn( "slow");
-  });
+			function getData() {
+				$http({
+					url : 'http://localhost:8080/course/find-all-course',
+					method : 'GET'
+				}).then(function(response) {
+					$scope.courses = response.data.DATA;
+					console.log(response.data.DATA.COURSE_START_DATE)
+				}, function(response) {
+					alert("error");
+				});
+			}
+			;
 
-  $( "#end-date" ).click(function() {
-      $("#btn").fadeIn( "slow");
-    });
-  //Date Time Picker
-  $(function() {
-    $( "#datetimepicker" ).datepicker();
-  });
+			$scope.sort = function(keyname) {
+				$scope.sortKey = keyname; //set the sortKey to the param passed
+				$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+			}
+		});
+	
+		$(document).ready(
+				function() {
 
-  $(function() {
-    $( "#datetimepicker1" ).datepicker();
-  });
+					$("#btn-plus").click(function() {
+						$("#hide").fadeIn();
+						$("#add-gen").fadeIn();
+					});
+					$("#btnCancel").click(function() {
+						$("#start-date").fadeOut("fast");
+						$("#end-date").fadeOut("fast");
+						$("#add-gen").fadeOut("fast");
+						$("#btn").fadeOut("fast");
+						$("#hide").fadeOut("fast");
+					});
+					//--Add Course--//
+					$("#add-gen").click(function() {
+						$("#start-date").fadeIn("slow");
+					});
+					//--Add Class--//
+					$("#start-date").click(function() {
+						$("#end-date").fadeIn("slow");
+					});
 
-  $('#datepicker1,#datepicker2').datetimepicker({
-    onGenerate:function( ct ){
-      $(this).find('.xdsoft_date')
-      .toggleClass('xdsoft_disabled');
-      },
-     timepicker:false,
-     formatDate:'Y/m/d',
-     minDate:'-1970/01/02',//yesterday is minimum date(for today use 0 or -1970/01/01)
-     maxDate:'+1970/01/02'//tomorrow is maximum date calendar
-   });
+					$("#end-date").click(function() {
+						$("#btn").fadeIn("slow");
+					});
+					//Date Time Picker
+					$(function() {
+						$("#datepicker1").datepicker();
+					});
 
-});
-</script>
-	<jsp:include page="../include/footDashboard.jsp" />
-	<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
+					$(function() {
+						$("#datepicker2").datepicker();
+					});
+
+					$('#datepicker1,#datepicker2').datetimepicker(
+							{
+								onGenerate : function(ct) {
+									$(this).find('.xdsoft_date').toggleClass(
+											'xdsoft_disabled');
+								},
+								timepicker : false,
+								formatDate : 'Y/m/d',
+								minDate : '-1970/01/02',//yesterday is minimum date(for today use 0 or -1970/01/01)
+								maxDate : '+1970/01/02'//tomorrow is maximum date calendar
+							});
+
+				});
+		
+		$.widget.bridge('uibutton', $.ui.button);
+	</script>
 	<!--End Script-->
 </body>
 </html>

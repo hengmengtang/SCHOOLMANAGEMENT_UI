@@ -38,6 +38,7 @@
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2"
 			ng-app="app" ng-controller="ctrl">
+			<fieldset>
 			<!-- Start Row 1 -->
 			<div class="row">
 
@@ -295,6 +296,7 @@
 							<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 						</div>
 					</div>
+			</fieldset>
 		</div>
 		<!-- /.content-wrapper -->
 		</fieldset>

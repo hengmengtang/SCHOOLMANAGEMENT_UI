@@ -87,13 +87,13 @@
 							<label for="exampleInputFName">First Name <span
 								class="star"> * </span></label> <span class="glyphicons glyphicons-user"></span>
 							<input type="text" class="form-control " id="fname"
-								placeholder="Enter Your Khmer First Name" ng-model="fname">
+								placeholder="Enter Your Khmer First Name" ng-model="fname" required>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="exampleInputLName">Last Name <span
 								class="star"> * </span></label> <input type="text" class="form-control"
 								id="lname" placeholder="Enter Your Khmer Last Name"
-								ng-model="lname">
+								ng-model="lname" required>
 						</div>
 					</div>
 					<div class="row">
@@ -101,13 +101,13 @@
 							<label for="exampleInputFLName">First Latin Name <span
 								class="star"> * </span></label> <span class="glyphicons glyphicons-user"></span>
 							<input type="text" class="form-control " id="latin_fname"
-								placeholder="Enter Your First Latin Name" ng-model="latin_fname">
+								placeholder="Enter Your First Latin Name" ng-model="latin_fname" required>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="exampleInputLLName">Last Latin Name <span
 								class="star"> * </span></label> <input type="text" class="form-control"
 								id="latin_lname" placeholder="Enter Your Last Latin Name"
-								ng-model="latin_lname">
+								ng-model="latin_lname" required>
 						</div>
 					</div>
 					<!--Radio-->
@@ -125,31 +125,31 @@
 						<div class="form-group col-md-3 required">
 							<label class="control-label" for="dob">Birth Date<span
 								class="star"> * </span></label> <input type="text" class="form-control"
-								name="dob" id="dob" placeholder="Birth date">
+								name="dob" id="dob" placeholder="Birth date" required>
 						</div>
 						<div class="form-group col-md-3">
 							<label for="exampleInputNationality">Nationality</label> <input
 								type="text" class="form-control" id="nationality"
-								placeholder="Nationality" ng-model="nationality">
+								placeholder="Nationality" ng-model="nationality" required>
 						</div>
 						<div class="form-group col-md-3">
 							<label for="exampleInputSocialID">Social ID</label> <input
 								type="text" class="form-control" id="social_id"
-								placeholder="Social id" ng-model="social_id">
+								placeholder="Social id" ng-model="social_id" required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label for="exampleInputPOB">Place Of Birth</label> <input
 								type="text" class="form-control" id="pob"
-								placeholder="Address" ng-model="pob">
+								placeholder="Address" ng-model="pob" required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label for="exampleInputAddress">Permanent Address</label> <input
 								type="text" class="form-control" id="address"
-								placeholder="Address" ng-model="address">
+								placeholder="Address" ng-model="address" required>
 						</div>
 					</div>
 
@@ -158,18 +158,18 @@
 							<label for="exampleInputEmail2">Email <span class="star">
 									* </span></label> <input type="email" class="form-control"
 								id="email" placeholder="Your_email@gmail.com"
-								ng-model="email">
+								ng-model="email" required>
 						</div>
 						<div class="form-group col-md-4">
 							<label for="Phone">Phone <span class="star"> * </span></label> <input
 								type="number" class="form-control" id="phone" placeholder="Phone"
-								ng-model="phone" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+								ng-model="phone" data-inputmask='"mask": "(999) 999-9999"' data-mask required>
 						</div>
 						<div class="form-group col-md-4">
 							<label for="exampleInputPosition">Position <span
 								class="star"> * </span></label> <input type="input" class="form-control"
 								id="position" value="student"
-								readonly="readonly">
+								readonly="readonly" required>
 
 						</div>
 					</div>
@@ -188,7 +188,7 @@
 						</div>
 						<div class="form-group col-md-4">
 							<label for="Graduated">Graduated</label> <input type="text"
-								class="form-control" id="graduated" placeholder="Graduation">
+								class="form-control" id="graduated" ng-model="graduated" placeholder="Graduation" required>
 						</div>
 						<div class="form-group col-md-4">
 							<label for="exampleInputUniversity">University</label> <select
@@ -220,7 +220,7 @@
 						</div>
 						<div class="form-group col-md-4">
 							<label for="Korean">Korean Level</label> <select
-								class="form-control" id="Korean" name="Korean">
+								class="form-control" id="korean" name="korean">
 								<option>Select - Option</option>
 								<option>Primary</option>
 								<option>Intermediate</option>
@@ -249,32 +249,32 @@
 						<div class="form-group col-md-6">
 							<label for="exampleInputFatherName">Father's Khmer Name</label> <input
 								type="text" class="form-control" id="father_name"
-								placeholder="Father's Name" ng-model="father_name">
+								placeholder="Father's Name" ng-model="father_name" required>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="exampleInputFatherLName">Father's Latin Name</label>
 							<input type="text" class="form-control"
 								id="father_latin_name" placeholder="Father's Latin Name"
-								ng-model="father_latin_name">
+								ng-model="father_latin_name" required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label for="Address">Address</label> <input type="text"
 								class="form-control" id="address" placeholder="Address"
-								ng-model="faddress">
+								ng-model="faddress" required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-6">
 							<label for="FOccupation">Occupation</label> <input type="text"
 								class="form-control" id="foccupation"
-								placeholder="Father Occupation" ng-model="foccupation">
+								placeholder="Father Occupation" ng-model="foccupation" required>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="FPhone">Father's Phone</label> <input type="number"
 								class="form-control" id="fphone" placeholder="Father's Phone "
-								ng-model="fphone">
+								ng-model="fphone" required>
 						</div>
 
 					</div>
@@ -284,38 +284,38 @@
 						<div class="form-group col-md-6">
 							<label for="MotherName">Mother's Khmer Name</label> <input
 								type="text" class="form-control" id="kmname"
-								placeholder="Mother's Name" ng-model="kmname">
+								placeholder="Mother's Name" ng-model="mkname" required>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="FatherLName">Mother's Latin Name</label> <input
 								type="text" class="form-control" id="mlname"
-								placeholder="Mother's Latin Name" ng-model="mlname">
+								placeholder="Mother's Latin Name" ng-model="mlname" required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label for="FAddress">Address</label> <input type="text"
 								class="form-control" id="maddress" placeholder="Address"
-								ng-model="maddress">
+								ng-model="maddress" required>
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-6">
 							<label for="FOccupation">Occupation</label> <input type="text"
 								class="form-control" id="moccupation"
-								placeholder="Mother Occupation" ng-model="moccupation">
+								placeholder="Mother Occupation" ng-model="moccupation" required>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="FPhone">Mother's Phone</label> <input type="number"
 								class="form-control" id="mphone" placeholder="Mother's Phone "
-								ng-model="mphone">
+								ng-model="mphone" required>
 						</div>
 
 					</div>
 
 					<div class="row pull-right" style="margin: 7px;">
 						<!-- Contextual button for informational alert messages -->
-						<button type="button" class="btn"
+						<button type="submit" class="btn"
 							style="font-width: 20px; color: white; background-color: green;" ng-click="submit()">
 							Add</button>
 					</div>
@@ -347,7 +347,7 @@
 								url:'http://localhost:8080/student/student-the-last-id',
 								method:'GET'
 							}).then(function(response){
-								$scope.id = response.data.DATA.maxStuId;
+								$scope.id = response.data.DATA.MAX_STUDENT_ID;
 								$scope.stu_id = $scope.id;	
 							}, function(response){
 								alert("error");
@@ -360,6 +360,11 @@
 					$scope.korean = $('#korean').val();
 					$scope.status = $('#status').val();
 					$scope.dob = $('#dob').val();
+					$scope.gender = $('input[name=gender]:checked').val();
+					$scope.university = $('#university').val();
+					$scope.it_year = $('#it_year').val();
+					alert($scope.it_year); 
+					
 					$http({
 						url:'http://localhost:8080/student/save',
 						data:{
@@ -371,10 +376,10 @@
 							  "FATHER_ADDRESS": $scope.faddress,
 							  "FATHER_ENGLISH_NAME": $scope.father_name,
 							  "FATHER_KHMER_NAME": $scope.father_latin_name,
-							  "FATHER_OCCUPATION": foccupation,
+							  "FATHER_OCCUPATION": $scope.foccupation,
 							  "FATHER_PHONE": $scope.fphone,
 							  "GENDER": $scope.gender,
-							  "GRADUATE": $scope.graduation,
+							  "GRADUATE": $scope.graduated,
 							  "KHMER_FULL_NAME": $scope.fname+" "+ $scope.lname,
 							  "KHMER_ID_NUMBER": $scope.social_id,
 							  "KOREAN_LEVEL": $scope.korean,
@@ -391,11 +396,11 @@
 							  "STUDENT_ID": $scope.stu_id,
 							  "STUDENT_STATUS": $scope.status,
 							  "UNIVERSITY": $scope.university
-						}
+						},
 						method:'POST'
 					}).then(function(response){
 						clearInputControll();	
-						/* getID(); */
+						
 					}, function(response){
 						alert("error");
 					});
@@ -403,18 +408,11 @@
 				}
 				
 				function clearInputControll(){
+					getID();
 					$('input').val("");
 					$("select").prop("selectedIndex",0);
 				}
 				
-				$scope.sort = function(keyname){
-			        $scope.sortKey = keyname;   //set the sortKey to the param passed
-			        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
-			    }
-				
-				/* $scope.tooltip = {
-						  "title": "only character!",
-				}; */
 			});
 	</script>
 	<script type="text/javascript">

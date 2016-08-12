@@ -93,7 +93,7 @@
 											class="star"> * </span></label> <span
 											class="glyphicons glyphicons-user"></span> <input type="text"
 											class="form-control " placeholder="Enter khmer full name"
-											ng-model="khmerFName">
+											ng-model="khmer_name">
 									</div>
 								</div>
 								<div class="row">
@@ -103,7 +103,7 @@
 											class="glyphicons glyphicons-user"></span> <input type="text"
 											class="form-control " 
 											placeholder="Enter Your First Latin Name"
-											ng-model="latin_fname">
+											ng-model="latin_name">
 									</div>
 								</div>
 								<!--Radio-->
@@ -111,9 +111,9 @@
 									<div class="form-group col-md-6">
 										<label>Gender <span class="star"> * </span></label> <br>
 										<label class="radio-inline"> <input type="radio"
-											id="gender" name="gender" value="M"> Male
+											id="m" name="gender" value="M"> Male
 										</label> <label class="radio-inline"> <input type="radio"
-											id="gender" name="gender" value="F"> Female
+											id="f" name="gender" value="F"> Female
 										</label>
 									</div>
 									<div class="form-group col-md-6 required">
@@ -150,7 +150,7 @@
 										<label for="exampleInputPassWord">Password <span
 											class="star"> * </span></label> <input type="password"
 											class="form-control" 
-											placeholder="Password" ng-model="password">
+											placeholder="Password" ng-model="password" readonly>
 									</div>
 			
 								</div>
@@ -316,7 +316,7 @@
 					           <div class="row pull-right" style="margin: 7px;">
 								<!-- Contextual button for informational alert messages -->
 								<button type="submit" class="btn"
-										style="font-width: 20px; color: white; background-color: green;" ng-click="update()">
+										style="font-width: 20px; color: white; background-color: green;" ng-click="submit()">
 										Update</button>
 							  </div>
 							</fieldset>
@@ -363,10 +363,10 @@
 						<span class="input-group-addon" style="background-color: green;">
 							<i class="fa fa-align-justify"
 							style="color: white; font-size: 20px"></i>
-						</span><select class="form-control select" ng-init="select | select='5'" ng-model="select">
-							<option value="">10</option>
-							<option>15</option>
-							<option>20</option>
+						</span><select class="form-control select" ng-init="select | select='No'" ng-model="select">
+							<option value="">No</option>
+							<option >3</option>
+							<option >5</option>
 						</select>
 					</div>
 				</div>
@@ -376,15 +376,42 @@
 					<div class="input-group pull-left">
 						<span class="input-group-addon"
 							style="color: white; background-color: green;"> Generation
-						</span> <select class="form-control selectpicker" ng-model="searchGeneration">
-							<option value="allgeneration">All Generation</option>
-							<option value="generation1">Generation 1</option>
-							<option value="generation2">Generation 2</option>
-							<option value="generation3">Generation 3</option>
-							<option value="generation4">Generation 4</option>
+						</span> <select class="form-control selectpicker" ng-init="searchGeneration | searchGeneration='Generation'" ng-model="searchGeneration" ng-mouseleave="getGeneration()">
+							<option value="">Generation</option>
+							<option>1 Generation</option>
+							<option>2 Generation</option>
+							<option>3 Generation</option>
+							<option>4 Generation</option>
 						</select>
 					</div>
 				</div>
+				
+				<div class="col-md-2 pull-left">
+					<div class="input-group pull-left">
+						<span class="input-group-addon"
+							style="color: white; background-color: green;"> Course
+						</span> <select class="form-control selectpicker" ng-model="searchCourse"  ng-init="searchCourse | searchCourse='Course'" ng-mouseleave="getCourse()">
+							<option value="">Course</option>
+							<option>Basic Course</option>
+							<option>Advance Course</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="col-md-2 pull-left">
+					<div class="input-group pull-left">
+						<span class="input-group-addon"
+							style="color: white; background-color: green;"> Class
+						</span> <select class="form-control selectpicker" ng-model="searchClass" ng-init="searchClass | searchClass='Class'">
+							<option value="">Class</option>
+							<option>BTB</option>
+							<option>KSP</option>
+							<option>PP</option>
+							<option>SR</option>
+						</select>
+					</div>
+				</div>
+				
 				<!--Search Location-->
 				<div class="col-md-3 pull-left">
 					<div class="input-group">
@@ -425,8 +452,8 @@
 								<td>{{student.ENGLIST_FULL_NAME}}</td>
 								
 								<td><center>
-									<span class="label label-danger" style="font-size: 13px;" ng-if="student.GENDER=='f'">{{student.GENDER | uppercase}}</span>
-									<span class="label label-info" style="font-size: 13px;" ng-if="student.GENDER=='m'">{{student.GENDER | uppercase}}</span>
+									<span class="label label-danger" style="font-size: 13px;" ng-if="student.GENDER=='F' || student.GENDER=='f'">{{student.GENDER | uppercase}}</span>
+									<span class="label label-info" style="font-size: 13px;" ng-if="student.GENDER=='M' || student.GENDER=='m'">{{student.GENDER | uppercase}}</span>
 								</center></td>
 								
 								<td>{{student.DATE_OF_BIRTH}}</td>
@@ -458,23 +485,121 @@
 		var app = angular.module('appListStu', ['angularUtils.directives.dirPagination']);
 			app.controller('ctrlListStu', function($scope, $http){
 				
-				getData();
+				$scope.getCourse = function(){
+					getData();
+				}
+				
+				$scope.getGeneration = function(){
+					getData();
+				}
 				
 				function getData(){
 						$http({
-								url:'http://localhost:8080/student/find-all',
-								method:'GET'
+								url:'http://localhost:8080/student/select_student-by-generation-and-course',
+								data: {
+									"COURSE_NAME": $scope.searchCourse,
+									"GENERATION_NAME": $scope.searchGeneration
+								},
+								method:'POST'
 							}).then(function(response){
 								$scope.students = response.data.DATA;
-									
+								console.log($scope.searchCourse);
 							}, function(response){
 								alert("error");
 							});
 				};
 				
 				$scope.update = function(data){
-					$scope.stu_id = data.STUDENT_ID;
-					$scope.khmerFName = data.KHMER_FULL_NAME;
+					$http({
+						url:'http://localhost:8080/student/select_student-by-generation-and-course',
+						method:'GET'
+					}).then(function(response){
+						$scope.data = response.data.DATA;
+						$scope.stu_id = data.STUDENT_ID;
+						$scope.khmer_name = data.KHMER_FULL_NAME;
+						$scope.latin_name = data.ENGLISH_FULL_NAME;
+						var sex = data.GENDER;
+						if(sex == 'F')
+							$('#f:checked').val();
+						else
+							$('#m:checked').val();
+						$scope.dob = data.DATE_OF_BIRTH;
+						$scope.pob = data.PLACE_OF_BIRTH;
+						$scope.address = data.PERMANENT_ADDRESS;
+						$scope.email = data.EMAIL;
+						$('#it_year').val(data.IT_YEAR);
+						$scope.graduated = data.GRADUATED;
+						$('#university').val(data.UNIVERSITY);
+						$('#english').val(data.ENGLISH);
+						$('#korean').val(data.KOREAN);
+						$('#status').val(data.STUDENT_STATUS)
+						$scope.phone = data.PHONE;
+						$scope.nationality = "";
+						$scope.social_id = data.KHMER_ID_NUMBER;
+						$scope.fkname = data.FATHER_KHMER_NAME;
+						$scope.flname = data.FATHER_LATIN_NAME;
+						$scope.faddress = data.FATHER_ADDRESS;
+						$scope.foccupation = data.FATHER_OCCUPATION;
+						$scope.fphone = data.FATHER_PHONE;
+						$scope.mkname = data.MOTHER_KHMER_NAME;
+						$scope.mlname = data.MOTHER_LATIN_NAME;
+						$scope.maddress = data.MOTHER_ADDRESS;
+						$scope.moccupation = data.MOTHER_OCCUPATION;
+						$scope.mphone = data.MOTHER_PHONE;
+					}, function(response){
+						alert("error");
+					});
+				}
+				
+				$scope.submit = function(){
+					$scope.photo = $('#photo').val();
+					$scope.english = $('#english').val();
+					$scope.korean = $('#korean').val();
+					$scope.status = $('#status').val();
+					$scope.dob = $('#dob').val();
+					$scope.gender = $('input[name=gender]:checked').val();
+					$scope.university = $('#university').val();
+					$scope.it_year = $('#it_year').val();
+					var id = $scope.stu_id;
+					
+					$http({
+						url:'http://localhost:8080/student/updateById',
+						data:{
+							  "DATE_OF_BIRTH": $scope.dob,
+							  "EDUCATION_LEVEL": $scope.it_year,
+							  "EMAIL": $scope.email,
+							  "ENGLISH_LEVEL": $scope.english,
+							  "ENGLIST_FULL_NAME": $scope.fname+" "+$scope.lname,
+							  "FATHER_ADDRESS": $scope.faddress,
+							  "FATHER_ENGLISH_NAME": $scope.father_name,
+							  "FATHER_KHMER_NAME": $scope.father_latin_name,
+							  "FATHER_OCCUPATION": $scope.foccupation,
+							  "FATHER_PHONE": $scope.fphone,
+							  "GENDER": $scope.gender,
+							  "GRADUATE": $scope.graduated,
+							  "KHMER_FULL_NAME": $scope.fname+" "+ $scope.lname,
+							  "KHMER_ID_NUMBER": $scope.social_id,
+							  "KOREAN_LEVEL": $scope.korean,
+							  "MOTHER_ADDRESS": $scope.maddress,
+							  "MOTHER_ENGLISH_NAME": $scope.mlname,
+							  "MOTHER_KHMER_NAME": $scope.mkname,
+							  "MOTHER_OCCUPATION": $scope.moccupation,
+							  "MOTHER_PHONE": $scope.mphone,
+							  "PERMANENT_ADDRESS": $scope.address,
+							  "PHONE": $scope.phone,
+							  "PHOTO": $scope.photo,
+							  "PLACE_OF_BIRTH": $scope.pob,
+							  "STATUS": true,
+							  "STUDENT_STATUS": $scope.status,
+							  "UNIVERSITY": $scope.university
+						},
+						method:'PUT'
+					}).then(function(response){
+						clearInputControll();	
+						
+					}, function(response){
+						alert("error");
+					});
 				}
 				
 				$scope.sort = function(keyname){
