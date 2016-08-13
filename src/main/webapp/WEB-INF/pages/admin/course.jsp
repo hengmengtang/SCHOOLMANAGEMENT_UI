@@ -118,8 +118,11 @@
 										<td>{{course.COURSE_START_DATE}}</td>
 										<td>{{course.COURSE_END_DATE}}</td>
 										<td>
-											<button type="button" class="btn btn-success">
+											<button type="button" class="btn btn-success" ng-if="course.STATUS==true" ng-click="action()">
 												<span class="glyphicon glyphicon-ok"></span>
+											</button>
+											<button type="button" class="btn btn-danger" ng-if="course.STATUS!=true" ng-click="action()">
+												<span class="glyphicon glyphicon-remove"></span>
 											</button>
 										</td>
 									</tr>
@@ -151,8 +154,8 @@
 				<div class="row">
 					<div id="hide">
 						<div class="col-md-4" id="add-gen" style="display: none;">
-							<span>Subject<span class="star">*</span></span> <input
-								type="text" class="form-control" placeholder="Subject"
+							<span>Course<span class="star">*</span></span> <input
+								type="text" class="form-control" placeholder="Course"
 								style="margin: 5px;" id="generation">
 						</div>
 
@@ -195,6 +198,8 @@
 		src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/resources/datetimepicker/jquery.datetimepicker.min.js"></script>
 	<script>
 		var app = angular.module('app',
 				[ 'angularUtils.directives.dirPagination' ]);
@@ -208,7 +213,7 @@
 
 			function getData() {
 				$http({
-					url : 'http://localhost:8080/course/find-all-course',
+					url : 'http://localhost:8080/api/course/find-all-course',
 					method : 'GET'
 				}).then(function(response) {
 					$scope.courses = response.data.DATA;
@@ -223,8 +228,14 @@
 				$scope.sortKey = keyname; //set the sortKey to the param passed
 				$scope.reverse = !$scope.reverse; //if true make it false and vice versa
 			}
+			
+			$scope.action = function(){
+				
+			}
 		});
 	
+		
+		/* jquery */
 		$(document).ready(
 				function() {
 
@@ -259,18 +270,6 @@
 					$(function() {
 						$("#datepicker2").datepicker();
 					});
-
-					$('#datepicker1,#datepicker2').datetimepicker(
-							{
-								onGenerate : function(ct) {
-									$(this).find('.xdsoft_date').toggleClass(
-											'xdsoft_disabled');
-								},
-								timepicker : false,
-								formatDate : 'Y/m/d',
-								minDate : '-1970/01/02',//yesterday is minimum date(for today use 0 or -1970/01/01)
-								maxDate : '+1970/01/02'//tomorrow is maximum date calendar
-							});
 
 				});
 		

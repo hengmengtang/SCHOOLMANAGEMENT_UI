@@ -344,10 +344,10 @@
 				function getID(){
 						
 						$http({
-								url:'http://localhost:8080/student/student-the-last-id',
+								url:'http://localhost:8080/api/student/auto-student-id',
 								method:'GET'
 							}).then(function(response){
-								$scope.id = response.data.DATA.MAX_STUDENT_ID;
+								$scope.id = response.data.DATA.MAX_ID;
 								$scope.stu_id = $scope.id;	
 							}, function(response){
 								alert("error");

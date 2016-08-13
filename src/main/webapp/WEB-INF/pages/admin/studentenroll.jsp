@@ -26,7 +26,7 @@
 			<li class="active">Studetn Enroll</li>
 		</ol>
 		</section>
-		<section class="content">
+		<section class="content" ng-app="app" ng-controller="ctrl">
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
 			<fieldset>
@@ -195,39 +195,37 @@
 					Course<sup style="color: red">*</sup>
 				</div>
 				<div class="col-md-3">
+					Subject<sup style="color: red">*</sup>
+				</div>
+				<div class="col-md-3">
 					Class<sup style="color: red">*</sup>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-3">
-					<!-- <select class="form-control select" id="add-gen"
-						style="margin-top: 15px; display: none;">
-						<option>Select Generation</option>
-						<option value="gen1">Generation 1</option>
-						<option value="gen2">Generation 2</option>
-						<option value="gen3">Generation 3</option>
-						<option value="gen4">Generation 4</option>
-					</select> -->
-					<label class="form-control select" id="add-gen"
-						style="margin-top: 15px; display: none;">Generation4th</label>
+					<label class="form-control" id="add-gen"
+						style="margin-top: 15px; ng-bind="generation" readonly></label>
 				</div>
 				<div class="col-md-3">
-					<select class="form-control select" id="add-course"
-						style="margin-top: 15px; display: none;">
-						<option>Select Course</option>
-						<option value="basic">Basic</option>
-						<option value="advance">Advance</option>
+					<label class="form-control" id="add-course"
+						style="margin-top: 15px" ng-bind="course" readonly></label>
+				</div>
+				<div class="col-md-3">
+					<select class="form-control select" id="subject"
+						style="margin-top: 15px;" ng-model="subject">
+						<option value="">Subjects</option>
+						<option>Battambang</option>
 					</select>
 				</div>
 				<div class="col-md-3">
 					<select class="form-control select" id="add-class"
-						style="margin-top: 15px; display: none;">
-						<option>Select Class</option>
-						<option value="btb">Battambang</option>
-						<option value="pp">Phnom Penh</option>
-						<option value="kps">Kampongsom</option>
-						<option value="sr">Siem Reap</option>
+						style="margin-top: 15px; display:none" ng-model="class" >
+						<option value="">Select Class</option>
+						<option >Battambang</option>
+						<option >Phnom Penh</option>
+						<option >Kampongsom</option>
+						<option >Siem Reap</option>
 					</select>
 				</div>
 			</div>
@@ -237,20 +235,125 @@
 					Student<sup style="color: red">*</sup>
 				</div>
 			</div>
-
-			<div class="row">
+			
+			<!-- student list -->
+			<div class="row" id="lststudent">
 				<div class="col-md-12">
-					<div class="form-group" id="add-stu"
-						style="margin-top: 20px; display: none;">
-						<input type="text" class="form-control" placeholder="Student Name">
+					<!-- Main content-->
+					<section class="content">
+					<div class="container-fluid"
+						style="border: 2px solid green; background-color: #e0f2f2">
+						<fieldset>
+						<div class="row">
+
+							<div class="col-md-2 pull-left" style="font-size: 18px;">
+								<i class="fa fa-users" aria-hidden="true"></i> Student List
+							</div>
+
+							<div class="col-md-10 pull-right" style="margin-bottom: -20px">
+								<nav class="page">
+								<ul class="pagination pull-right toptable"
+									style="margin-top: 2px;">
+									<dir-pagination-controls max-size="5" direction-links="true"
+										boundary-links="true"> </dir-pagination-controls>
+								</ul>
+								</nav>
+							</div>
+						</div>
+						<!-- end pagination(Row 1) -->
+
+						<!-- Start Row 2 -->
+						<div class="row">
+							<div class="col-md-2 pull-left">
+								<div class="input-group pull-left">
+									<span class="input-group-addon"
+										style="background-color: green;"> <i
+										class="fa fa-align-justify"
+										style="color: white; font-size: 20px"></i>
+									</span><select class="form-control select"
+										ng-init="select | select='5'" ng-model="select">
+										<option value="">10</option>
+										<option>15</option>
+										<option>20</option>
+									</select>
+								</div>
+							</div>
+							<!-- End Selection -->
+
+							<!--Search Location-->
+							<div class="col-md-3 pull-left">
+								<div class="input-group">
+									<span class="input-group-addon" id="basic-addon1"
+										style="color: white; background-color: green;"><i
+										class="fa fa-search" aria-hidden="true"
+										style="font-size: 20px;"></i> </span> <input type="text"
+										class="form-control" placeholder="Search Student..."
+										ng-model="searchStudent"> <span
+										class="input-group-btn">								
+									</span>
+								</div>
+							</div>
+						</div>
+						<!-- End Search Location-->
+
+						<!-- End Row 2 -->
+
+						<!-- Start Table -->
+						<div class="row" style="margin: 0px;">
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<thead>
+										<tr style="font-size: 16px;">
+											<th ng-click="sort('id')">Student No
+												&#x2191;&#x2193;</th>
+											<th ng-click="sort('khmerName')">Khmer
+												Name&#x2191;&#x2193;</th>
+											<th ng-click="sort('LatinName')">English
+												Name&#x2191;&#x2193;</th>
+											<th><center>Gender</center></th>
+											<th style="width: 200px;">Email</th>
+											<th>University</th>
+											<th>Address</th>
+											<th>Enroll</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
+											<td>{{student.STUDENT_ID}}</td>
+											<td>{{student.KHMER_FULL_NAME}}</td>
+											<td>{{student.ENGLIST_FULL_NAME}}</td>
+
+											<td><center>
+													<span class="label label-danger" style="font-size: 13px;"
+														ng-if="student.GENDER=='f' || student.GENDER=='F'">{{student.GENDER |
+														uppercase}}</span> <span class="label label-info"
+														style="font-size: 13px;" ng-if="student.GENDER=='m' || student.GENDER=='M'">{{student.GENDER
+														| uppercase}}</span>
+												</center>
+											</td>
+
+											<td>{{student.EMAIL}}</td>
+											<td>{{student.UNIVERSITY}}</td>
+											<td>{{student.PERMANENT_ADDRESS}}</td>
+											<td>
+												 <label><input type="checkbox" ng-click="enroll($event, student.STUDENT_ID)"></label>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- End Table(Row 3) -->
+					</fieldset>
 					</div>
+					</section>
 				</div>
 			</div>
-
 			<div class="row" style="margin-bottom: 7px;">
 				<div class="col-md-12">
-					<div class="pull-right" id="add-btn" style="display: none;">
-						<button type="button" class="btn btn-success" id="btnSave">Save</button>
+					<div class="pull-right" id="add-btn"">
+						<button type="button" class="btn btn-success" id="btnSave" ng-disabled="checked()" ng-click="submit()">Save</button>
 						<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 					</div>
 				</div>
@@ -263,69 +366,104 @@
 	</div>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp"></jsp:include>
+	<script
+		src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/resources/angularjs/checklist-model.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script>
+		var app = angular.module('app',
+				[ 'angularUtils.directives.dirPagination','checklist-model' ]);
+		app.controller('ctrl', function($scope, $http) {
+			
+			getData();
+			
+			function getData() {
+				$http({
+					url : 'http://localhost:8080/api/student/find-all',
+					method : 'GET'
+				}).then(function(response) {
+					$scope.students = response.data.DATA;
+				}, function(response) {
+					alert("error");
+				});
+			};
+
+			$scope.sort = function(keyname) {
+				$scope.sortKey = keyname; //set the sortKey to the param passed
+				$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+			};
+			
+			/* $(document).on('change', '#enroll', function(){
+				if($(this).is(':checked')){
+					$scope.enroll = function(id){
+						alert(id);
+					} 
+				}
+			}) */
+			
+			$scope.studentIDs = [];
+			
+			$scope.enroll = function(e, id){
+				if(e.target.checked){
+					$scope.studentIDs.push(id);
+				}
+				if(!e.target.checked){
+					$scope.studentIDs.splice($scope.studentIDs.indexOf(id),1);
+				}
+			}
+			
+			$scope.submit = function(){
+				angular.forEach($scope.studentIDs, function(id) {
+					alert(id);
+			    });
+			}
+			
+		});
+		
+		/* jquery */	
 		$(document)
 				.ready(
+				
 						function() {
+							 
+							$("#hide").fadeOut("fast");
+							$('#lststudent').fadeOut("fast");
+							
 							//--Add Generation--//
 							$("#btn-add").click(function() {
 								$("#hide").fadeIn();
-								$("#add-gen").fadeIn("slow", function() {
-								});
-								$("#add-course").fadeIn();
 							});
+							
 							$("#btnCancel").click(function(){
-								$("#add-course").val("Select Course").fadeOut("fast");
-								$("#add-class").val("Select Class").fadeOut("fast");
-								$("#add-gen").val("Select Generation").fadeOut("fast");
-								$("#add-stu").val("").fadeOut("fast");
-								$("#add-btn").fadeOut("fast");
 								$("#hide").fadeOut("fast");
-							});
-							//--Add Course--//
-							$("#add-gen")
-									.change(
-											function() {
-												var gen = $(this).val();
-												(gen == "gen1" || gen == "gen2"
-														|| gen == "gen3" || gen == "gen4") ? $(
-														"#add-course").fadeIn(
-														'slow')
-														: $("#add-course")
-																.fadeOut('slow');
-											});
-
-							//--Add Class--//
-							$("#add-course")
-									.change(
-											function() {
-												var course = $(this).val();
-												(course == 'basic' || course == 'advance') ? $(
-														"#add-class").fadeIn(
-														"slow")
-														: $("#add-class")
-																.fadeOut("slow");
-											});
-
-							//--Add Student--//
-							$("#add-class")
-									.change(
-											function() {
-												var clas = $(this).val();
-												(clas == 'btb' || clas == 'pp'
-														|| clas == 'kps' || clas == 'sr') ? $(
-														"#add-stu").fadeIn(
-														"slow")
-														: $("#add-stu")
-																.fadeOut("slow");
-											});
-
-							//--Add Button--//
-							$("#add-stu").click(function() {
-								$("#add-btn").fadeIn("slow");
-							});
+								$('#lststudent').fadeOut("fast");
+								 $('#add-class').fadeOut("fast");
+								clearInputControll();
+							}); 
+							
+							 $(function () {
+							        $("#add-class").change(function () {
+							            $('#lststudent').fadeIn("slow");
+							        });
+							  });
+							 
+							 $(function () {
+							        $("#subject").change(function () {
+							            $('#add-class').fadeIn("slow");
+							        });
+							  });
+							 
+							 function clearInputControll(){
+									$('input').val("");
+									$("select").prop("selectedIndex",0);
+							 }
+							
 
 						});
+		
+			
 	</script>
 
 </body>
