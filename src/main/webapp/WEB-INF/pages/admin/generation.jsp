@@ -30,6 +30,7 @@
 			<li><small>Generation</small></li>
 		</ol>
 		</section>
+		
 		<!-- Main content -->
 		<section class="content">
 
@@ -173,7 +174,8 @@
 						</div>
 						
 						<div class="row" style="margin: 7px;">
-							<div class="pull-right" style="margin-top: 5px; display: none;"
+							<div class="col-md-9 pull-left"></div>
+							<div class="col-md-3 pull-right" style="margin-top: 5px; display: none;"
 								id="button">
 								<button type='button' class="btn btn-success" id="btnSave"
 									ng-click="add()">Save</button>
