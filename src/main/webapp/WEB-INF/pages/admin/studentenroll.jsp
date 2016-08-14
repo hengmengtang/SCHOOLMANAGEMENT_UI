@@ -195,9 +195,6 @@
 					Course<sup style="color: red">*</sup>
 				</div>
 				<div class="col-md-3">
-					Subject<sup style="color: red">*</sup>
-				</div>
-				<div class="col-md-3">
 					Class<sup style="color: red">*</sup>
 				</div>
 			</div>
@@ -205,22 +202,16 @@
 			<div class="row">
 				<div class="col-md-3">
 					<label class="form-control" id="add-gen"
-						style="margin-top: 15px; ng-bind="generation" readonly></label>
+						style="margin-top: 15px;" ng-bind="generation" readonly></label>
 				</div>
 				<div class="col-md-3">
 					<label class="form-control" id="add-course"
 						style="margin-top: 15px" ng-bind="course" readonly></label>
 				</div>
-				<div class="col-md-3">
-					<select class="form-control select" id="subject"
-						style="margin-top: 15px;" ng-model="subject">
-						<option value="">Subjects</option>
-						<option>Battambang</option>
-					</select>
-				</div>
+				
 				<div class="col-md-3">
 					<select class="form-control select" id="add-class"
-						style="margin-top: 15px; display:none" ng-model="class" >
+						style="margin-top: 15px;">
 						<option value="">Select Class</option>
 						<option >Battambang</option>
 						<option >Phnom Penh</option>
@@ -353,7 +344,7 @@
 			<div class="row" style="margin-bottom: 7px;">
 				<div class="col-md-12">
 					<div class="pull-right" id="add-btn"">
-						<button type="button" class="btn btn-success" id="btnSave" ng-disabled="checked()" ng-click="submit()">Save</button>
+						<button type="button" class="btn btn-success" id="btnSave" ng-click="submit()">Save</button>
 						<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 					</div>
 				</div>
@@ -389,12 +380,34 @@
 					alert("error");
 				});
 			};
-
-			$scope.sort = function(keyname) {
-				$scope.sortKey = keyname; //set the sortKey to the param passed
-				$scope.reverse = !$scope.reverse; //if true make it false and vice versa
-			};
 			
+
+			$scope.submit = function() {
+					$scope.classs = $('#add_class').val();
+					
+					$http({
+						url : 'http://localhost:8080/api/enrollment/enroll-student',
+						data : {
+						 "CLASS_NAME": $scope.classs,
+						  "COURSE_NAME": "string",
+						  "ENROLL_DATE": "string",
+						  "GENERATION_NAME": "string",
+						  "STUDENT_NAME": "string",
+						  "SUCCESS": 0
+						},
+						method : 'POST'
+					}).then(function(response) {
+	
+					}, function(response) {
+	
+					})
+				}
+
+				$scope.sort = function(keyname) {
+					$scope.sortKey = keyname; //set the sortKey to the param passed
+					$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+				};
+
 			/* $(document).on('change', '#enroll', function(){
 				if($(this).is(':checked')){
 					$scope.enroll = function(id){
@@ -402,68 +415,64 @@
 					} 
 				}
 			}) */
-			
-			$scope.studentIDs = [];
-			
-			$scope.enroll = function(e, id){
-				if(e.target.checked){
-					$scope.studentIDs.push(id);
-				}
-				if(!e.target.checked){
-					$scope.studentIDs.splice($scope.studentIDs.indexOf(id),1);
-				}
-			}
-			
-			$scope.submit = function(){
-				angular.forEach($scope.studentIDs, function(id) {
-					alert(id);
-			    });
-			}
-			
-		});
-		
-		/* jquery */	
-		$(document)
-				.ready(
-				
-						function() {
-							 
-							$("#hide").fadeOut("fast");
-							$('#lststudent').fadeOut("fast");
-							
-							//--Add Generation--//
-							$("#btn-add").click(function() {
-								$("#hide").fadeIn();
-							});
-							
-							$("#btnCancel").click(function(){
-								$("#hide").fadeOut("fast");
-								$('#lststudent').fadeOut("fast");
-								 $('#add-class').fadeOut("fast");
-								clearInputControll();
-							}); 
-							
-							 $(function () {
-							        $("#add-class").change(function () {
-							            $('#lststudent').fadeIn("slow");
-							        });
-							  });
-							 
-							 $(function () {
-							        $("#subject").change(function () {
-							            $('#add-class').fadeIn("slow");
-							        });
-							  });
-							 
-							 function clearInputControll(){
-									$('input').val("");
-									$("select").prop("selectedIndex",0);
-							 }
-							
 
-						});
-		
-			
+				$scope.studentIDs = [];
+	
+				$scope.enroll = function(e, id) {
+					if (e.target.checked) {
+						$scope.studentIDs.push(id);
+					}
+					if (!e.target.checked) {
+						$scope.studentIDs.splice($scope.studentIDs.indexOf(id), 1);
+					}
+				}
+
+				$scope.submit = function() {
+					angular.forEach($scope.studentIDs, function(id) {
+						alert(id);
+					});
+				}
+	
+			});
+
+		/* jquery */
+		$(document).ready(
+
+		function() {
+
+			$("#hide").fadeOut("fast");
+			$('#lststudent').fadeOut("fast");
+
+			//--Add Generation--//
+			$("#btn-add").click(function() {
+				$("#hide").fadeIn();
+			});
+
+			$("#btnCancel").click(function() {
+				$("#hide").fadeOut("fast");
+				$('#lststudent').fadeOut("fast");
+				$('#add-class').fadeOut("fast");
+				clearInputControll();
+			});
+
+			$(function() {
+				$("#add-class").change(function() {
+					$('#lststudent').fadeIn("slow");
+				});
+			});
+
+			$(function() {
+				$("#subject").change(function() {
+					$('#add-class').fadeIn("slow");
+				});
+			});
+
+			function clearInputControll() {
+				$('input').val("");
+				$("select").prop("selectedIndex", 0);
+			}
+
+		});
 	</script>
 
 </body>
