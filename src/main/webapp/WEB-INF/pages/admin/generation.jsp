@@ -79,7 +79,7 @@
 							<span class="input-group-addon" id="basic-addon1"
 								style="background-color: #00A65A;"><i
 								class="fa fa-search" style="color: white;"></i> </span> <input
-								type="text" class="form-control" placeholder="Username">
+								type="text" class="form-control" placeholder="Generation" ng-model="search" ng-init="search | search='Generation'">
 						</div>
 
 					</div>
@@ -101,7 +101,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr dir-paginate="gen in generations|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':gen_name}|itemsPerPage:No">
+								<tr dir-paginate="gen in generations|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':search}|itemsPerPage:No">
 									<td>{{$index+1}}</td>
 									<td>{{gen.GENERATION_NAME}}</td>
 									<td>{{gen.GENERATION_START_DATE}}</td>
