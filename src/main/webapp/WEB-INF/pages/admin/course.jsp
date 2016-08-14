@@ -113,8 +113,8 @@
 							<tbody>
 									<tr dir-paginate="course in courses|orderBy:sortKey:reverse|filter:{'COURSE_NAME':searchCourse}|itemsPerPage:select">
 										<td>{{course.COURSE_ID}}</td>
-										<td>{{course.COURSE_NAME}}</td>
 										<td>3rd Generation</td>
+										<td>{{course.COURSE_NAME}}</td>
 										<td>{{course.COURSE_START_DATE}}</td>
 										<td>{{course.COURSE_END_DATE}}</td>
 										<td>
@@ -156,7 +156,7 @@
 						<div class="col-md-4" id="add-gen" style="display: none;">
 							<span>Course<span class="star">*</span></span> <input
 								type="text" class="form-control" placeholder="Course"
-								style="margin: 5px;" id="generation">
+								style="margin: 5px;" id="generation" ng-model="course">
 						</div>
 
 						<div class="col-md-4" id="start-date" style="display: none;">
@@ -174,7 +174,7 @@
 					</div>
 					<div class="row" style="margin: 5px;">
 						<div class="pull-right" id='btn' style="display: none;">
-							<button class="btn btn-success" id="btnSave">Save</button>
+							<button class="btn btn-success" id="btnSave" ng-click="submit()">Save</button>
 							<button class="btn btn-danger" id="btnCancel">Cancel</button>
 						</div>
 					</div>
@@ -206,6 +206,7 @@
 		app.controller('ctrl', function($scope, $http) {
 			
 			getData();
+			getCourseID()
 			
 			$scope.getGeneration = function(){
 				getData();
@@ -221,16 +222,49 @@
 				}, function(response) {
 					alert("error");
 				});
-			}
-			;
+			};
+			
 
 			$scope.sort = function(keyname) {
 				$scope.sortKey = keyname; //set the sortKey to the param passed
 				$scope.reverse = !$scope.reverse; //if true make it false and vice versa
 			}
 			
-			$scope.action = function(){
-				
+			$scope.submit = function(){
+				$scope.end_date = $('#datepicker1').val();
+				$scope.start_date = $('#datepicker2').val()
+				$http({
+					url: 'http://localhost:8080/api/course/register-course',
+					data:{
+						 "COURSE_END_DATE": $scope.end_date,
+						 "COURSE_ID": $scope.id,
+						 "COURSE_NAME": $scope.course,
+						 "COURSE_START_DATE": $scope.start_date,
+						 "STATUS": true
+					},
+					method: 'POST'
+				}).then(function(response){
+					getData();
+					clearInputControll();
+				}, function(response){
+					
+				})
+			}
+			
+			function getCourseID(){
+				$http({
+						url:'http://localhost:8080/api/course/auto-course-id',
+						method:'GET'
+					}).then(function(response){
+						$scope.id = response.data.DATA.MAX_ID;
+					}, function(response){
+						alert("error");
+					});
+			};
+			
+			function clearInputControll(){
+				$('input').val("");
+				$("select").prop("selectedIndex",0);
 			}
 		});
 	

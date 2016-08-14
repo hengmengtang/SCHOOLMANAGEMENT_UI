@@ -46,15 +46,11 @@
 					<!-- pagination -->
 					<div class="col-md-10">
 						<ul class="pagination pull-right" style="margin-top: 2px;">
-							<li><a href="#">First</a></li>
-							<li><a href="#" aria-label="Previous"> <span
-									aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#" aria-label="Next"> <span
-									aria-hidden="true">&raquo;</span>
-							</a></li>
-							<li><a href="#">Last</a></li>
+							<dir-pagination-controls
+						       max-size="5"
+						       direction-links="true"
+						       boundary-links="true" >
+					    	</dir-pagination-controls>
 						</ul>
 					</div>
 					<!-- End Pagination -->
@@ -68,12 +64,11 @@
 							<span class="input-group-addon"
 								style="background-color: #00A65A;"> <i
 								class="fa fa-align-justify" style="color: white;"></i>
-							</span> <select class="form-control selectpicker">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
+							</span> <select class="form-control selectpicker" ng-model="No" ng-init="No | No='No'">
+								<option value="">No</option>
 								<option>4</option>
-								<option>5</option>
+								<option>6</option>
+								<option>10</option>
 							</select>
 
 						</div>
@@ -85,7 +80,7 @@
 							<span class="input-group-addon" id="basic-addon1"
 								style="background-color: #00A65A;"><i
 								class="fa fa-search" style="color: white;"></i> </span> <input
-								type="text" class="form-control" placeholder="Username">
+								type="text" class="form-control" placeholder="Generation" ng-model="search" ng-init="search | search='Generation'">
 						</div>
 
 					</div>
@@ -99,15 +94,15 @@
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th>N <sup>o</sup></th>
-									<th>Genration<span class="arrow1">&#x2191;&#x2193;</span></th>
-									<th>Start Date<span class="arrow1">&#x2191;&#x2193;</span></th>
-									<th>End Date<span class="arrow1">&#x2191;&#x2193;</span></th>
+									<th>N <sup>o</sup>&#x2191;&#x2193;</th>
+									<th ng-click="sort('gen_name')">Genration<span class="arrow1">&#x2191;&#x2193;</span></th>
+									<th>Start Date<span class="arrow1"></span></th>
+									<th>End Date<span class="arrow1"></span></th>
 									<th>Finish</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="gen in generation">
+								<tr dir-paginate="gen in generations|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':search}|itemsPerPage:No">
 									<td>{{$index+1}}</td>
 									<td>{{gen.GENERATION_NAME}}</td>
 									<td>{{gen.GENERATION_START_DATE}}</td>
@@ -259,19 +254,20 @@
 		var app = angular.module('appGen', ['angularUtils.directives.dirPagination']);
 			app.controller('genCtrl', function($scope, $http){
 				
+				getData();
+				getGenID();
 				
 				function getData(){
 						$http({
 								url:'http://localhost:8080/api/generation/find-all-generation',
 								method:'GET'
 							}).then(function(response){
-								$scope.generation = response.data.DATA;
-								console.log($scope.generation)
+								$scope.generations = response.data.DATA;
 							}, function(response){
 								alert("error");
 							});
 				};
-				getData(); 
+				
 				$scope.add=function(){
 					$http({
 						url:'http://localhost:8080/api/generation/add-generation',
@@ -285,11 +281,11 @@
 						}
 					}).then(function(response){
 						getData();
-
 					}, function(response){
 						alert("error");
 					});
 				};  
+				
 				function getGenID(){
 					$http({
 							url:'http://localhost:8080/api/generation/auto-generation-id',
@@ -300,7 +296,6 @@
 							alert("error");
 						});
 				};
-				getGenID();
 				
 			});
 	</script>
