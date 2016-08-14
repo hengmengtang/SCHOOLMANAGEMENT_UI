@@ -36,7 +36,7 @@
 		</section>
 
 		<!-- Main content -->
-		<section class="content"> <!-- Main content -->
+		<section class="content" ng-app="app" ng-controller="ctrl"> <!-- Main content -->
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
 			<fieldset>
@@ -179,15 +179,7 @@
 			<div class="row">
 				<div id="hide">				
 				<div class="col-md-3" id="add-gen" style="display: none;">
-					<span>Generation<span class="star">*</span></span> <!-- <select
-						class="form-control select controlBottom" id="selection"
-						style="margin-top: 5px;">
-						<option>Select Generation</option>
-						<option value="gen1">Generation 1</option>
-						<option value="gen2">Generation 2</option>
-						<option value="gen3">Generation 3</option>
-						<option value="gen4">Generation 4</option>
-					</select> -->
+					<span>Generation<span class="star">*</span></span> 
 					<lebel class="form-control select controlBottom" id="selection"
 						style="margin-top: 5px;">Generation4th</lebel>
 				</div>
@@ -205,7 +197,7 @@
 					<span>Class<span class="star">*</span></span>
 					<div>
 						<input type="text" class="form-control select controlBottom" placeholder="Class"
-							style="margin-top: 5px;">
+							style="margin-top: 5px;" ng-model="class_name">
 					</div>
 				</div>
 
@@ -213,7 +205,7 @@
 
 			<div class="row" style="margin: 5px;">
 				<div class="pull-right" id="add-btn" style="display: none;">
-					<button type="button" class="btn btn-success" id="btnSave">Save</button>
+					<button type="button" class="btn btn-success" id="btnSave" ng-click="submit()">Save</button>
 					<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 				</div>
 			</div>
@@ -226,6 +218,59 @@
 	</div>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
+	<script
+		src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
+	<script>
+		var app = angular.module('app',
+				[ 'angularUtils.directives.dirPagination' ]);
+		app.controller('ctrl', function($scope, $http) {
+			
+			getData();
+			
+			$scope.getGeneration = function(){
+				getData();
+			}
+
+			function getData() {
+				$http({
+					url : 'http://localhost:8080/api/class/find-all-class',
+					method : 'GET'
+				}).then(function(response) {
+					$scope.classes = response.data.DATA;
+					console.log(response.data.DATA.COURSE_START_DATE)
+				}, function(response) {
+					alert("error");
+				});
+			};
+			
+
+			$scope.sort = function(keyname) {
+				$scope.sortKey = keyname; //set the sortKey to the param passed
+				$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+			}
+			
+			$scope.submit = function(){
+				
+				$http({
+					url: 'http://localhost:8080/api/class/add-class',
+					data:{
+						 "ACTIVE": true,
+						  "CLASS_END_DATE": "string",
+						  "CLASS_ID": 0,
+						  "CLASS_NAME": $scope.class_name,
+						  "CLASS_START_DATE": "string"
+					},
+					method: 'POST'
+				}).then(function(response){
+					
+				}, function(response){
+					
+				})
+			}
+		});
+	</script>
 	<script>
   		$.widget.bridge('uibutton', $.ui.button);
 	</script>
