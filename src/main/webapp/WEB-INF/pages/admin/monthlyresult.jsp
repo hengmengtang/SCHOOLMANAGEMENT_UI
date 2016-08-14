@@ -117,7 +117,7 @@
 					<!-- Start Table -->
 					<div class="row" style="margin: 0px;">
 						<div class="table-responsive">
-							<table class="table table-hover">
+							<table class="table table-hover" id="printTable">
 								<thead>
 									<tr style="font-size: 16px;">
 										<th>N <sup>o</sup></th>
@@ -158,7 +158,7 @@
 				</div>
 				<div class="row pull-right" style="margin: 7px;">
 					<div id="button">
-						<input type="submit" value="Print" class="btn btn-success">
+						<input type="button" value="Print" class="btn btn-success" id="print">
 						<input type="submit" value="Export" class="btn btn-danger">
 					</div>
 				</div>
@@ -168,12 +168,28 @@
 	</div>
 	</div>
 	<!-- /.content-wrapper -->
+	<script src="${pageContext.request.contextPath }/resources/jquery/jquery/jquery-2.2.4.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
 
 	<script>
 		$.widget.bridge('uibutton', $.ui.button);
 	</script>
-
+	<script>
+		function printData()
+		{
+		   var divToPrint=document.getElementById("printTable");
+		   newWin= window.open("");
+		   newWin.document.write(divToPrint.outerHTML);
+		   newWin.print();
+		   newWin.close();
+		}
+	
+		$('#print').on('click',function(){
+			printData();
+		})
+	</script>
+	
 </body>
 </html>

@@ -385,7 +385,7 @@
 						</span> <input type="text" class="form-control"
 							placeholder="Search Student..." ng-model="searchStudent"> <span
 							class="input-group-btn">
-							<button class="btn btn-danger" id="btn-add" ng-click="test()">Export</button>
+							<button ng-json-export-excel data="students" report-fields="{'STUDENT_ID': 'Student ID', 'KHMER_FULL_NAME': 'Khmer Name','ENGLISH_FULL_NAME': 'English Name','GENDER':'Gender','DATE_OF_BIRTH': 'Date Of Birth','PLACE_OF_BIRTH': 'Place Of Birth', 'EMAIL': 'Email'}" class="btn btn-danger" id="btn-add" ng-click="test()">Export</button>
 						</span>
 					</div>
 				</div>
@@ -445,9 +445,10 @@
 	<jsp:include page="../include/footDashboard.jsp" />
 	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
-	
+	<script src="${pageContext.request.contextPath }/resources/angularjs/FileSaver.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/angularjs/json-export-excel.js"></script>
 	<script>
-		var app = angular.module('appListStu', ['angularUtils.directives.dirPagination']);
+		var app = angular.module('appListStu', ['angularUtils.directives.dirPagination','ngJsonExportExcel']);
 			app.controller('ctrlListStu', function($scope, $http){
 				
 				$scope.getCourse = function(){
@@ -468,7 +469,6 @@
 								method:'POST'
 							}).then(function(response){
 								$scope.students = response.data.DATA;
-								console.log($scope.students.ENGLISH_FULL_NAME);
 							}, function(response){
 								alert("error");
 							});
