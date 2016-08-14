@@ -421,7 +421,7 @@
 								</center></td>
 								
 								<td>{{student.DATE_OF_BIRTH}}</td>
-								<td>{{student.PLACE_OF_BIRTH}}</td>
+								<td>{{student.PERMANENT_ADDRESS}}</td>
 								<td>{{}}</td>
 								<td>{{student.EMAIL}}</td>
 								<td>

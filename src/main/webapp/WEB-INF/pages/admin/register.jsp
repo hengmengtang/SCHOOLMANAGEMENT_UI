@@ -366,7 +366,7 @@
 					alert($scope.it_year); 
 					
 					$http({
-						url:'http://localhost:8080/student/save',
+						url:'http://localhost:8080/api/student/save',
 						data:{
 							  "DATE_OF_BIRTH": $scope.dob,
 							  "EDUCATION_LEVEL": $scope.it_year,

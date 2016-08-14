@@ -23,7 +23,7 @@
 	<jsp:include page="index.jsp" />
 
 	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper boxcontent">
+	<div class="content-wrapper boxcontent" ng-app="appInstructEnroll" ng-controller="instEnrollCtrl">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 		<h1>
@@ -74,7 +74,7 @@
 
 					<div class="input-group pull-left">
 						<span class="input-group-addon"
-							style="color: white; background-color: green;"> <i
+							style="color: white; background-color: #00A65A;"> <i
 							class="fa fa-align-justify"></i>
 						</span> <select class="form-control selectpicker">
 							<option>1</option>
@@ -127,24 +127,26 @@
 							<tr style="font-size: 16px;">
 								<th>N <sup>o</sup></th>
 								<th>Instructor&#x2191;&#x2193;</th>
+								<th>Khmer Name&#x2191;&#x2193;</th>
 								<th>Class&#x2191;&#x2193;</th>
 								<th>Start Date&#x2191;&#x2193;</th>
 								<th>Delete</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Rath Phearun</td>
-								<td>Battambang</td>
-								<td>2016-5-20</td>
+							<tr ng-repeat="inst in instructor">
+								<td>{{$index+1}}</td>
+								<td>{{inst.ENGLISH_FULL_NAME}}</td>
+								<td>{{inst.KHMER_FULL_NAME}}</td>
+								<td>{{inst.CLASS_NAME}}</td>
+								<td>{{inst.DATE}}</td>
 								<td>
 									<button type="button" class="btn btn-danger">
 										<span class="glyphicon glyphicon-trash"></span>
 									</button>
 								</td>
 							</tr>
-							<tr>
+							<!-- <tr>
 								<td>2</td>
 								<td>Aing Techun</td>
 								<td>Battambang</td>
@@ -187,7 +189,7 @@
 										<span class="glyphicon glyphicon-trash"></span>
 									</button>
 								</td>
-							</tr>
+							</tr> -->
 						</tbody>
 
 					</table>
@@ -211,23 +213,25 @@
 
 			</div>
 			<!--End Add Student-->
+			
 
 			<!--Input for gen, stu, class-->
 			<div class="row" style="margin-bottom: 5px;">
-				<div class="col-md-3">
-					Generation<sup style="color: red">*</sup>
+				<div class="col-md-4">
+					Generation<span class="star">*</span>
 				</div>
 				<div class="col-md-4">
-					Course<sup style="color: red">*</sup>
+					Course<span class="star">*</span>
 				</div>
-				<div class="col-md-5">
-					Class<sup style="color: red">*</sup>
+				<div class="col-md-4">
+					Subject<span class="star">*</span>
 				</div>
+				
 			</div>
 
 			<div class="row">
 
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<!-- <select class="form-control select" id="add-gen"
 						style="display: none;">
 						<option>Select Generation</option>
@@ -236,42 +240,73 @@
 						<option value="gen3" id="gen3">Generation 3</option>
 						<option value="gen4" id="gen4">Generation 4</option>
 					</select> -->
-					<label class="form-control select" id="add-gen"
-						style="display: none;">Generation4th</label>
+					<input type="text" class="form-control select" id="add-gen"
+						style="display: none;" value="Generation4th"  readonly>
 				</div>
 
 				<div class="col-md-4">
-					<select class="form-control select" id="add-course"
-						style="display: none;">
-						<option>Select Course</option>
-						<option value="basic">Basic</option>
-						<option value="advance">Advance</option>
+					<input type="text" class="form-control select" id="add-course"
+						style="display: none;" value="Advance Course" ng-model="course" >
+				</div>
+				<!-- <div id="hide-sub"> -->
+				<div class="col-md-3">
+					<select class="form-control select" id="add-subject-basic"
+						style="display: none; position: absolute;">
+						<option>Select Subject</option>
+						<option value="java">Java</option>
+						<option value="web">Web</option>
+						<option value="korean">Korean</option>
 					</select>
 				</div>
-
-				<div class="col-md-5">
-					<select class="form-control select" id="add-class"
-						style="display: none;">
-						<option value="btb">Battambang</option>
-						<option value="pp">Phnom Penh</option>
-						<option value="kps">Kampongsom</option>
-						<option value="sr">Siem Reap</option>
+				<div class="col-md-3">
+					<select class="form-control select" id="add-subject-advance"
+						style="display: none;position: absolute;" ng-model="subject">
+						<option>Select Subject</option>
+						<option value="ios">IOS</option>
+						<option value="android">Android</option>
+						<option value="delphi">Delphi</option>
+						<option value="spring">Spring</option>
+						<option value="c">C</option>
 					</select>
 				</div>
+			
+				
 
 			</div>
 			<!-- End Row -->
 			<div class="row" style="margin-top: 5px;">
 				<div class="col-md-4">
-					Instructor<sup style="color: red">*</sup>
+					Class<span class="star">*</span>
+				</div>
+				<div class="col-md-4">
+					Instructor<span class="star">*</span>
+				</div>
+				<div class="col-md-4">
+					Enroll Date<span class="star">*</span>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-4">
+					<select class="form-control select" id="add-class"
+						style="display: none;" ng-model="Class">
+						<option >Select Class</option>
+						<option value="BTB">Battambang</option>
+						<option value="PP">Phnom Penh</option>
+						<option value="KPS">Kampongsom</option>
+						<option value="SR">Siem Reap</option>
+					</select>
+				</div>
+				<div class="col-md-4">
 					<div class="form-group" id="add-stu" style="display: none;">
 						<input type="text" class="form-control"
-							placeholder="Instructor Name">
+							placeholder="Instructor Name" ng-model="staff">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="form-group" id="add-date" style="display: none;">
+						<input type="text" class="form-control"
+							placeholder="Enroll Date" id="date" ng-model="date">
 					</div>
 				</div>
 			</div>
@@ -279,7 +314,7 @@
 			<div class="row">
 				<div class="pull-right" id="add-btn"
 					style="margin: 7px; display: none;">
-					<button type="button" class="btn btn-success" id="btnSave">Save</button>
+					<button type="button" class="btn btn-success" id="btnSave" ng-click="add()">Save</button>
 					<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 				</div>
 			</div>
@@ -290,6 +325,16 @@
 	</div>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp"></jsp:include>
+	<script src="${pageContext.request.contextPath}/resources/angularjs/angular.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.js"></script>
+	<script >
+	$(function(){	
+		/* initialize date picker */
+	$("#date").datepicker();
+	
+	});
+	</script>
 	<script>
 		$(document)
 				.ready(
@@ -307,6 +352,8 @@
 								$("#add-stu").fadeOut("fast");
 								$("#add-btn").fadeOut("fast");
 								$("#add-gen").fadeOut("fast");
+								$("#add-subject-advance").fadeOut("fast");
+								$("#add-date").fadeOut("fast");
 							});
 							//--Add Course--//
 							$("#add-gen")
@@ -321,38 +368,94 @@
 																.fadeOut('slow');
 											});
 
-							//--Add Class--//
+							//--Add Subject--//
 							$("#add-course")
 									.change(
 											function() {
 												var course = $(this).val();
-												(course == 'basic' || course == 'advance') ? $(
-														"#add-class").fadeIn(
+												if(course='Advance Course') $(
+												"#add-subject-advance").fadeIn(
+												"slow")
+												else $("#add-subject-advance")
+														.fadeOut("slow");
+											});
+							//--Add Class--//
+							$("#add-subject-basic,#add-subject-advance")
+									.change(
+											function() {
+												var sub = $(this).val();
+												if(sub) $("#add-class").fadeIn(
 														"slow")
-														: $("#add-class")
+												if(sub=='Select Subject') $("#add-class")
 																.fadeOut("slow");
 											});
-
-							//--Add Student--//
+							
+							//--Add Instructor--//
 							$("#add-class")
 									.change(
 											function() {
 												var clas = $(this).val();
-												(clas == 'btb' || clas == 'pp'
-														|| clas == 'kps' || clas == 'sr') ? $(
+												(clas == 'BTB' || clas == 'PP'
+														|| clas == 'KPS' || clas == 'SR') ? $(
 														"#add-stu").fadeIn(
 														"slow")
 														: $("#add-stu")
 																.fadeOut("slow");
 											});
+							//--Add Date--//
+							$("#add-stu")
+									.click(
+											function() {
+												$("#add-date").fadeIn("slow")
+											});
 
 							//--Add Button--//
-							$("#add-stu").click(function() {
+							$("#add-date").click(function() {
 								$("#add-btn").fadeIn("slow");
 							});
 
 						});
+		
 	</script>
+	<!-- Angular Js -->
+	<script>
+		var app = angular.module('appInstructEnroll', ['angularUtils.directives.dirPagination']);
+			app.controller('instEnrollCtrl', function($scope, $http){
+				
+				
+				function getData(){
+						$http({
+								url:'http://localhost:8080/api/staff/display-staff-in-class',
+								method:'GET'
+							}).then(function(response){
+								$scope.instructor = response.data.DATA;
+								console.log($scope.instructor)
+							}, function(response){
+								alert("error");
+							});
+				};
+				getData(); 
+				$scope.add=function(){
+					$http({
+						url:'http://localhost:8080/handle-subject-to-staff-to-class',
+						method:'POST',
+						data:{
+							'COURSE_NAME': $scope.course,
+							'SUBJECT_TYPE_NAME': $scope.subject,
+							'CLASS_ROOM_NAME': $scope.Class,
+							'STAFF_HANDLE_NAME': $scope.staff,
+							'DATE': $scope.date
+						}
+					}).then(function(response){
+						getData();
 
+					}, function(response){
+						alert("error");
+					});
+				}; 
+				
+			});
+	</script>
+	
 </body>
 </html>

@@ -17,7 +17,7 @@
 	<jsp:include page="index.jsp" />
 
 	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper boxcontent">
+	<div class="content-wrapper boxcontent" ng-app="appGen" ng-controller="genCtrl">
 		<section class="content-header">
 		<h1>
 			Study <small>Management</small>
@@ -33,182 +33,172 @@
 		<!-- Main content -->
 		<section class="content">
 
-		<div class="container-fluid"
-			style="border: 2px solid green; background-color: #e0f2f2">
+		<div class="container-fluid" style="border: 2px solid green; background-color: #e0f2f2">
 			<fieldset>
-			<div class="row">
-				<!-- Title -->
-				<div class="col-md-2 pull-left">
-					<i class="fa fa-graduation-cap"></i> <small style="color: black;">Generation</small>
-				</div>
-				<!-- End Title -->
-
-				<!-- pagination -->
-				<div class="col-md-10">
-					<ul class="pagination pull-right" style="margin-top: 2px;">
-						<li><a href="#">First</a></li>
-						<li><a href="#" aria-label="Previous"> <span
-								aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#" aria-label="Next"> <span
-								aria-hidden="true">&raquo;</span>
-						</a></li>
-						<li><a href="#">Last</a></li>
-					</ul>
-				</div>
-				<!-- End Pagination -->
-			</div>
-			<!-- Start Row 2 -->
-			<div class="row">
-
-				<div class="col-md-2">
-
-					<div class="input-group pull-left">
-						<span class="input-group-addon" style="background-color: green;">
-							<i class="fa fa-align-justify" style="color: white;"></i>
-						</span> <select class="form-control selectpicker">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
-
+				<div class="row">
+					<!-- Title -->
+					<div class="col-md-2 pull-left">
+						<i class="fa fa-graduation-cap"></i> <small style="color: black;">Generation</small>
 					</div>
-				</div>
-				<!-- End Selector -->
-				<div class="col-md-3">
+					<!-- End Title -->
 
-					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1"
-							style="background-color: green;"><i class="fa fa-search"
-							style="color: white;"></i> </span> <input type="text"
-							class="form-control" placeholder="Username">
+					<!-- pagination -->
+					<div class="col-md-10">
+						<ul class="pagination pull-right" style="margin-top: 2px;">
+							<dir-pagination-controls
+						       max-size="5"
+						       direction-links="true"
+						       boundary-links="true" >
+					    	</dir-pagination-controls>
+						</ul>
+					</div>
+					<!-- End Pagination -->
+				</div>
+				<!-- Start Row 2 -->
+				<div class="row">
+
+					<div class="col-md-2">
+
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="background-color: #00A65A;"> <i
+								class="fa fa-align-justify" style="color: white;"></i>
+							</span> <select class="form-control selectpicker" ng-model="No" ng-init="No | No='No'">
+								<option value="">No</option>
+								<option>4</option>
+								<option>6</option>
+								<option>10</option>
+							</select>
+
+						</div>
+					</div>
+					<!-- End Selector -->
+					<div class="col-md-3">
+
+						<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1"
+								style="background-color: #00A65A;"><i
+								class="fa fa-search" style="color: white;"></i> </span> <input
+								type="text" class="form-control" placeholder="Username">
+						</div>
+
 					</div>
 
 				</div>
+				<!-- End Row 2 -->
 
-			</div>
-			<!-- End Row 2 -->
-
-			<!-- Start Table -->
-			<div class="row" style="margin: 0px;">
+				<!-- Start Table -->
+				<div class="row" style="margin: 0px;">
 					<div class="table-responsive">
 						<table class="table table-hover">
-						<thead>
-							<tr>
-								<th>N <sup>o</sup></th>
-								<th>Genration<span class="arrow1">&#x2191;&#x2193;</span></th>
-								<th>Start Date<span class="arrow1">&#x2191;&#x2193;</span></th>
-								<th>End Date<span class="arrow1">&#x2191;&#x2193;</span></th>
-								<th>Finish</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>1st Generation</td>
-								<td>2016-5-14</td>
-								<td>2016-5-20</td>
-								<td>
-									<button type="button" class="btn btn-danger">Yes</button>
-								</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>2nd Generation</td>
-								<td>2016-5-14</td>
-								<td>2016-5-20</td>
-								<td>
-									<button type="button" class="btn btn-danger">Yes</button>
-								</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>3rd Generation</td>
-								<td>2016-5-14</td>
-								<td>2016-5-20</td>
-								<td>
-									<button type="button" class="btn btn-success">
-										<span class="glyphicon glyphicon-ok"></span>
-									</button>
-								</td>
-							</tr>
-						</tbody>
+							<thead>
+								<tr>
+									<th>N <sup>o</sup>&#x2191;&#x2193;</th>
+									<th ng-click="sort('gen_name')">Genration<span class="arrow1">&#x2191;&#x2193;</span></th>
+									<th>Start Date<span class="arrow1"></span></th>
+									<th>End Date<span class="arrow1"></span></th>
+									<th>Finish</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr dir-paginate="gen in generations|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':gen_name}|itemsPerPage:No">
+									<td>{{$index+1}}</td>
+									<td>{{gen.GENERATION_NAME}}</td>
+									<td>{{gen.GENERATION_START_DATE}}</td>
+									<td>{{gen.GENERATION_END_DATE}}</td>
+									<td>
+										<button type="button" class="btn btn-danger"
+											ng-if="gen.ACTIVE==false">Yes</button>
+										<button type="button" class="btn btn-success"
+											ng-if="gen.ACTIVE==true">
+											<span class="glyphicon glyphicon-ok"></span>
+										</button>
+									</td>
+								</tr>
+							</tbody>
 
-					</table>
+						</table>
+					</div>
+					<!-- End Table -->
 				</div>
-				<!-- End Table -->
-			</div>
-			<!-- End Row 3 -->
-			<!-- Start add generation -->
-			<div class="row" style="margin: 0px;">
-				<!-- <div class="col-md-2"> -->
-				<div class="pull-left" style="color: black;">
-					<i class="fa fa-plus-circle" style="color: green;"></i> <span>Add
-						Generation</span>
-				</div>
+				<!-- End Row 3 -->
+				<!-- Start add generation -->
+				<div class="row" style="margin: 0px;">
+					<!-- <div class="col-md-2"> -->
+					<div class="pull-left" style="color: black;">
+						<i class="fa fa-plus-circle" style="color: green;"></i> <span>Add
+							Generation</span>
+					</div>
 
-				<div class="pull-right">
-					<button class="pull-right btn btn-success" id="btn-sub">
-						<span class="glyphicon glyphicon-plus"></span>
-					</button>
-				</div>
+					<div class="pull-right">
+						<button class="pull-right btn btn-success" id="btn-sub">
+							<span class="glyphicon glyphicon-plus"></span>
+						</button>
+					</div>
 
-			</div>
-			<!-- End add generation -->
+				</div>
+				<!-- End add generation -->
 
-			<!-- Start Add Generation -->
-			<div class="row">
-				<div id="hide">
-				<div class="col-md-4" style="display: none;" id="gen">
-					<span>Generation<span class="star">*</span></span> <input
-						type="text" class="form-control" placeholder="Generation"
-						style="margin-top: 5px;">
-				</div>
-				
-			
+				<!-- Start Add Generation -->
+				<div class="row">
+					<div id="hide">
+						<div style="display:none ;" id="id">
+							<span>Generation ID</span> <input
+								type="text" class="form-control" placeholder="Generation"
+								style="margin-top: 5px;" ng-model="id" readonly>
+						</div>
+						<div class="col-md-4" style="display: none;" id="gen">
+							<span>Generation<span class="star">*</span></span> <input
+								type="text" class="form-control" placeholder="Generation"
+								style="margin-top: 5px;" ng-model="genName">
+						</div>
 
-				<div class="col-md-4" style="display: none;" id="start-date">
-					<span>Start Date<span class="star">*</span></span> <input
-						id="datepicker1" class="form-control"
-						placeholder="Click here to select date" style="margin-top: 5px;">
-				</div>
+						<div class="col-md-4" style="display: none;" id="start-date">
+							<span>Start Date<span class="star">*</span></span> <input
+								id="startDate" class="form-control"
+								placeholder="Click here to select date" style="margin-top: 5px;"
+								ng-model="startDate">
+						</div>
 
-				<div class="col-md-4" style="display: none;" id="end-date">
-					<span>End Date<span class="star">*</span></span> <input
-						id="datepicker2" type="text" class="form-control"
-						placeholder="Click here to select date" style="margin-top: 5px;">
+						<div class="col-md-4" style="display: none;" id="end-date">
+							<span>End Date<span class="star">*</span></span> <input
+								id="endDate" type="text" class="form-control"
+								placeholder="Click here to select date" style="margin-top: 5px;"
+								ng-model="endDate">
+						</div>
+						
+						<div class="row" style="margin: 7px;">
+							<div class="pull-right" style="margin-top: 5px; display: none;"
+								id="button">
+								<button type='button' class="btn btn-success" id="btnSave"
+									ng-click="add()">Save</button>
+								<button type='button' class="btn btn-danger" id="btnCancel">Cancel</button>
+							</div>
+						</div>
+					</div>
 				</div>
-			<div class="row" style="margin: 7px;">
-				<div class="pull-right" style="margin-top: 5px; display: none;"
-					id="button">
-					<button type='button' class="btn btn-success" id="btnSave">Save</button>
-					<button type='button' class="btn btn-danger" id="btnCancel">Cancel</button>
-				</div>
-			</div>
+				<!-- End Button Save and Cancel -->
+			</fieldset>
 		</div>
-		</div>
-			<!-- End Button Save and Cancel -->
-	</fieldset>
+		<!-- End page --> 
+		</section>
 	</div>
-	<!-- End page -->
-	</section>
-</div>
 	<!-- .content-wrapper -->
 	<div>
 		<jsp:include page="../include/footer.jsp" />
 	</div>
 	<!--Add Script-->
-	</script>
 	<jsp:include page="../include/footDashboard.jsp" />
 	<script>
 		$.widget.bridge('uibutton', $.ui.button);
 	</script>
+	<script src="${pageContext.request.contextPath}/resources/angularjs/angular.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.js"></script>
 	<script>
 		$(document).ready(
 				function() {
+				
 					//-- bottom add --//
 					$("#btn-sub").click(function() {
 						$("#hide").fadeIn();
@@ -249,9 +239,63 @@
 							});
 
 				});
-	</script>
-	<script type='text/javascript'>
+		$(function(){	
+			/* initialize date picker */
+		$("#startDate").datepicker();
+		$("#endDate").datepicker();
 		
+		});
+	</script>
+	
+	<!-- Angular Code -->
+	<script>
+		var app = angular.module('appGen', ['angularUtils.directives.dirPagination']);
+			app.controller('genCtrl', function($scope, $http){
+				
+				getData();
+				getGenID();
+				
+				function getData(){
+						$http({
+								url:'http://localhost:8080/api/generation/find-all-generation',
+								method:'GET'
+							}).then(function(response){
+								$scope.generations = response.data.DATA;
+							}, function(response){
+								alert("error");
+							});
+				};
+				
+				$scope.add=function(){
+					$http({
+						url:'http://localhost:8080/api/generation/add-generation',
+						method:'POST',
+						data:{
+							'ACTIVE': true,
+							'GENERATION_ID': $scope.id,
+							'GENERATION_NAME': $scope.genName,
+							'GENERATION_START_DATE': $scope.startDate,
+							'GENERATION_END_DATE': $scope.endDate
+						}
+					}).then(function(response){
+						getData();
+					}, function(response){
+						alert("error");
+					});
+				};  
+				
+				function getGenID(){
+					$http({
+							url:'http://localhost:8080/api/generation/auto-generation-id',
+							method:'GET'
+						}).then(function(response){
+							$scope.id = response.data.DATA.MAX_ID;
+						}, function(response){
+							alert("error");
+						});
+				};
+				
+			});
 	</script>
 	<!--End Script-->
 	</div>
