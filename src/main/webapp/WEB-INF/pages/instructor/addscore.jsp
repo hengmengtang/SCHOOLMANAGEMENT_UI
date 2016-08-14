@@ -54,18 +54,20 @@
 							</div>
 							<!-- Start Selection -->
 							<div class="row">
-								<div class="col-md-1">
-									<div>
-										<span> <i class="fa fa-align-justify"
-											style="font-size: 32px;"></i>
-										</span> <select class="form-control select"
-											style="height: 30px; margin-left: 35px; margin-top: -32px;">
+								<div class="col-md-2">
+
+									<div class="input-group pull-left">
+										<span class="input-group-addon"
+											style="background-color: #00A65A;"> <i
+											class="fa fa-align-justify" style="color: white;"></i>
+										</span> <select class="form-control selectpicker">
 											<option>1</option>
 											<option>2</option>
 											<option>3</option>
 											<option>4</option>
 											<option>5</option>
 										</select>
+
 									</div>
 								</div>
 								<!-- End Selection -->
