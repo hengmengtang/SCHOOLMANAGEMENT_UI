@@ -140,23 +140,17 @@
 								<tr style="font-size: 16px;">
 									<th>N <sup>o</sup></th>
 									<th>Student&#x2191;&#x2193;</th>
+									<th>Course</th>
 									<th>Class&#x2191;&#x2193;</th>
-									<th>Korean&#x2191;&#x2193;</th>
-									<th>Web&#x2191;&#x2193;</th>
-									<th>Java&#x2191;&#x2193;</th>
-									<th>Total Score&#x2191;&#x2193;</th>
-									<th>Add Score</th>
+									<th>Score</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td>1</td>
 									<td>Sam Ol Sam On</td>
+									<td>Advance Course</td>
 									<td>Battambang</td>
-									<td>100</td>
-									<td>100</td>
-									<td>100</td>
-									<td>100</td>
 									<td><input type="text" pattern="^[0-9]$" maxlength="5"
 										class="koreanScore" placeholder="Korean Score"
 										style="display: none;"> <input type="text"
@@ -167,12 +161,9 @@
 								</tr>
 								<tr>
 									<td>1</td>
-									<td>Sam Ol Sam On</td>
+									<td>MengTang</td>
+									<td>Advance Course</td>
 									<td>Battambang</td>
-									<td>100</td>
-									<td>100</td>
-									<td>100</td>
-									<td>100</td>
 									<td><input type="text" pattern="^[0-9]$" maxlength="5"
 										class="koreanScore" placeholder="Korean Score"
 										style="display: none;"> <input type="text"
