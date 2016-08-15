@@ -62,7 +62,7 @@
 								class="fa fa-align-justify"></i>
 							</span> <select class="form-control selectionpicker" ng-init="select | select='No'" ng-model="select">
 								<option value="">No</option>
-								<option>5</option>
+								<option>1</option>
 								<option>10</option>
 							</select>
 							<!-- End Selection -->
@@ -76,10 +76,7 @@
 								style="color: white; background-color: green;">
 								Generation </span> <select class="form-control selectpicker" ng-init="searchGeneration | searchGeneration='Generation'" ng-model="searchGeneration" ng-mouseleave="getGeneration()">
 								<option value="">Generation</option>
-								<option>1 Generation</option>
-								<option>2 Generation</option>
-								<option>3 Generation</option>
-								<option>4 Generation</option>
+								<option ng-repeat="gen in generations | orderBy:'GENERATION_NAME'">{{gen.GENERATION_NAME}}</option>
 							</select>
 						</div>
 
@@ -111,18 +108,20 @@
 									</tr>
 								</thead>
 							<tbody>
-									<tr dir-paginate="course in courses|orderBy:sortKey:reverse|filter:{'COURSE_NAME':searchCourse}|itemsPerPage:select">
+									<tr dir-paginate="course in courses|orderBy:sortKey:reverse|filter:{'COURSE_NAME':searchCourse}:{'COURSE_NAME':searchCourse}|itemsPerPage:select">
 										<td>{{course.COURSE_ID}}</td>
 										<td>3rd Generation</td>
 										<td>{{course.COURSE_NAME}}</td>
 										<td>{{course.COURSE_START_DATE}}</td>
 										<td>{{course.COURSE_END_DATE}}</td>
 										<td>
-											<button type="button" class="btn btn-success" ng-if="course.STATUS==true" ng-click="action()">
+											<button type="button" class="btn btn-danger"
+												ng-if="course.STATUS==false">
 												<span class="glyphicon glyphicon-ok"></span>
 											</button>
-											<button type="button" class="btn btn-danger" ng-if="course.STATUS!=true" ng-click="action()">
-												<span class="glyphicon glyphicon-remove"></span>
+											<button type="button" class="btn btn-success"
+												ng-if="course.STATUS==true" ng-click="finish(course.COURSE_ID)">
+												<span class="glyphicon glyphicon-ban-circle"></span>
 											</button>
 										</td>
 									</tr>
@@ -194,6 +193,7 @@
 		<jsp:include page="../include/footer.jsp" />
 	</div>
 	<jsp:include page="../include/footDashboard.jsp"/>
+	<jsp:include page="../include/sweetalert.jsp"/>
 	<script
 		src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
 	<script
@@ -206,7 +206,8 @@
 		app.controller('ctrl', function($scope, $http) {
 			
 			getData();
-			getCourseID()
+			getCourseID();
+			getGeneration();
 			
 			$scope.getGeneration = function(){
 				getData();
@@ -218,13 +219,33 @@
 					method : 'GET'
 				}).then(function(response) {
 					$scope.courses = response.data.DATA;
-					console.log(response.data.DATA.COURSE_START_DATE)
 				}, function(response) {
 					alert("error");
 				});
 			};
 			
-
+			/* function getCourseStatus() {
+				$http({
+					url : 'http://localhost:8080/api/course/find-all-course',
+					method : 'GET'
+				}).then(function(response) {
+					$scope. = response.data.DATA.STATUS;
+				}, function(response) {
+					alert("error");
+				});
+			}; */
+			
+			function getGeneration(){
+				$http({
+						url:'http://localhost:8080/api/generation/find-all-generation',
+						method:'GET'
+					}).then(function(response){
+						$scope.generations = response.data.DATA;
+					}, function(response){
+						alert("error");
+					});
+			};
+			
 			$scope.sort = function(keyname) {
 				$scope.sortKey = keyname; //set the sortKey to the param passed
 				$scope.reverse = !$scope.reverse; //if true make it false and vice versa
@@ -261,6 +282,14 @@
 						alert("error");
 					});
 			};
+			
+			$scope.finish = function(id){
+				swal({   title: "Are you sure want finish?",   text: "You want finish!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Finished!",   closeOnConfirm: false }, function(){   
+						swal("Finished!", "Finished.", "success"); 
+						alert(id);
+						
+					});
+			}
 			
 			function clearInputControll(){
 				$('input').val("");

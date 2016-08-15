@@ -79,7 +79,7 @@
 							<span class="input-group-addon" id="basic-addon1"
 								style="background-color: #00A65A;"><i
 								class="fa fa-search" style="color: white;"></i> </span> <input
-								type="text" class="form-control" placeholder="Username">
+								type="text" class="form-control" placeholder="Generation" ng-model="search" ng-init="search | search='Generation'">
 						</div>
 
 					</div>
@@ -101,17 +101,19 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr dir-paginate="gen in generations|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':gen_name}|itemsPerPage:No">
+								<tr dir-paginate="gen in generations|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':search}|itemsPerPage:No">
 									<td>{{$index+1}}</td>
 									<td>{{gen.GENERATION_NAME}}</td>
 									<td>{{gen.GENERATION_START_DATE}}</td>
 									<td>{{gen.GENERATION_END_DATE}}</td>
 									<td>
 										<button type="button" class="btn btn-danger"
-											ng-if="gen.ACTIVE==false">Yes</button>
-										<button type="button" class="btn btn-success"
-											ng-if="gen.ACTIVE==true">
+											ng-if="gen.STATUS==false">
 											<span class="glyphicon glyphicon-ok"></span>
+										</button>
+										<button type="button" class="btn btn-success"
+											ng-if="gen.STATUS==true" ng-click="finish(gen.GENERATION_ID)">
+											<span class="glyphicon glyphicon-ban-circle"></span>
 										</button>
 									</td>
 								</tr>
@@ -189,6 +191,7 @@
 	</div>
 	<!--Add Script-->
 	<jsp:include page="../include/footDashboard.jsp" />
+	<jsp:include page="../include/sweetalert.jsp"/>
 	<script>
 		$.widget.bridge('uibutton', $.ui.button);
 	</script>
@@ -279,6 +282,7 @@
 						}
 					}).then(function(response){
 						getData();
+						clearInputControll();
 					}, function(response){
 						alert("error");
 					});
@@ -294,6 +298,19 @@
 							alert("error");
 						});
 				};
+				
+				$scope.finish = function(id){
+					swal({   title: "Are you sure want finish?",   text: "You want finish!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Finished!",   closeOnConfirm: false }, function(){   
+							swal("Finished!", "Finished.", "success"); 
+							alert(id);
+							
+						});
+				}
+				
+				function clearInputControll(){
+					$('input').val("");
+					$("select").prop("selectedIndex",0);
+				}
 				
 			});
 	</script>

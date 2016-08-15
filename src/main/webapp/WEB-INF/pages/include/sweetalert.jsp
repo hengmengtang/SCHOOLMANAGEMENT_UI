@@ -1,0 +1,2 @@
+ <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/sweetaler/dist/sweetalert.css">
+ <script src="${pageContext.request.contextPath }/resources/sweetaler/dist/sweetalert.min.js"></script>
