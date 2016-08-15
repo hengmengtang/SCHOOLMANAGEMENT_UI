@@ -448,11 +448,17 @@
 						}
 					}).then(function(response){
 						getData();
+						clearInputControll();
 
 					}, function(response){
 						alert("error");
 					});
 				}; 
+				
+				function clearInputControll(){
+					$('input').val("");
+					$("select").prop("selectedIndex",0);
+				}
 				
 			});
 	</script>

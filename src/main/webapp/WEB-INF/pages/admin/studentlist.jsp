@@ -342,10 +342,7 @@
 							style="color: white; background-color: green;"> Generation
 						</span> <select class="form-control selectpicker" ng-init="searchGeneration | searchGeneration='Generation'" ng-model="searchGeneration" ng-mouseleave="getGeneration()">
 							<option value="">Generation</option>
-							<option>1 Generation</option>
-							<option>2 Generation</option>
-							<option>3 Generation</option>
-							<option>4 Generation</option>
+							<option ng-repeat="gen in generations | orderBy:'GENERATION_NAME'">{{gen.GENERATION_NAME}}</option>
 						</select>
 					</div>
 				</div>
@@ -368,10 +365,7 @@
 							style="color: white; background-color: green;"> Class
 						</span> <select class="form-control selectpicker" ng-model="searchClass" ng-init="searchClass | searchClass='Class'">
 							<option value="">Class</option>
-							<option>BTB</option>
-							<option>KSP</option>
-							<option>PP</option>
-							<option>SR</option>
+							<option ng-repeat="class in classes | orderBy:'CLASS_NAME'">{{class.CLASS_NAME}}</option>
 						</select>
 					</div>
 				</div>
@@ -411,7 +405,7 @@
 							</tr>
 						</thead>
 						<tbody>
-                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
+                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
 								<td>{{student.STUDENT_ID}}</td> 
 								<td>{{student.KHMER_FULL_NAME}}</td>
 								<td>{{student.ENGLISH_FULL_NAME}}</td>
@@ -421,12 +415,17 @@
 								</center></td>
 								
 								<td>{{student.DATE_OF_BIRTH}}</td>
-								<td>{{student.PERMANENT_ADDRESS}}</td>
-								<td>{{}}</td>
+								<td>{{student.ADDRESS}}</td>
+								<td>{{student.CLASS_NAME}}</td>
 								<td>{{student.EMAIL}}</td>
 								<td>
-									<button type="button" class="btn btn-success">
-										<i class="fa fa-check-circle" aria-hidden="true"></i>
+									<button type="button" class="btn btn-danger"
+											ng-if="student.STATUS==false" ng-click="active(student.STUDENT_ID)">
+											<span class="glyphicon glyphicon-remove"></span>
+									</button>
+									<button type="button" class="btn btn-success"
+											ng-if="student.STATUS==true" ng-click="inactive(student.STUDENT_ID)">
+											<span class="glyphicon glyphicon-ok"></span>
 									</button>
 									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="update(student.STUDENT_ID)"><i class="glyphicon glyphicon-refresh"></i></button>
 								</td>
@@ -443,6 +442,7 @@
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
+	<jsp:include page="../include/sweetalert.jsp"/>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	
@@ -450,12 +450,41 @@
 		var app = angular.module('appListStu', ['angularUtils.directives.dirPagination']);
 			app.controller('ctrlListStu', function($scope, $http){
 				
+				getGeneration();
+				getClass();
 				$scope.getCourse = function(){
 					getData();
 				}
 				
 				$scope.getGeneration = function(){
 					getData();
+				}
+				
+				$scope.inactive = function(id){
+					swal({   title: "Are you sure want to be Inactive?",   text: "You want to student be inactive!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Inactive!",   closeOnConfirm: false }, function(){   
+							swal("Inactive!", "Record has been Inactive.", "success"); 
+							updateStatus(id);
+							
+						});
+				}
+				
+				$scope.active = function(id){
+					swal({   title: "Are you sure want to be active?",   text: "You want to student be active!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Active!",   closeOnConfirm: false }, function(){   
+							swal("Active!", "Record has been active.", "success"); 
+							updateStatus(id);
+							
+						});
+				}
+				
+				function updateStatus(id){
+					$http({
+						url:'http://localhost:8080/api/student/updateStatus/'+id,
+						method:'PUT'
+					}).then(function(response){
+						getData();
+					}, function(response){
+						alert("error");
+					});
 				}
 				
 				function getData(){
@@ -471,6 +500,28 @@
 							}, function(response){
 								alert("error");
 							});
+				};
+				
+				function getClass() {
+					$http({
+						url : 'http://localhost:8080/api/class/find-all-class',
+						method : 'GET'
+					}).then(function(response) {
+						$scope.classes = response.data.DATA;
+					}, function(response) {
+						alert("error");
+					});
+				};
+				
+				function getGeneration(){
+					$http({
+							url:'http://localhost:8080/api/generation/find-all-generation',
+							method:'GET'
+						}).then(function(response){
+							$scope.generations = response.data.DATA;
+						}, function(response){
+							alert("error");
+						});
 				};
 				
 				$scope.update = function(id){

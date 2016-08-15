@@ -76,10 +76,7 @@
 							style="color: white; background-color: green;"> Generation
 						</span> <select class="form-control selectpicker">
 							<option value="allgeneration">All Generation</option>
-							<option value="generation1">Generation 1</option>
-							<option value="generation2">Generation 2</option>
-							<option value="generation3">Generation 3</option>
-							<option value="generation4">Generation 4</option>
+							<option ng-repeat="gen in generations | orderBy:'GENERATION_NAME'">{{gen.GENERATION_NAME}}</option>
 						</select>
 					</div>
 				</div>
@@ -211,12 +208,9 @@
 				
 				<div class="col-md-3">
 					<select class="form-control select" id="add-class"
-						style="margin-top: 15px;">
-						<option value="">Select Class</option>
-						<option >Battambang</option>
-						<option >Phnom Penh</option>
-						<option >Kampongsom</option>
-						<option >Siem Reap</option>
+						style="margin-top: 15px;" >
+						<option value="" >Select Class</option>
+						<option ng-repeat="class in classes">{{class.CLASS_NAME}}</option>
 					</select>
 				</div>
 			</div>
@@ -328,7 +322,7 @@
 											<td>{{student.UNIVERSITY}}</td>
 											<td>{{student.PERMANENT_ADDRESS}}</td>
 											<td>
-												 <label><input type="checkbox" ng-click="enroll($event, student.STUDENT_ID)"></label>
+												 <label><input type="checkbox" ng-click="enroll($event, student.ENGLIST_FULL_NAME)"></label>
 											</td>
 										</tr>
 									</tbody>
@@ -369,10 +363,12 @@
 		app.controller('ctrl', function($scope, $http) {
 			
 			getData();
+			getClass();
+			getGeneration();
 			
 			function getData() {
 				$http({
-					url : 'http://localhost:8080/api/student/find-all',
+					url : 'http://localhost:8080/api/student/display-student-not-yet-enroll-to-class',
 					method : 'GET'
 				}).then(function(response) {
 					$scope.students = response.data.DATA;
@@ -381,32 +377,44 @@
 				});
 			};
 			
-
-			$scope.submit = function() {
-					$scope.classs = $('#add_class').val();
+			function getClass() {
+				$http({
+					url : 'http://localhost:8080/api/class/find-all-class',
+					method : 'GET'
+				}).then(function(response) {
+					$scope.classes = response.data.DATA;
+				}, function(response) {
+					alert("error");
+				});
+			};
+			
+			function getGeneration(){
+				$http({
+						url:'http://localhost:8080/api/generation/find-all-generation',
+						method:'GET'
+					}).then(function(response){
+						$scope.generations = response.data.DATA;
+					}, function(response){
+						alert("error");
+					});
+			};
+			
+			function updateStatus(id){
+				http({
+					url:'http://localhost:8080/api/student/updateStatus/'+id,
+					method:'POST'
+				}).then(function(response){
 					
-					$http({
-						url : 'http://localhost:8080/api/enrollment/enroll-student',
-						data : {
-						 "CLASS_NAME": $scope.classs,
-						  "COURSE_NAME": "string",
-						  "ENROLL_DATE": "string",
-						  "GENERATION_NAME": "string",
-						  "STUDENT_NAME": "string",
-						  "SUCCESS": 0
-						},
-						method : 'POST'
-					}).then(function(response) {
-	
-					}, function(response) {
-	
-					})
-				}
+				}, function(response){
+					alert("error");
+				});
+			}
+			
 
-				$scope.sort = function(keyname) {
-					$scope.sortKey = keyname; //set the sortKey to the param passed
-					$scope.reverse = !$scope.reverse; //if true make it false and vice versa
-				};
+			$scope.sort = function(keyname) {
+				$scope.sortKey = keyname; //set the sortKey to the param passed
+				$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+			};
 
 			/* $(document).on('change', '#enroll', function(){
 				if($(this).is(':checked')){
@@ -416,24 +424,40 @@
 				}
 			}) */
 
-				$scope.studentIDs = [];
-	
-				$scope.enroll = function(e, id) {
-					if (e.target.checked) {
-						$scope.studentIDs.push(id);
-					}
-					if (!e.target.checked) {
-						$scope.studentIDs.splice($scope.studentIDs.indexOf(id), 1);
-					}
-				}
+			$scope.studentNames = [];
 
-				$scope.submit = function() {
-					angular.forEach($scope.studentIDs, function(id) {
-						alert(id);
-					});
+			$scope.enroll = function(e, name) {
+				if (e.target.checked) {
+					$scope.studentNames.push(name);
 				}
-	
-			});
+				if (!e.target.checked) {
+					$scope.studentNames.splice($scope.studentNames.indexOf(name), 1);
+				}
+			}
+
+			$scope.submit = function() {
+				
+				/*$scope.classs = $('#add-class').val();
+				 alert($scope.classs+", "+$('#add-course').val()+", "+$('#add-gen').val()); */
+				angular.forEach($scope.studentNames, function(name){
+					/* $http({
+						url : 'http://localhost:8080/api/enrollment/enroll-student',
+						data:{
+							  "CLASS_NAME": "string",
+							  "COURSE_NAME": "string",
+							  "GENERATION_NAME": "string",
+							  "STUDENT_NAME": "string",
+							  "SUCCESS": 0
+						},
+						method : 'POST'
+					}).then(function(response) {
+						
+					}, function(response) {
+						alert("error");
+					}); */
+				});
+			}
+		});
 
 		/* jquery */
 		$(document).ready(
@@ -445,7 +469,8 @@
 
 			//--Add Generation--//
 			$("#btn-add").click(function() {
-				$("#hide").fadeIn();
+				$("#hide").fadeIn("slow");
+				$('#add-class').fadeIn("slow");
 			});
 
 			$("#btnCancel").click(function() {
@@ -458,12 +483,6 @@
 			$(function() {
 				$("#add-class").change(function() {
 					$('#lststudent').fadeIn("slow");
-				});
-			});
-
-			$(function() {
-				$("#subject").change(function() {
-					$('#add-class').fadeIn("slow");
 				});
 			});
 

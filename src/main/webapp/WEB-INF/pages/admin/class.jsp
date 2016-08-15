@@ -84,10 +84,7 @@
 							style="color: white; background-color: green;"> Generation
 						</span> <select class="form-control selectpicker" ng-model="generation" ng-init="generation | generation='Generation'">
 							<option value="">Generation</option>
-							<option>Generation 1st</option>
-							<option>Generation 2nd</option>
-							<option>Generation 3rd</option>
-							<option>Generation 4th</option>
+							<option ng-repeat="gen in generations | orderBy:'GENERATION_NAME'">{{gen.GENERATION_NAME}}</option>
 						</select>
 					</div>
 
@@ -114,7 +111,7 @@
 								<th ng-click="sort('gen_name')">Class<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
 								<th>Course<span style="color: blue; font-weight: bold;"></span></th>
 								<th>Generation<span style="color: blue;"></span></th>
-								<th>Deactive</th>
+								<th>Closed</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -125,10 +122,12 @@
 								<td>{{class.CLASS_NAME}}</td>
 								<td>
 									<button type="button" class="btn btn-danger"
-										ng-if="class.ACTIVE==false">Yes</button>
+										ng-if="class.ACTIVE==false">
+										<span class="glyphicon glyphicon-ok"></span>
+									</button>
 									<button type="button" class="btn btn-success"
 										ng-if="class.ACTIVE==true">
-										<span class="glyphicon glyphicon-ok"></span>
+										<span class="glyphicon glyphicon-ban-circle"></span>
 									</button>
 								</td>
 							</tr>
@@ -200,6 +199,8 @@
 		app.controller('ctrl', function($scope, $http) {
 			
 			getData();
+			getGeneration();
+			getID();
 			
 			$scope.getGeneration = function(){
 				getData();
@@ -217,10 +218,36 @@
 				});
 			};
 			
+			function getGeneration(){
+				$http({
+						url:'http://localhost:8080/api/generation/find-all-generation',
+						method:'GET'
+					}).then(function(response){
+						$scope.generations = response.data.DATA;
+					}, function(response){
+						alert("error");
+					});
+			};
 
 			$scope.sort = function(keyname) {
 				$scope.sortKey = keyname; //set the sortKey to the param passed
 				$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+			}
+			
+			function clearInputControll(){
+				$('input').val("");
+				$("select").prop("selectedIndex",0);
+			}
+			
+			function getID(){
+				$http({
+					url: 'http://localhost:8080/api/class/auto-class-id',
+					method: 'GET'
+				}).then(function(response){
+					$scope.id = response.data.DATA.MAX_ID;
+				}, function(response){
+					
+				})
 			}
 			
 			$scope.submit = function(){
@@ -230,13 +257,14 @@
 					data:{
 						 "ACTIVE": true,
 						  "CLASS_END_DATE": "string",
-						  "CLASS_ID": 0,
+						  "CLASS_ID": $scope.id,
 						  "CLASS_NAME": $scope.class_name,
 						  "CLASS_START_DATE": "string"
 					},
 					method: 'POST'
 				}).then(function(response){
-					
+					getID();
+					clearInputControll();
 				}, function(response){
 					
 				})
