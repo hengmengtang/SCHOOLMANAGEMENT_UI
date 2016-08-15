@@ -50,15 +50,11 @@
 
 				<div class="col-md-10">
 					<ul class="pagination pull-right" style="margin-top: 2px;">
-						<li><a href="#">First</a></li>
-						<li><a href="#" aria-label="Previous"> <span
-								aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#" aria-label="Next"> <span
-								aria-hidden="true">&raquo;</span>
-						</a></li>
-						<li><a href="#">Last</a></li>
+						<dir-pagination-controls
+					       max-size="5"
+					       direction-links="true"
+					       boundary-links="true" >
+					    </dir-pagination-controls>
 					</ul>
 				</div>
 
@@ -72,12 +68,10 @@
 						<span class="input-group-addon"
 							style="color: white; background-color: green;"> <i
 							class="fa fa-align-justify"></i>
-						</span> <select class="form-control selectionpicker">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
+						</span> <select class="form-control selectionpicker" ng-model="No" ng-init="No | No='No'">
+							<option value="">No</option>
+							<option>10</option>
+							<option>20</option>
 						</select>
 						<!-- End Selection -->
 					</div>
@@ -88,8 +82,8 @@
 					<div class="input-group pull-left">
 						<span class="input-group-addon"
 							style="color: white; background-color: green;"> Generation
-						</span> <select class="form-control selectpicker">
-							<option>All Generation</option>
+						</span> <select class="form-control selectpicker" ng-model="generation" ng-init="generation | generation='Generation'">
+							<option value="">Generation</option>
 							<option>Generation 1st</option>
 							<option>Generation 2nd</option>
 							<option>Generation 3rd</option>
@@ -104,7 +98,7 @@
 					<div class="input-group">
 						<span class="input-group-addon" style="background-color: green;"><i
 							class="fa fa-search" style="color: white;"></i> </span> <input
-							type="text" class="form-control" placeholder="Class">
+							type="text" class="form-control" placeholder="Class" ng-model="search" ng-init="search | search='Class'">
 					</div>
 				</div>
 				<!-- End Text Search -->
@@ -117,43 +111,24 @@
 						<thead>
 							<tr>
 								<th>N <sup>o</sup></th>
-								<th>Class<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
-								<th>Course<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
-								<th>Generation<span style="color: blue;">&#x2191;&#x2193;</span></th>
+								<th ng-click="sort('gen_name')">Class<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
+								<th>Course<span style="color: blue; font-weight: bold;"></span></th>
+								<th>Generation<span style="color: blue;"></span></th>
 								<th>Deactive</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Battambong</td>
-								<td>Basic</td>
-								<td>3rd Generation</td>
+							<tr dir-paginate="class in classes|orderBy:sortKey:reverse|filter:{'CLASS_NAME':search}|itemsPerPage:No">
+								<td>{{$index+1}}</td>
+								<td>{{class.CLASS_NAME}}</td>
+								<td>{{class.CLASS_NAME}}</td>
+								<td>{{class.CLASS_NAME}}</td>
 								<td>
-									<button type="button" class="btn btn-danger">
-										Yes</span>
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>Phnom Penh</td>
-								<td>Basic</td>
-								<td>3rd Generation</td>
-								<td>
-									<button type="button" class="btn btn-danger">
-										Yes</span>
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>Simp Reap</td>
-								<td>Basic</td>
-								<td>3rd Generation</td>
-								<td>
-									<button type="button" class="btn btn-danger">
-										Yes</span>
+									<button type="button" class="btn btn-danger"
+										ng-if="class.ACTIVE==false">Yes</button>
+									<button type="button" class="btn btn-success"
+										ng-if="class.ACTIVE==true">
+										<span class="glyphicon glyphicon-ok"></span>
 									</button>
 								</td>
 							</tr>
@@ -181,16 +156,13 @@
 				<div class="col-md-3" id="add-gen" style="display: none;">
 					<span>Generation<span class="star">*</span></span> 
 					<lebel class="form-control select controlBottom" id="selection"
-						style="margin-top: 5px;">Generation4th</lebel>
+						style="margin-top: 5px;" readonly>Generation4th</lebel>
 				</div>
 
 				<div class="col-md-3" id="add-course" style="display: none;">
-					<span>Course<span class="star">*</span></span> <select
-						class="form-control select controlBottom" id="course" style="margin-top: 5px;">
-						<option>Select Course</option>
-						<option value="basic">Basic</option>
-						<option value="advance">Advance</option>
-					</select>
+					<span>Course<span class="star">*</span></span> <lebel
+						class="form-control select controlBottom" id="course" style="margin-top: 5px;" readonly>
+						Basic</lebel>
 				</div>
 
 				<div class="col-md-5" id="add-class" style="display: none;">
@@ -282,26 +254,14 @@
     	$("#hide").fadeIn();
       $( "#add-gen" ).fadeIn( "slow");
       $("#add-course").fadeIn('slow');
+      $("#add-class").fadeIn("slow");
     });
     $("#btnCancel").click(function(){
-		$("#add-gen").fadeOut("fast");
-		$("#add-course").fadeOut("fast");
-		$("#add-class").fadeOut("fast");
+		
 		$("#add-btn").fadeOut("fast");
 		$("#hide").fadeOut("fast");
 	});
-    //--Add Course--//
-    $( "#selection" ).change(function() {
-      var gen=$(this).val();
-      (gen=="gen1" || gen=="gen2" || gen=="gen3" || gen=="gen4" ) ? $("#add-course").fadeIn('slow') : $("#add-course").fadeOut('slow');
-    });
-
-    //--Add Class--//
-    $( "#course" ).change(function() {
-      var course=$(this).val();
-      (course=='basic' || course=='advance') ? $("#add-class").fadeIn( "slow"): $("#add-class").fadeOut( "slow");
-    });
-
+    
     //--Add Student--//
     $( "#add-class" ).change(function() {
       var clas=$(this).val();
