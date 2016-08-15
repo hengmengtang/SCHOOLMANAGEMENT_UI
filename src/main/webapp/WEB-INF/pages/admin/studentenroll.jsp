@@ -199,11 +199,11 @@
 			<div class="row">
 				<div class="col-md-3">
 					<label class="form-control" id="add-gen"
-						style="margin-top: 15px;" ng-bind="generation" readonly></label>
+						style="margin-top: 15px;" readonly ng-repeat="gen in generation">{{gen.GENERATION_NAME}}</label>
 				</div>
 				<div class="col-md-3">
 					<label class="form-control" id="add-course"
-						style="margin-top: 15px" ng-bind="course" readonly></label>
+						style="margin-top: 15px" ng-repeat="cou in course" readonly>{{cou.COURSE_NAME}}</label>
 				</div>
 				
 				<div class="col-md-3">
@@ -362,9 +362,10 @@
 				[ 'angularUtils.directives.dirPagination','checklist-model' ]);
 		app.controller('ctrl', function($scope, $http) {
 			
-			getData();
+			/* getData(); */
 			getClass();
-			getGeneration();
+			getLastGeneration();
+			getLastCourse();
 			
 			function getData() {
 				$http({
@@ -388,23 +389,34 @@
 				});
 			};
 			
-			function getGeneration(){
+			function getLastGeneration(){
 				$http({
-						url:'http://localhost:8080/api/generation/find-all-generation',
+						url:'http://localhost:8080/api/generation/get-last-generation',
 						method:'GET'
 					}).then(function(response){
-						$scope.generations = response.data.DATA;
+						$scope.generation = response.data.DATA;
 					}, function(response){
 						alert("error");
 					});
 			};
 			
-			function updateStatus(id){
+			/* function updateStatus(id){
 				http({
 					url:'http://localhost:8080/api/student/updateStatus/'+id,
 					method:'POST'
 				}).then(function(response){
 					
+				}, function(response){
+					alert("error");
+				});
+			} */
+			
+			function getLastCourse(){
+				$http({
+					url:'http://localhost:8080/api/course/get-last-course',
+					method:'GET'
+				}).then(function(response){
+					$scope.course = response.data.DATA;
 				}, function(response){
 					alert("error");
 				});

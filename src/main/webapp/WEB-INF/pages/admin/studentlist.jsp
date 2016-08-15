@@ -340,7 +340,7 @@
 					<div class="input-group pull-left">
 						<span class="input-group-addon"
 							style="color: white; background-color: green;"> Generation
-						</span> <select class="form-control selectpicker" ng-init="searchGeneration | searchGeneration='Generation'" ng-model="searchGeneration" ng-mouseleave="getGeneration()">
+						</span> <select class="form-control selectpicker" ng-init="searchGeneration | searchGeneration='Generation'" ng-model="searchGeneration" ng-change="getGeneration()">
 							<option value="">Generation</option>
 							<option ng-repeat="gen in generations | orderBy:'GENERATION_NAME'">{{gen.GENERATION_NAME}}</option>
 						</select>
@@ -351,7 +351,7 @@
 					<div class="input-group pull-left">
 						<span class="input-group-addon"
 							style="color: white; background-color: green;"> Course
-						</span> <select class="form-control selectpicker" ng-model="searchCourse"  ng-init="searchCourse | searchCourse='Course'" ng-mouseleave="getCourse()">
+						</span> <select class="form-control selectpicker" ng-model="searchCourse"  ng-init="searchCourse | searchCourse='Course'" ng-change="getCourse()">
 							<option value="">Course</option>
 							<option>Basic Course</option>
 							<option>Advance Course</option>
@@ -364,7 +364,7 @@
 						<span class="input-group-addon"
 							style="color: white; background-color: green;"> Class
 						</span> <select class="form-control selectpicker" ng-model="searchClass" ng-init="searchClass | searchClass='Class'">
-							<option value="">Class</option>
+							<option value="" selected>Class</option>
 							<option ng-repeat="class in classes | orderBy:'CLASS_NAME'">{{class.CLASS_NAME}}</option>
 						</select>
 					</div>
@@ -438,6 +438,8 @@
 			</fieldset>
 			</div>
 		</section>
+		<input type="text" ng-repeat="gen in last_gen" value="{{gen.GENERATION_NAME}}" id="gen" style="display:none">
+		<input type="text" ng-repeat="cou in last_cou" value="{{cou.COURSE_NAME}}" id="course" style="display:none">
 	</div>
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footer.jsp" />
@@ -451,14 +453,18 @@
 		var app = angular.module('appListStu', ['angularUtils.directives.dirPagination','ngJsonExportExcel']);
 			app.controller('ctrlListStu', function($scope, $http){
 				
+				getStudentLastGen();
 				getGeneration();
-				getClass();
+				getLastGeneration();
+				getLastCourse();
+			
 				$scope.getCourse = function(){
 					getData();
 				}
 				
 				$scope.getGeneration = function(){
 					getData();
+					getClass($('#gen').val(), $('#course').val());
 				}
 				
 				$scope.inactive = function(id){
@@ -475,6 +481,18 @@
 							updateStatus(id);
 							
 						});
+				}
+				
+				function getStudentLastGen(){
+					$http({
+						url:'http://localhost:8080/api/student/get-student-in-last-generation',
+						method:'GET'
+					}).then(function(response){
+						$scope.students = response.data.DATA;
+						getClass($('#gen').val(), $('#course').val());
+					}, function(response){
+						alert("error");
+					});
 				}
 				
 				function updateStatus(id){
@@ -498,20 +516,48 @@
 								method:'POST'
 							}).then(function(response){
 								$scope.students = response.data.DATA;
+								getClass($scope.searchGeneration, $scope.searchCourse);
 							}, function(response){
 								alert("error");
 							});
 				};
 				
-				function getClass() {
+				function getLastGeneration(){
 					$http({
-						url : 'http://localhost:8080/api/class/find-all-class',
-						method : 'GET'
-					}).then(function(response) {
-						$scope.classes = response.data.DATA;
-					}, function(response) {
+							url:'http://localhost:8080/api/generation/get-last-generation',
+							method:'GET'
+						}).then(function(response){
+							$scope.last_gen = response.data.DATA;
+						}, function(response){
+							alert("error");
+						});
+				};
+				
+				function getLastCourse(){
+					$http({
+						url:'http://localhost:8080/api/course/get-last-course',
+						method:'GET'
+					}).then(function(response){
+						$scope.last_cou = response.data.DATA;
+					}, function(response){
 						alert("error");
 					});
+				}
+				
+				function getClass(generation, course) {
+					$http({
+						url : 'http://localhost:8080/api/class/get-class-by-generation-course',
+						data:{
+							"COURSE_NAME": course,
+							"GENERATION_NAME": generation
+						},
+						method : 'POST'
+					}).then(function(response) {
+						$scope.classes = response.data.DATA;
+						$scope.searchClass="";
+					}, function(response) {
+						alert("error");
+					}); 
 				};
 				
 				function getGeneration(){
@@ -628,7 +674,7 @@
 					$('input').val("");
 					$("select").prop("selectedIndex",0);
 				}
-			});
+		});
 	</script>
 	<script type="text/javascript">
 		//click on image
