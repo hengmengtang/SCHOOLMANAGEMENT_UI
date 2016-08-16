@@ -26,11 +26,11 @@
 		<!-- sidebar: style can be found in sidebar.less -->
 		<section class="sidebar">
 			<!-- Sidebar user panel -->
-			<div class="user-panel">
-				<div class="pull-left image">
-					<img src="" class="img-circle" alt="Image">
+			<div class="user-panel ">
+				<div class="pull-left image ">
+					<img src="${pageContext.request.contextPath}/resources/images/DashboardLogo.png" class="img-circle" alt="Image" style="height:25px; width:25px; margin-right:0px">
 				</div>
-				<div class="pull-left info">
+				<div class="pull-left info" style="margin-left:0px">
 					<p>HRD Management System</p>
 				</div>
 			</div>

@@ -11,7 +11,7 @@
 	<jsp:include page="index.jsp" />
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper boxcontent"
-		style="padding-left: 15px; padding-right: 15px">
+		style="padding-left: 15px; padding-right: 15px" ng-app="appAddScore" ng-controller="scoreCtrl">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 		<h1>
@@ -59,12 +59,68 @@
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;">
 								Instructor </span> 
-								<input class="form-control selectpicker" placeholder="Instructor name"
-								ng-init="searchGeneration | searchGeneration='Generation'"
-								ng-model="searchGeneration" ng-mouseleave="getGeneration()">
+								<!-- <input class="form-control selectpicker" placeholder="Instructor name"
+								ng-model=""  > -->
+								<select class="form-control" ng-model="instructors">
+									<option value="">Select Staff</option>
+									<option ng-repeat="ins in instructor " value="{{ins.ENGLISH_FULL_NAME}}">
+									{{ins.ENGLISH_FULL_NAME}}
+									</option>
+								</select>
 						</div>
 					</div>
+					<div class="col-md-3 pull-left">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;">
+								Generation </span> 
+								<input class="form-control selectpicker" ng-model="generation"  value="4 Generation" ng-init="generation='4 Generation' "
+							 readonly> 
+						</div>
+					</div>
+
+					<div class="col-md-2 pull-left">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;"> Course
+							</span> 
+							<input class="form-control selectpicker" 
+								ng-model="course" value="Advance Course" ng-init="course='Advance Course'"
+								 readonly>
+						</div>
+					</div>
+					<div class="col-md-2 pull-left">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;"> Subject </span>
+							<select class="form-control selectpicker" ng-model="subject">
+								<option value=" ">Subject</option>
+								<option value="ios">IOS</option>
+								<option value="android">Android</option>
+								<option value="delphi">Delphi</option>
+								<option value="spring">Spring</option>
+								<option value="c">C</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2 pull-left">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;"> Class </span>
+							<select class="form-control selectpicker" ng-model="Class"
+								ng-init="searchClass | searchClass='Class'">
+								<option value="">Class</option>
+								<option>BTB</option>
+								<option>KSP</option>
+								<option>PP</option>
+								<option>SR</option>
+								
+							</select>
+						</div>
+					</div>
+					
 				</div>
+				
 				<br>
 				<!-- Start Selection -->
 				<div class="row">
@@ -84,48 +140,25 @@
 
 						</div>
 					</div>
-					<!-- End Selection -->
-					<div class="col-md-3 pull-left">
-						<div class="input-group pull-left">
-							<span class="input-group-addon"
-								style="color: white; background-color: #00A65A;">
-								Generation </span> 
-								<input class="form-control selectpicker" value="4 Generation"
-								ng-init="searchGeneration | searchGeneration='Generation'"
-								ng-model="searchGeneration" ng-mouseleave="getGeneration()" readonly>
-						</div>
-					</div>
-
+					<div class="col-md-1"> </div>
 					<div class="col-md-2 pull-left">
 						<div class="input-group pull-left">
 							<span class="input-group-addon"
-								style="color: white; background-color: #00A65A;"> Course
+								style="color: white; background-color: #00A65A;"> Date
 							</span> 
 							<input class="form-control selectpicker"
-								ng-model="searchCourse" value="Advance Course"
-								ng-init="searchCourse | searchCourse='Course'"
-								ng-mouseleave="getCourse()" readonly>
+								ng-model="date | date:'yyyy-MM-dd'"   readonly>
 						</div>
 					</div>
-
-					<div class="col-md-2 pull-left">
-						<div class="input-group pull-left">
-							<span class="input-group-addon"
-								style="color: white; background-color: #00A65A;"> Class </span>
-							<select class="form-control selectpicker" ng-model="searchClass"
-								ng-init="searchClass | searchClass='Class'">
-								<option value="">Class</option>
-								<option>BTB</option>
-								<option>KSP</option>
-								<option>PP</option>
-								<option>SR</option>
-							</select>
-						</div>
-					</div>
+					<!-- End Selection -->
+					
 
 					<!--Search Location-->
-
-					<div class="col-md-3">
+					<div class="col-md-5"> </div>
+					
+					
+					
+					<div class="col-md-2">
 						<button class="btn btn-primary" id="addScore">Add Score</button>
 						<button class="btn btn-primary" id="viewScore">View Score</button>
 						<input type="hidden" id="getUser" value="korean">
@@ -230,6 +263,8 @@
 	</div>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
+	<script src="${pageContext.request.contextPath}/resources/angularjs/angular.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script>
         $(document).ready(function(){
         	
@@ -320,8 +355,53 @@
             }
     });
 });
-
 </script>
+<script>
+		var app = angular.module('appAddScore', []);
+			app.controller('scoreCtrl', function($scope, $http){
+				
+				$scope.date = new Date();
+				function getData(){
+					$http({
+							url:'http://localhost:8080/api/staff/display-staff-in-class',
+							method:'GET'
+						}).then(function(response){
+							$scope.instructor = response.data.DATA;
+							console.log($scope.instructor)
+						}, function(response){
+							alert("error");
+						});
+				};
+				getData();
+				
+				/* getGenID(); */
+				/*$scope.add=function(){
+					$http({
+						url:'http://localhost:8080/api/mark/add-mark,
+						method:'POST',
+						data:{
+							'DATE': $scope.date,
+							'MARK': $scope.score,
+							'PARAMETER_FOR_ADD_MARK': {
+								'STAFF_NAME': $scope.instructors,
+								'SUBJECT_TYPE_NAME': $scope.subject,
+								'CLASS_ROOM_NAME': $scope.Class,
+								'STUDENT_NAME': $scope.student
+							}s
+						}
+					}).then(function(response){
+						getData();
+					}, function(response){
+						alert("error");
+					});
+				}; */   
+				
+				
+			});
+	
+			    
+			
+	</script>
 
 </body>
 </html>
