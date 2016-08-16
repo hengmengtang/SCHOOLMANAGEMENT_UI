@@ -11,11 +11,11 @@
 	<jsp:include page="index.jsp" />
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper boxcontent"
-		style="padding-left: 15px; padding-right: 15px">
+		style="padding-left: 15px; padding-right: 15px" ng-app="appAddScore" ng-controller="scoreCtrl">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 		<h1>
-			<b>HRD</b> Student Score
+			HRD<small> Student Score </small>
 		</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -24,191 +24,247 @@
 		</section>
 
 		<!-- Main content-->
-		<div class="content">
-			<div class="row">
-				<div class="col-md-12 col-xs-6 bg-dafault">
-					<div class="small-box bg-aqua">
-						<div class="inner"
-							style="background-color: #E0F2F2; border-top: 3px solid green; color: black;">
-							<div class="row">
-								<div class="col-md-8" style="font-size: 18px;">
-									<i class="fa fa-users" aria-hidden="true"></i> Student Score
-								</div>
-								<div class="col-md-4">
-									<nav class="page">
-									<ul class="pagination">
-										<li><a href="#">First</a></li>
-										<li><a href="#" aria-label="Previous"> <span
-												aria-hidden="true">&laquo;</span>
-										</a></li>
-										<li><a href="#">1</a></li>
-										<li><a href="#">2</a></li>
-										<li><a href="#">3</a></li>
-										<li><a href="#" aria-label="Next"> <span
-												aria-hidden="true">&raquo;</span>
-										</a></li>
-										<li><a href="#">Last</a></li>
-									</ul>
-									</nav>
-								</div>
-							</div>
-							<!-- Start Selection -->
-							<div class="row">
-								<div class="col-md-2">
+		<section class="content">
+		<div class="container-fluid"
+			style="border: 2px solid green; background-color: #e0f2f2">
+			<fieldset>
+				<div class="row">
+					<!-- Title -->
+					<div class="col-md-2 pull-left">
+						<i class="fa fa-graduation-cap"></i> <span style="color: black;">Student
+							Score</span>
+					</div>
+					<!-- End Title -->
 
-									<div class="input-group pull-left">
-										<span class="input-group-addon"
-											style="background-color: #00A65A;"> <i
-											class="fa fa-align-justify" style="color: white;"></i>
-										</span> <select class="form-control selectpicker">
-											<option>1</option>
-											<option>2</option>
-											<option>3</option>
-											<option>4</option>
-											<option>5</option>
-										</select>
-
-									</div>
-								</div>
-								<!-- End Selection -->
-								<div class="col-md-2">
-									<!--  <button class="btn btn-success" style="height: 30px;">Generation</button>-->
-									<label id="generation"
-										style="margin-left: 20px; font-size: 20px">Generation</label>
-								</div>
-								<!--Search Location-->
-								<div class="col-md-3">
-									<div class="input-group" style="margin-left: 20px;">
-										<span class="input-group-addon" id="basic-addon1"
-											style="background-color: #00A65A;">Course </span> <select
-											style="width: 160px; height: 30px;">
-											<option>Basic</option>
-											<option>Advance</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="input-group">
-										<span class="input-group-addon" id="basic-addon1"
-											style="background-color: #00A65A;">Class </span> <select
-											style="width: 160px; height: 30px;">
-											<option>Battambang</option>
-											<option>Phnom Penh</option>
-											<option>Siem Reap</option>
-											<option>Kampongsom</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<button class="btn btn-primary" id="addScore">Add
-										Score</button>
-									<button class="btn btn-primary" id="viewScore">View
-										Score</button>
-									<input type="hidden" id="getUser" value="korean">
-								</div>
-							</div>
-							<!-- End Selection -->
-							<!-- Start Add Score Table Here-->
-							<div style="margin-top: 20px; display: none" id="addScoreTable">
-								<table class="table">
-									<thead>
-										<tr style="font-size: 16px;">
-											<th>N <sup>o</sup></th>
-											<th>Student&#x2191;&#x2193;</th>
-											<th>Class&#x2191;&#x2193;</th>
-											<th>Korean&#x2191;&#x2193;</th>
-											<th>Web&#x2191;&#x2193;</th>
-											<th>Java&#x2191;&#x2193;</th>
-											<th>Total Score&#x2191;&#x2193;</th>
-											<th>Add Score</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>Sam Ol Sam On</td>
-											<td>Battambang</td>
-											<td>100</td>
-											<td>100</td>
-											<td>100</td>
-											<td>100</td>
-											<td><input type="text" pattern="^[0-9]$" maxlength="5"
-												class="koreanScore" placeholder="Korean Score"
-												style="display: none;"> <input type="text"
-												pattern="^[0-9]$" maxlength="5" class="javaScore"
-												placeholder="Java Score" style="display: none;"> <input
-												type="text" pattern="^[0-9]$" maxlength="5" class="webScore"
-												placeholder="Web Score" style="display: none;"></td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>Sam Ol Sam On</td>
-											<td>Battambang</td>
-											<td>100</td>
-											<td>100</td>
-											<td>100</td>
-											<td>100</td>
-											<td><input type="text" pattern="^[0-9]$" maxlength="5"
-												class="koreanScore" placeholder="Korean Score"
-												style="display: none;"> <input type="text"
-												pattern="^[0-9]$" maxlength="5" class="javaScore"
-												placeholder="Java Score" style="display: none;"> <input
-												type="text" pattern="^[0-9]$" maxlength="5" class="webScore"
-												placeholder="Web Score" style="display: none;"></td>
-										</tr>
-									</tbody>
-								</table>
-								<input type="submit" value="Save" class="btn btn-success"
-									style="margin-left: 1000px">
-							</div>
-
-							<!-- End Add Score Table Here -->
-							<!-- Start View Score Table Here -->
-							<div style="margin-top: 20px; display: none" id="viewScoreTable">
-								<table class="table">
-									<thead>
-										<tr style="font-size: 16px;">
-											<th>N <sup>o</sup></th>
-											<th>Student&#x2191;&#x2193;</th>
-											<th>Class&#x2191;&#x2193;</th>
-											<th>Korean&#x2191;&#x2193;</th>
-											<th>Web&#x2191;&#x2193;</th>
-											<th>Java&#x2191;&#x2193;</th>
-											<th>Total Score&#x2191;&#x2193;</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>Sam Ol Sam On</td>
-											<td>Battambang</td>
-											<td>100</td>
-											<td>100</td>
-											<td>100</td>
-											<td>100</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>Sam Ol Sam On</td>
-											<td>Battambang</td>
-											<td>100</td>
-											<td>100</td>
-											<td>100</td>
-											<td>100</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-
-							<!-- End View Score Table Here -->
+					<!-- pagination -->
+					<div class="col-md-10">
+						<ul class="pagination pull-right" style="margin-top: 2px;">
+							<li><a href="#">First</a></li>
+							<li><a href="#" aria-label="Previous"> <span
+									aria-hidden="true">&laquo;</span>
+							</a></li>
+							<li><a href="#">1</a></li>
+							<li><a href="#" aria-label="Next"> <span
+									aria-hidden="true">&raquo;</span>
+							</a></li>
+							<li><a href="#">Last</a></li>
+						</ul>
+					</div>
+					<!-- End Pagination -->
+				</div>
+				<!-- Testing -->
+				<div class="row">
+					<div class="col-md-3 pull-left">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;">
+								Instructor </span> 
+								<!-- <input class="form-control selectpicker" placeholder="Instructor name"
+								ng-model=""  > -->
+								<select class="form-control" ng-model="instructors">
+									<option value="">Select Staff</option>
+									<option ng-repeat="ins in instructor " value="{{ins.ENGLISH_FULL_NAME}}">
+									{{ins.ENGLISH_FULL_NAME}}
+									</option>
+								</select>
 						</div>
 					</div>
+					<div class="col-md-3 pull-left">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;">
+								Generation </span> 
+								<input class="form-control selectpicker" ng-model="generation"  value="4 Generation" ng-init="generation='4 Generation' "
+							 readonly> 
+						</div>
+					</div>
+
+					<div class="col-md-2 pull-left">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;"> Course
+							</span> 
+							<input class="form-control selectpicker" 
+								ng-model="course" value="Advance Course" ng-init="course='Advance Course'"
+								 readonly>
+						</div>
+					</div>
+					<div class="col-md-2 pull-left">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;"> Subject </span>
+							<select class="form-control selectpicker" ng-model="subject">
+								<option value=" ">Subject</option>
+								<option value="ios">IOS</option>
+								<option value="android">Android</option>
+								<option value="delphi">Delphi</option>
+								<option value="spring">Spring</option>
+								<option value="c">C</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-2 pull-left">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;"> Class </span>
+							<select class="form-control selectpicker" ng-model="Class"
+								ng-init="searchClass | searchClass='Class'">
+								<option value="">Class</option>
+								<option>BTB</option>
+								<option>KSP</option>
+								<option>PP</option>
+								<option>SR</option>
+								
+							</select>
+						</div>
+					</div>
+					
+				</div>
+				
+				<br>
+				<!-- Start Selection -->
+				<div class="row">
+					<div class="col-md-2">
+
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="background-color: #00A65A;"> <i
+								class="fa fa-align-justify" style="color: white;"></i>
+							</span> <select class="form-control selectpicker">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+							</select>
+
+						</div>
+					</div>
+					<div class="col-md-1"> </div>
+					<div class="col-md-2 pull-left">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;"> Date
+							</span> 
+							<input class="form-control selectpicker"
+								ng-model="date | date:'yyyy-MM-dd'"   readonly>
+						</div>
+					</div>
+					<!-- End Selection -->
+					
+
+					<!--Search Location-->
+					<div class="col-md-5"> </div>
+					
+					
+					
+					<div class="col-md-2">
+						<button class="btn btn-primary" id="addScore">Add Score</button>
+						<button class="btn btn-primary" id="viewScore">View Score</button>
+						<input type="hidden" id="getUser" value="korean">
+					</div>
+				</div>
+				<!-- End Selection -->
+				<!-- Start Add Score Table Here-->
+				<div style="margin-top: 20px; display: none" id="addScoreTable">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr style="font-size: 16px;">
+									<th>N <sup>o</sup></th>
+									<th>Student&#x2191;&#x2193;</th>
+									<th>Course</th>
+									<th>Class&#x2191;&#x2193;</th>
+									<th>Score</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>Sam Ol Sam On</td>
+									<td>Advance Course</td>
+									<td>Battambang</td>
+									<td><input type="text" pattern="^[0-9]$" maxlength="5"
+										class="koreanScore" placeholder="Korean Score"
+										style="display: none;"> <input type="text"
+										pattern="^[0-9]$" maxlength="5" class="javaScore"
+										placeholder="Java Score" style="display: none;"> <input
+										type="text" pattern="^[0-9]$" maxlength="5" class="webScore"
+										placeholder="Web Score" style="display: none;"></td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>MengTang</td>
+									<td>Advance Course</td>
+									<td>Battambang</td>
+									<td><input type="text" pattern="^[0-9]$" maxlength="5"
+										class="koreanScore" placeholder="Korean Score"
+										style="display: none;"> <input type="text"
+										pattern="^[0-9]$" maxlength="5" class="javaScore"
+										placeholder="Java Score" style="display: none;"> <input
+										type="text" pattern="^[0-9]$" maxlength="5" class="webScore"
+										placeholder="Web Score" style="display: none;"></td>
+								</tr>
+							</tbody>
+						</table>
+						<input type="submit" value="Save" class="btn btn-success"
+							style="margin-left: 1000px">
+					</div>
+				</div>
+				<!-- End Add Score Table Here -->
+				<!-- Start View Score Table Here -->
+				<div style="margin-top: 20px; display: none" id="viewScoreTable">
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr style="font-size: 16px;">
+									<th>N <sup>o</sup></th>
+									<th>Student&#x2191;&#x2193;</th>
+									<th>Class&#x2191;&#x2193;</th>
+									<th>Korean&#x2191;&#x2193;</th>
+									<th>Web&#x2191;&#x2193;</th>
+									<th>Java&#x2191;&#x2193;</th>
+									<th>Total Score&#x2191;&#x2193;</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>Sam Ol Sam On</td>
+									<td>Battambang</td>
+									<td>100</td>
+									<td>100</td>
+									<td>100</td>
+									<td>100</td>
+								</tr>
+								<tr>
+									<td>1</td>
+									<td>Sam Ol Sam On</td>
+									<td>Battambang</td>
+									<td>100</td>
+									<td>100</td>
+									<td>100</td>
+									<td>100</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- End View Score Table Here -->
+				</div>
+				</div>
 				</div>
 			</div>
 		</div>
+		</fieldset>
+		</div>
+		<!-- End page --> 
+		</section>
 	</div>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
+	<script src="${pageContext.request.contextPath}/resources/angularjs/angular.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script>
         $(document).ready(function(){
         	
@@ -299,8 +355,53 @@
             }
     });
 });
-
 </script>
+<script>
+		var app = angular.module('appAddScore', []);
+			app.controller('scoreCtrl', function($scope, $http){
+				
+				$scope.date = new Date();
+				function getData(){
+					$http({
+							url:'http://localhost:8080/api/staff/display-staff-in-class',
+							method:'GET'
+						}).then(function(response){
+							$scope.instructor = response.data.DATA;
+							console.log($scope.instructor)
+						}, function(response){
+							alert("error");
+						});
+				};
+				getData();
+				
+				/* getGenID(); */
+				/*$scope.add=function(){
+					$http({
+						url:'http://localhost:8080/api/mark/add-mark,
+						method:'POST',
+						data:{
+							'DATE': $scope.date,
+							'MARK': $scope.score,
+							'PARAMETER_FOR_ADD_MARK': {
+								'STAFF_NAME': $scope.instructors,
+								'SUBJECT_TYPE_NAME': $scope.subject,
+								'CLASS_ROOM_NAME': $scope.Class,
+								'STUDENT_NAME': $scope.student
+							}s
+						}
+					}).then(function(response){
+						getData();
+					}, function(response){
+						alert("error");
+					});
+				}; */   
+				
+				
+			});
+	
+			    
+			
+	</script>
 
 </body>
 </html>

@@ -3,8 +3,12 @@
 	<header class="main-header">
 		<!-- Logo -->
 		<a href="index2.html" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
-			<span class="logo-mini"><b>S</b>M</span> <!-- logo for regular state and mobile devices -->
-			<span class="logo-lg"><b>School</b>Management</span>
+			<div class="user-panel ">
+				<div class="pull-left image ">
+					<img src="${pageContext.request.contextPath}/resources/images/DashboardLogo.png" class="img-circle" alt="Image" style="height:25px; width:25px; margin-right:0px">
+					<b>KSchool</b>
+				</div>
+			</div>
 		</a>
 		<!-- Header Navbar: style can be found in header.less -->
 		<nav class="navbar navbar-static-top">
@@ -15,8 +19,33 @@
 
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
-					<li><a href="#" data-toggle="control-sidebar"><i
-							class="fa fa-frown-o" aria-hidden="true"></i></i> user login</a></li>
+					 <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="${pageContext.request.contextPath}/resources/images/pic1.jpg" class="user-image" alt="User Image">
+              <span class="hidden-xs">Heng MengTang</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="${pageContext.request.contextPath}/resources/images/pic1.jpg" class="img-circle" alt="User Image">
+
+                <p>
+                  Heng MengTang - Instructor
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
 				</ul>
 			</div>
 		</nav>
@@ -26,14 +55,7 @@
 		<!-- sidebar: style can be found in sidebar.less -->
 		<section class="sidebar">
 			<!-- Sidebar user panel -->
-			<div class="user-panel">
-				<div class="pull-left image">
-					<img src="" class="img-circle" alt="Image">
-				</div>
-				<div class="pull-left info">
-					<p>HRD Management System</p>
-				</div>
-			</div>
+			
 			<!-- search form -->
 			<form action="#" method="get" class="sidebar-form">
 				<div class="input-group">
