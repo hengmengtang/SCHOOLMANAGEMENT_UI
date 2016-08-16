@@ -15,8 +15,33 @@
 
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
-					<li><a href="#" data-toggle="control-sidebar"><i
-							class="fa fa-frown-o" aria-hidden="true"></i></i> Heng MengTang</a></li>
+					 <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="${pageContext.request.contextPath}/resources/images/pic1.jpg" class="user-image" alt="User Image">
+              <span class="hidden-xs">Heng MengTang</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="${pageContext.request.contextPath}/resources/images/pic1.jpg" class="img-circle" alt="User Image">
+
+                <p>
+                  Heng MengTang - Instructor
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
 				</ul>
 			</div>
 		</nav>
