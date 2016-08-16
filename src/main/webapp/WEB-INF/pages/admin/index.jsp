@@ -16,7 +16,7 @@
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
 					<li><a href="#" data-toggle="control-sidebar"><i
-							class="fa fa-frown-o" aria-hidden="true"></i></i> user login</a></li>
+							class="fa fa-frown-o" aria-hidden="true"></i></i> Heng MengTang</a></li>
 				</ul>
 			</div>
 		</nav>
