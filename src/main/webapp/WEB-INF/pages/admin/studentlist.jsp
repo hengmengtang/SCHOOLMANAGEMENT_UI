@@ -551,7 +551,7 @@
 							url:'http://localhost:8080/api/generation/get-last-generation',
 							method:'GET'
 						}).then(function(response){
-							$scope.last_gen = response.data.DATA;
+							$scope.last_gen = response.data.DATA.GENERATION_NAME;
 						}, function(response){
 							alert("error");
 						});

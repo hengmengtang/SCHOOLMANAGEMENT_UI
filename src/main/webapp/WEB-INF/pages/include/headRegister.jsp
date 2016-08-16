@@ -54,3 +54,4 @@
 <script src="${pageContext.request.contextPath }/resources/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="${pageContext.request.contextPath }/resources/dist/js/demo.js"></script>
+<script src="${pageContext.request.contextPath }/resources/angularjs/angular-virual-key.js"></script>

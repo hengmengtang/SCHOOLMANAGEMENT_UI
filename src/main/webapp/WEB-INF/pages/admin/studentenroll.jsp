@@ -362,7 +362,7 @@
 				[ 'angularUtils.directives.dirPagination','checklist-model' ]);
 		app.controller('ctrl', function($scope, $http) {
 			
-			/* getData(); */
+			getData();
 			getClass();
 			getLastGeneration();
 			getLastCourse();
@@ -395,6 +395,7 @@
 						method:'GET'
 					}).then(function(response){
 						$scope.generation = response.data.DATA;
+						/* console.log($scope.generation); */
 					}, function(response){
 						alert("error");
 					});

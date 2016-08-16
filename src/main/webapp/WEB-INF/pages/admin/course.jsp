@@ -155,7 +155,7 @@
 						<div class="col-md-4" id="add-gen" style="display: none;">
 							<span>Course<span class="star">*</span></span> <input
 								type="text" class="form-control" placeholder="Course"
-								style="margin: 5px;" id="generation" ng-model="course">
+								style="margin: 5px;" id="course" ng-model="course">
 						</div>
 
 						<div class="col-md-4" id="start-date" style="display: none;">
@@ -208,6 +208,7 @@
 			getData();
 			getCourseID();
 			getGeneration();
+			clearInputControll();
 			
 			$scope.getGeneration = function(){
 				getData();
@@ -314,16 +315,19 @@
 						$("#hide").fadeOut("fast");
 					});
 					//--Add Course--//
-					$("#add-gen").click(function() {
-						$("#start-date").fadeIn("slow");
+					$("#add-gen").keypress(function() {
+						if($('#course').val() != '' && $('#course').val() != null)
+							$("#start-date").fadeIn("slow");
 					});
 					//--Add Class--//
-					$("#start-date").click(function() {
-						$("#end-date").fadeIn("slow");
+					$("#start-date").mouseleave(function() {
+						if($("#datepicker1").val() != '' && $("#datepicker1").val() != null)
+							$("#end-date").fadeIn("slow");
 					});
 
-					$("#end-date").click(function() {
-						$("#btn").fadeIn("slow");
+					$("#end-date").mouseleave(function() {
+						if($("#datepicker2").val() != '' && $("#datepicker2").val() != null)
+							$("#btn").fadeIn("slow");
 					});
 					//Date Time Picker
 					$(function() {

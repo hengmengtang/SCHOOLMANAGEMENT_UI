@@ -12,31 +12,32 @@
 	href="${pageContext.request.contextPath }/resources/style/customSubject.css"
 	rel="stylesheet" />
 </head>
-<body>
+<body class="bg">
 	<!-- index is menu -->
-	<jsp:include page="index.jsp" />
+<jsp:include page="index.jsp" />
 
-	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper boxcontent">
-		<!-- Content Header (Page header) -->
-		<section class="content-header">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper boxcontent">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
 
-		<h1>
-			Study <small>Management</small>
-		</h1>
-		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>
-					Home</a></li>
-			<li><a href="#">Student Management</a></li>
-			<li class="active">Subject</li>
-		</ol>
-		</section>
+	<h1>
+		Study <small>Management</small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>
+				Home</a></li>
+		<li><a href="#">Student Management</a></li>
+		<li class="active">Subject</li>
+	</ol>
+	</section>
 
-		<!-- Main content -->
-		<section class="content"> <!-- Main content --> <!-- Start Container -->
-		<div class="container-fluid"
-			style="border: 2px solid green; background-color: #e0f2f2">
-			<fieldset>
+	<!-- Main content -->
+	<section class="content" ng-app="app" ng-controller="ctrl">
+	<!-- Main content --> <!-- Start Container -->
+	<div class="container-fluid"
+		style="border: 2px solid green; background-color: #e0f2f2">
+		<fieldset>
 			<!-- Start Row 1 -->
 			<div class="row">
 
@@ -47,13 +48,11 @@
 
 				<div class="col-md-4">
 					<ul class="pagination pull-right" style="margin-top: 3px;">
-						<li><a href="#">First</a></li>
-						<li><a href="#" aria-label="Previous"> <span>&laquo;</span>
-						</a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#" aria-label="Next"> <span>&raquo;</span>
-						</a></li>
-						<li><a href="#">Last</a></li>
+						<dir-pagination-controls
+					       max-size="5"
+					       direction-links="true"
+					       boundary-links="true" >
+				    	</dir-pagination-controls>
 					</ul>
 				</div>
 			</div>
@@ -64,8 +63,8 @@
 					<div class="input-group pull-left">
 						<span class="input-group-addon" style="background-color: green;">
 							<i class="fa fa-align-justify" style="color: white;"></i>
-						</span> <select class="form-control select">
-							<option>1</option>
+						</span> <select class="form-control select" ng-model="No" ng-init="No | No='No'">
+							<option value="" selected>No</option>
 							<option>2</option>
 							<option>3</option>
 							<option>4</option>
@@ -80,7 +79,7 @@
 						<span class="input-group-addon"
 							style="color: white; background-color: green;"><i
 							class="fa fa-search" style="font-size: 16px;"></i> </span> <input
-							type="text" class="form-control" placeholder="Search Course">
+							type="text" class="form-control" placeholder="Search Course" ng-model="search" ng-init="search | search='Search Subject Name...'">
 					</div>
 				</div>
 				<!-- End Search Location -->
@@ -91,51 +90,26 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>N <sup>o</sup></th>
+								<th ng-click="sort('id')">N <sup>o</sup></th>
 								<th>Subject<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
 								<th>Description<span
 									style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
-								<th>Delete</th>
+								<th>Closed</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Java</td>
-								<td>J2SE,J2EE,J2ME</td>
+							<tr dir-paginate="subject in subjects|orderBy:sortKey:reverse|filter:{'SUBJECT_NAME':search}|itemsPerPage:No">
+								<td>{{$index+1}}</td>
+								<td>{{subject.SUBJECT_NAME}}</td>
+								<td>{{subject.DESCRIPTION}}</td>
 								<td>
-									<button type="button" class="btn btn-danger">
-										<i class="fa fa-trash-o"></i>
+									<button type="button" class="btn btn-danger"
+										ng-if="subject.ACTIVE==false">
+										<span class="glyphicon glyphicon-ok"></span>
 									</button>
-								</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>Web</td>
-								<td>HTML,CSS,JavaScript,JQuery,Ajax,JSON,AngularJS</td>
-								<td>
-									<button type="button" class="btn btn-danger">
-										<i class="fa fa-trash-o"></i>
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Korean</td>
-								<td>Sorgang 1A,1B</td>
-								<td>
-									<button type="button" class="btn btn-danger">
-										<i class="fa fa-trash-o"></i>
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>Spring</td>
-								<td>MVC,Maven</td>
-								<td>
-									<button type="button" class="btn btn-danger">
-										<i class="fa fa-trash-o"></i>
+									<button type="button" class="btn btn-success"
+										ng-if="subject.ACTIVE==true" ng-click="finish(subject.SUBJECT_ID)">
+										<span class="glyphicon glyphicon-ban-circle"></span>
 									</button>
 								</td>
 							</tr>
@@ -157,61 +131,158 @@
 			<!-- Start Add Generation -->
 			<div class="row" style="margin: 5px;">
 				<div id="hide">
-				<div class="col-md-5" style="display: none;" id="add-sub">
-					<span>Subject<span class="star">*</span></span><br> <input
-						type="text" class="form-control" placeholder="Subject"
-						style="margin: 5px;">
+					<div class="col-md-5" style="display: none;" id="add-sub">
+						<span>Subject<span class="star">*</span></span><br> <input
+							type="text" class="form-control" placeholder="Subject"
+							style="margin: 5px;" ng-model="sub" id="subject">
+					</div>
+
+					<div class="col-md-7" style="display: none;" id="des">
+						<span>Description<span class="star">*</span></span><br> <input
+							id="description" class="form-control"
+							placeholder="Description" style="margin: 5px;" ng-model="des">
+					</div>
+
 				</div>
 
-				<div class="col-md-7" style="display: none;" id="des">
-					<span>Description<span class="star">*</span></span><br> <input
-						id="datetimepicker" class="form-control"
-						placeholder="Description" style="margin: 5px;">
-				</div>
-
-			</div>
-
-			<div class="row pull-right" style="margin: 0px; margin-bottom: 7px;">
-				<div id="btn" style="display: none;">
-					<button type="button" class="btn btn-success" id="btnSave">Save</button>
-					<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
+				<div class="row pull-right"
+					style="margin: 0px; margin-bottom: 7px;">
+					<div id="btn" style="display: none;">
+						<button type="button" class="btn btn-success" id="btnSave">Save</button>
+						<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
+					</div>
 				</div>
 			</div>
-			</div>
-			</fieldset>
-		</div>
-		</section>
-		<!-- /.content -->
+		</fieldset>
 	</div>
-	<jsp:include page="../include/footer.jsp" />
-	<jsp:include page="../include/footDashboard.jsp" />
-	<script>
-  		$.widget.bridge('uibutton', $.ui.button);
-	</script>
+	</section>
+	<!-- /.content -->
+</div>
+<jsp:include page="../include/footer.jsp" />
+<jsp:include page="../include/footDashboard.jsp" />
+
+<script
+	src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
+<script
+	src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
+<script>
+		var app = angular.module('app',
+				[ 'angularUtils.directives.dirPagination' ]);
+		app.controller('ctrl', function($scope, $http) {
+			
+			getData();
+			/* getCourseID();
+			getGeneration();
+			clearInputControll(); */
+			
+			function getData() {
+				$http({
+					url : 'http://localhost:8080/api/subject/find-all-subject',
+					method : 'GET'
+				}).then(function(response) {
+					$scope.subjects = response.data.DATA;
+					console.log($scope.subjects)
+				}, function(response) {
+					alert("error");
+				});
+			};
+			
+			/* function getCourseStatus() {
+				$http({
+					url : 'http://localhost:8080/api/course/find-all-course',
+					method : 'GET'
+				}).then(function(response) {
+					$scope. = response.data.DATA.STATUS;
+				}, function(response) {
+					alert("error");
+				});
+			}; */
+			
+			/* function getGeneration(){
+				$http({
+						url:'http://localhost:8080/api/generation/find-all-generation',
+						method:'GET'
+					}).then(function(response){
+						$scope.generations = response.data.DATA;
+					}, function(response){
+						alert("error");
+					});
+			};*/
+			
+			/* $scope.submit = function(){
+				$http({
+					url: 'http://localhost:8080/api/subject/add-subject',
+					data:{
+						  "ACTIVE": true,
+						  "DESCRIPTION": $scope.description,
+						  "SUBJECT_ID": "string",
+						  "SUBJECT_NAME": $scope.subject
+					},
+					method: 'POST'
+				}).then(function(response){
+					getData();
+					clearInputControll();
+				}, function(response){
+					
+				})
+			} */
+			
+			/*function getSubjectID(){
+				$http({
+						url:'http://localhost:8080/api/subject/auto-subject-id',
+						method:'GET'
+					}).then(function(response){
+						$scope.id = response.data.DATA.MAX_ID;
+					}, function(response){
+						alert("error");
+					});
+			};
+			
+			$scope.finish = function(id){
+				swal({   title: "Are you sure want finish?",   text: "You want finish!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Finished!",   closeOnConfirm: false }, function(){   
+						swal("Finished!", "Finished.", "success"); 
+						alert(id);
+						
+					});
+			}
+			 */
+			 
+			$scope.sort = function(keyname){
+		        $scope.sortKey = keyname;   //set the sortKey to the param passed
+		        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+		    }
+			 
+			function clearInputControll(){
+				$('input').val("");
+			}
+		});
+</script>
+<script>
 	<!--Add Script-->
-	<script>
-$( document ).ready(function() {
-
-  $("#btn-sub").click (function(){
-	  $("#hide").fadeIn();
-    $("#add-sub").fadeIn();
-  });
-  $("#btnCancel").click(function(){
-		$("#add-sub").fadeOut("fast");
-		$("#des").fadeOut("fast");
-		$("#btn").fadeOut("fast");
-		$("#hide").fadeOut("fast");
-	});
-  //--Add Course--//
-  $( "#add-sub" ).click(function() {
-    $("#des").fadeIn( "slow");
-  });
-
-  $( "#des" ).click(function() {
-    $("#btn").fadeIn( "slow");
-  });
-
-});
+	 $( document ).ready(function() {
+	
+	  $("#btn-sub").click (function(){
+		$("#hide").fadeIn();
+	    $("#add-sub").fadeIn();
+	  });
+	  $("#btnCancel").click(function(){
+			$("#add-sub").fadeOut("fast");
+			$("#des").fadeOut("fast");
+			$("#btn").fadeOut("fast");
+			$("#hide").fadeOut("fast");
+		});
+	  //--Add Course--//
+	  $( "#add-sub" ).keypress(function() {
+		  if($('#subject').val() != '' && $('#subject').val() != null) 
+	    	$("#des").fadeIn( "slow");
+	  });
+	
+	  $( "#des" ).keypress(function() {
+		  if($('#description').val() != '' && $('#description').val() != null) 
+	    	$("#btn").fadeIn( "slow");
+	  });
+	
+	}); 
 </script>
 </body>
 </html>
