@@ -9,29 +9,29 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>School Management System</title>
 <jsp:include page="../include/headRegister.jsp" />
-<jsp:include page="../include/headDashboard.jsp" />
 </head>
 <body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" >
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
 
-	<!-- Main content-->
-	 <section class="content-header" >
-      <h1 >
-        Student <small>Management</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">My Profile</li>
-      </ol>
-    </section>
-	<section class="content" ng-app="app" ng-controller="ctrl"> <!--/.content-->
+		<!-- Main content-->
+		<section class="content-header">
+		<h1>
+			Student <small>Management</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li class="active">My Profile</li>
+		</ol>
+		</section>
+		<section class="content" ng-app="app" ng-controller="ctrl">
+		<!--/.content-->
 		<div class="container-fluid"
 			style="border: 2px solid green; background-color: #e0f2f2">
-			<form >
+			<form>
 				<fieldset>
 					<br>
 					<div class="row">
@@ -77,8 +77,8 @@
 						<div class="form-group col-md-3">
 							<label for="exampleInputStuID">Student ID: <span
 								class="star"> * </span></label> <span class="glyphicons glyphicons-user"></span>
-							<label class="form-control " id="stu_id"
-								placeholder="Enter ID" ng-bind="stu_id" readonly="readonly"></label>
+							<label class="form-control " id="stu_id" placeholder="Enter ID"
+								ng-bind="stu_id" readonly="readonly"></label>
 						</div>
 					</div>
 
@@ -87,13 +87,15 @@
 							<label for="exampleInputFName">First Name <span
 								class="star"> * </span></label> <span class="glyphicons glyphicons-user"></span>
 							<input type="text" class="form-control " id="fname"
-								placeholder="Enter Your Khmer First Name" ng-model="fname" required>
+								placeholder="Enter Your Khmer First Name" ng-model="fname"
+								required>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="exampleInputLName">Last Name <span
 								class="star"> * </span></label> <input type="text" class="form-control"
 								id="lname" placeholder="Enter Your Khmer Last Name"
-								ng-model="lname" required>
+								ng-model="lname" required
+								onkeyup="this.value=this.value.replace(/[^Aa-zZ]/g,'');">
 						</div>
 					</div>
 					<div class="row">
@@ -101,13 +103,15 @@
 							<label for="exampleInputFLName">First Latin Name <span
 								class="star"> * </span></label> <span class="glyphicons glyphicons-user"></span>
 							<input type="text" class="form-control " id="latin_fname"
-								placeholder="Enter Your First Latin Name" ng-model="latin_fname" required>
+								placeholder="Enter Your First Latin Name" ng-model="latin_fname"
+								required onkeyup="this.value=this.value.replace(/[^Aa-zZ]/g,'');">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="exampleInputLLName">Last Latin Name <span
 								class="star"> * </span></label> <input type="text" class="form-control"
 								id="latin_lname" placeholder="Enter Your Last Latin Name"
-								ng-model="latin_lname" required>
+								ng-model="latin_lname" required
+								onkeyup="this.value=this.value.replace(/[^Aa-zZ]/g,'');">
 						</div>
 					</div>
 					<!--Radio-->
@@ -115,10 +119,10 @@
 						<div class="form-group col-md-3">
 							<label>Gender <span class="star"> * </span></label> <br> <label
 								class="radio-inline"> <input type="radio"
-								class="flat-red" name="gender" id="gender" value="M">
+								class="flat-red" name="gender" id="gender" value="M" required>
 								Male
 							</label> <label class="radio-inline"> <input type="radio"
-								class="flat-red" name="gender" id="gender" value="F">
+								class="flat-red" name="gender" id="gender" value="F" required>
 								Female
 							</label>
 						</div>
@@ -130,19 +134,22 @@
 						<div class="form-group col-md-3">
 							<label for="exampleInputNationality">Nationality</label> <input
 								type="text" class="form-control" id="nationality"
-								placeholder="Nationality" ng-model="nationality" required>
+								placeholder="Nationality" ng-model="nationality" required
+								onkeyup="this.value=this.value.replace(/[^Aa-zZ]/g,'');">
 						</div>
 						<div class="form-group col-md-3">
 							<label for="exampleInputSocialID">Social ID</label> <input
 								type="text" class="form-control" id="social_id"
-								placeholder="Social id" ng-model="social_id" required>
+								placeholder="Social id" ng-model="social_id" required
+								onkeyup=" this.value = this.value.replace(/[^0-9\.]/g,'');">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label for="exampleInputPOB">Place Of Birth</label> <input
-								type="text" class="form-control" id="pob"
-								placeholder="Address" ng-model="pob" required>
+								type="text" class="form-control" id="pob" placeholder="Address"
+								ng-model="pob" required
+								onkeyup="this.value=this.value.replace(/[^Aa-zZ]/g,'');">
 						</div>
 					</div>
 					<div class="row">
@@ -156,20 +163,18 @@
 					<div class="row">
 						<div class="form-group col-md-4">
 							<label for="exampleInputEmail2">Email <span class="star">
-									* </span></label> <input type="email" class="form-control"
-								id="email" placeholder="Your_email@gmail.com"
-								ng-model="email" required>
+									* </span></label> <input type="email" class="form-control" id="email"
+								placeholder="Your_email@gmail.com" ng-model="email" required>
 						</div>
 						<div class="form-group col-md-4">
 							<label for="Phone">Phone <span class="star"> * </span></label> <input
-								type="number" class="form-control" id="phone" placeholder="Phone"
-								ng-model="phone" data-inputmask='"mask": "(999) 999-9999"' data-mask required>
+								type="text" class="form-control" id="phone" placeholder="Phone"
+								ng-model="phone" data-mask='"mask": "(999) 999-9999"' required>
 						</div>
 						<div class="form-group col-md-4">
 							<label for="exampleInputPosition">Position <span
 								class="star"> * </span></label> <input type="input" class="form-control"
-								id="position" value="student"
-								readonly="readonly" required>
+								id="position" value="student" readonly="readonly" required>
 
 						</div>
 					</div>
@@ -177,8 +182,8 @@
 					<div class="row">
 						<div class="form-group col-md-4">
 							<label for="ITYear">IT Year<span class="star"> * </span></label>
-							<select class="form-control" id="it_year" name="it_year">
-								<option>Select - Option</option>
+							<select class="form-control" id="it_year" name="it_year" required>
+								<option>IT Year</option>
 								<option>Year 1</option>
 								<option>Year 2</option>
 								<option>Year 3</option>
@@ -188,12 +193,14 @@
 						</div>
 						<div class="form-group col-md-4">
 							<label for="Graduated">Graduated</label> <input type="text"
-								class="form-control" id="graduated" ng-model="graduated" placeholder="Graduation" required>
+								class="form-control" id="graduated" ng-model="graduated"
+								placeholder="Graduation" required 
+								onkeyup="this.value=this.value.replace(/[^Aa-zZ]/g,'');">
 						</div>
 						<div class="form-group col-md-4">
 							<label for="exampleInputUniversity">University</label> <select
-								class="form-control" id="university">
-								<option>Select - Option</option>
+								class="form-control" id="university" required>
+								<option>University</option>
 								<option>RUPP</option>
 								<option>RULE</option>
 								<option>SETEC</option>
@@ -211,8 +218,8 @@
 					<div class="row">
 						<div class="form-group col-md-4">
 							<label for="English">English Level</label> <select
-								class="form-control" id="english" name="english">
-								<option>Select - Option</option>
+								class="form-control" id="english" name="english" required>
+								<option>English Level</option>
 								<option>Primary</option>
 								<option>Intermediate</option>
 								<option>Advanced</option>
@@ -220,8 +227,8 @@
 						</div>
 						<div class="form-group col-md-4">
 							<label for="Korean">Korean Level</label> <select
-								class="form-control" id="korean" name="korean">
-								<option>Select - Option</option>
+								class="form-control" id="korean" name="korean" required>
+								<option>Korean Level</option>
 								<option>Primary</option>
 								<option>Intermediate</option>
 								<option>Advanced</option>
@@ -229,8 +236,8 @@
 						</div>
 						<div class="form-group col-md-4">
 							<label for="Status">Status</label> <select class="form-control"
-								id="status" name="status">
-								<option>Select - Option</option>
+								id="status" name="status" required>
+								<option>Status</option>
 								<option>Single</option>
 								<option>Married</option>
 							</select>
@@ -253,9 +260,9 @@
 						</div>
 						<div class="form-group col-md-6">
 							<label for="exampleInputFatherLName">Father's Latin Name</label>
-							<input type="text" class="form-control"
-								id="father_latin_name" placeholder="Father's Latin Name"
-								ng-model="father_latin_name" required>
+							<input type="text" class="form-control" id="father_latin_name"
+								placeholder="Father's Latin Name" ng-model="father_latin_name"
+								required onkeyup="this.value=this.value.replace(/[^Aa-zZ]/g,'');">
 						</div>
 					</div>
 					<div class="row">
@@ -269,12 +276,13 @@
 						<div class="form-group col-md-6">
 							<label for="FOccupation">Occupation</label> <input type="text"
 								class="form-control" id="foccupation"
-								placeholder="Father Occupation" ng-model="foccupation" required>
+								placeholder="Father Occupation" ng-model="foccupation" required
+								onkeyup="this.value=this.value.replace(/[^Aa-zZ]/g,'');">
 						</div>
 						<div class="form-group col-md-6">
-							<label for="FPhone">Father's Phone</label> <input type="number"
+							<label for="FPhone">Father's Phone</label> <input type="text"
 								class="form-control" id="fphone" placeholder="Father's Phone "
-								ng-model="fphone" required>
+								ng-model="fphone" required data-mask='"mask": "(999) 999-9999"'>
 						</div>
 
 					</div>
@@ -284,12 +292,14 @@
 						<div class="form-group col-md-6">
 							<label for="MotherName">Mother's Khmer Name</label> <input
 								type="text" class="form-control" id="kmname"
-								placeholder="Mother's Name" ng-model="mkname" required>
+								placeholder="Mother's Name" ng-model="mkname" required
+								onkeyup="this.value=this.value.replace(/[^Aa-zZ]/g,'');">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="FatherLName">Mother's Latin Name</label> <input
 								type="text" class="form-control" id="mlname"
-								placeholder="Mother's Latin Name" ng-model="mlname" required>
+								placeholder="Mother's Latin Name" ng-model="mlname" required
+								onkeyup="this.value=this.value.replace(/[^Aa-zZ]/g,'');">
 						</div>
 					</div>
 					<div class="row">
@@ -303,12 +313,13 @@
 						<div class="form-group col-md-6">
 							<label for="FOccupation">Occupation</label> <input type="text"
 								class="form-control" id="moccupation"
-								placeholder="Mother Occupation" ng-model="moccupation" required>
+								placeholder="Mother Occupation" ng-model="moccupation" required
+								onkeyup="this.value=this.value.replace(/[^Aa-zZ]/g,'');">
 						</div>
 						<div class="form-group col-md-6">
-							<label for="FPhone">Mother's Phone</label> <input type="number"
+							<label for="FPhone">Mother's Phone</label> <input type="text"
 								class="form-control" id="mphone" placeholder="Mother's Phone "
-								ng-model="mphone" required>
+								ng-model="mphone" required data-mask='"mask": "(999) 999-9999"'>
 						</div>
 
 					</div>
@@ -316,106 +327,126 @@
 					<div class="row pull-right" style="margin: 7px;">
 						<!-- Contextual button for informational alert messages -->
 						<button type="submit" class="btn"
-							style="font-width: 20px; color: white; background-color: green;" ng-click="submit()">
-							Add</button>
+							style="font-width: 20px; color: white; background-color: green;"
+							ng-click="submit()">Sumbit</button>
 					</div>
 				</fieldset>
-				</div>
+		</div>
 		</form>
-			<!-- <div class="input-group col-xs-5">
-			  
-			  <input type="text" class="form-control" ng-bind="value" data-trigger="{{value}}" data-placement="right" data-type="info" data-container="body" placeholder="Focus to toggle tooltip"  bs-tooltip="tooltip">
-			</div> -->
-			
 		</section>
 	</div>
 	<jsp:include page="../include/footer.jsp" />
-	<jsp:include page="../include/footDashboard.jsp" />
-	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
-	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<%-- <script src="${pageContext.request.contextPath }/resources/angularstrap/angular-strap.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/angularstrap/angular-strap.tpl.min.js"></script> --%>
+
 	<script>
-		var app = angular.module('app', ['angularUtils.directives.dirPagination'/* , 'mgcrea.ngStrap.modal', 'mgcrea.ngStrap.aside', 'mgcrea.ngStrap.tooltip' */]);
-			app.controller('ctrl', function($scope, $http){
-				
-				getID();
-				
-				function getID(){
-						
-						$http({
-								url:'http://localhost:8080/api/student/auto-student-id',
-								method:'GET'
-							}).then(function(response){
-								$scope.id = response.data.DATA.MAX_ID;
-								$scope.stu_id = $scope.id;	
-							}, function(response){
-								alert("error");
-							});
-				};
-				
-				$scope.submit = function(){
-					$scope.photo = $('#photo').val();
-					$scope.english = $('#english').val();
-					$scope.korean = $('#korean').val();
-					$scope.status = $('#status').val();
-					$scope.dob = $('#dob').val();
-					$scope.gender = $('input[name=gender]:checked').val();
-					$scope.university = $('#university').val();
-					$scope.it_year = $('#it_year').val();
-					alert($scope.it_year); 
-					
-					$http({
-						url:'http://localhost:8080/api/student/save',
-						data:{
-							  "DATE_OF_BIRTH": $scope.dob,
-							  "EDUCATION_LEVEL": $scope.it_year,
-							  "EMAIL": $scope.email,
-							  "ENGLISH_LEVEL": $scope.english,
-							  "ENGLIST_FULL_NAME": $scope.fname+" "+$scope.lname,
-							  "FATHER_ADDRESS": $scope.faddress,
-							  "FATHER_ENGLISH_NAME": $scope.father_name,
-							  "FATHER_KHMER_NAME": $scope.father_latin_name,
-							  "FATHER_OCCUPATION": $scope.foccupation,
-							  "FATHER_PHONE": $scope.fphone,
-							  "GENDER": $scope.gender,
-							  "GRADUATE": $scope.graduated,
-							  "KHMER_FULL_NAME": $scope.fname+" "+ $scope.lname,
-							  "KHMER_ID_NUMBER": $scope.social_id,
-							  "KOREAN_LEVEL": $scope.korean,
-							  "MOTHER_ADDRESS": $scope.maddress,
-							  "MOTHER_ENGLISH_NAME": $scope.mlname,
-							  "MOTHER_KHMER_NAME": $scope.mkname,
-							  "MOTHER_OCCUPATION": $scope.moccupation,
-							  "MOTHER_PHONE": $scope.mphone,
-							  "PERMANENT_ADDRESS": $scope.address,
-							  "PHONE": $scope.phone,
-							  "PHOTO": $scope.photo,
-							  "PLACE_OF_BIRTH": $scope.pob,
-							  "STATUS": true,
-							  "STUDENT_ID": $scope.stu_id,
-							  "STUDENT_STATUS": $scope.status,
-							  "UNIVERSITY": $scope.university
-						},
-						method:'POST'
-					}).then(function(response){
-						clearInputControll();	
-						
-					}, function(response){
-						alert("error");
-					});
-					
-				}
-				
-				function clearInputControll(){
-					getID();
-					$('input').val("");
-					$("select").prop("selectedIndex",0);
-				}
-				
+		$(document).ready(function() {
+			$('#phone').inputmask({
+				'mask' : "(999) 999-9999"
 			});
+			
+			$('#fphone').inputmask({
+				'mask' : "(999) 999-9999"
+			});
+			
+			$('#mphone').inputmask({
+				'mask' : "(999) 999-9999"
+			});
+			
+		});
 	</script>
-	<script type="text/javascript">
+
+	<script>
+		var app = angular
+				.module(
+						'app',
+						[ 'angularUtils.directives.dirPagination'/* , 'mgcrea.ngStrap.modal', 'mgcrea.ngStrap.aside', 'mgcrea.ngStrap.tooltip' */]);
+		app.controller('ctrl', function($scope, $http) {
+
+			getID();
+
+			function getID() {
+
+				$http({
+					url : 'http://localhost:8080/api/student/auto-student-id',
+					method : 'GET'
+				}).then(function(response) {
+					$scope.id = response.data.DATA.MAX_ID;
+					$scope.stu_id = $scope.id;
+				}, function(response) {
+					alert("error");
+				});
+			}
+			;
+
+			$scope.submit = function() {
+				$scope.photo = $('#photo').val();
+				$scope.english = $('#english').val();
+				$scope.korean = $('#korean').val();
+				$scope.status = $('#status').val();
+				$scope.dob = $('#dob').val();
+				$scope.gender = $('input[name=gender]:checked').val();
+				$scope.university = $('#university').val();
+				$scope.it_year = $('#it_year').val();
+				alert($scope.it_year);
+
+				$http(
+						{
+							url : 'http://localhost:8080/api/student/save',
+							data : {
+								"DATE_OF_BIRTH" : $scope.dob,
+								"EDUCATION_LEVEL" : $scope.it_year,
+								"EMAIL" : $scope.email,
+								"ENGLISH_LEVEL" : $scope.english,
+								"ENGLIST_FULL_NAME" : $scope.fname + " "
+										+ $scope.lname,
+								"FATHER_ADDRESS" : $scope.faddress,
+								"FATHER_ENGLISH_NAME" : $scope.father_name,
+								"FATHER_KHMER_NAME" : $scope.father_latin_name,
+								"FATHER_OCCUPATION" : $scope.foccupation,
+								"FATHER_PHONE" : $scope.fphone,
+								"GENDER" : $scope.gender,
+								"GRADUATE" : $scope.graduated,
+								"KHMER_FULL_NAME" : $scope.fname + " "
+										+ $scope.lname,
+								"KHMER_ID_NUMBER" : $scope.social_id,
+								"KOREAN_LEVEL" : $scope.korean,
+								"MOTHER_ADDRESS" : $scope.maddress,
+								"MOTHER_ENGLISH_NAME" : $scope.mlname,
+								"MOTHER_KHMER_NAME" : $scope.mkname,
+								"MOTHER_OCCUPATION" : $scope.moccupation,
+								"MOTHER_PHONE" : $scope.mphone,
+								"PERMANENT_ADDRESS" : $scope.address,
+								"PHONE" : $scope.phone,
+								"PHOTO" : $scope.photo,
+								"PLACE_OF_BIRTH" : $scope.pob,
+								"STATUS" : true,
+								"STUDENT_ID" : $scope.stu_id,
+								"STUDENT_STATUS" : $scope.status,
+								"UNIVERSITY" : $scope.university
+							},
+							method : 'POST'
+						}).then(function(response) {
+					clearInputControll();
+
+				}, function(response) {
+					alert("error");
+				});
+
+			}
+
+			function clearInputControll() {
+				getID();
+				$('input').val("");
+				$("select").prop("selectedIndex", 0);
+			}
+
+		});
+
 		//click on image
 		$('#img').click(function() {
 			// call photo for browse file
@@ -436,16 +467,14 @@
 				reader.readAsDataURL(input.files[0]);
 			}
 		}
-	</script>
-	<script>
-		$(function(){	
+
+		$(function() {
 			/* initialize date picker */
-		$("#dob").datepicker();
+			$("#dob").datepicker();
 		});
+
+		$.widget.bridge('uibutton', $.ui.button);
 	</script>
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
 </body>
 </html>
 
