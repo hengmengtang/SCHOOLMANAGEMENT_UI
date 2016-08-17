@@ -66,8 +66,8 @@
 								class="fa fa-align-justify" style="color: white;"></i>
 							</span> <select class="form-control selectpicker" ng-model="No" ng-init="No | No='No'">
 								<option value="">No</option>
-								<option>4</option>
-								<option>6</option>
+								<option>1</option>
+								<option>5</option>
 								<option>10</option>
 							</select>
 
@@ -134,7 +134,7 @@
 					</div>
 
 					<div class="pull-right">
-						<button class="pull-right btn btn-success" id="btn-sub">
+						<button class="pull-right btn btn-success" id="btn-sub" ng-click="addGen()">
 							<span class="glyphicon glyphicon-plus"></span>
 						</button>
 					</div>
@@ -143,7 +143,7 @@
 				<!-- End add generation -->
 
 				<!-- Start Add Generation -->
-				<div class="row">
+				<div class="row" ng-show="formAddGeneration">
 					<div id="hide">
 						<div style="display:none ;" id="id">
 							<span>Generation ID</span> <input
@@ -153,26 +153,25 @@
 						<div class="col-md-4" style="display: none;" id="gen">
 							<span>Generation<span class="star">*</span></span> <input
 								type="text" class="form-control" placeholder="Generation"
-								style="margin-top: 5px;" ng-model="genName">
+								style="margin-top: 5px;" id="genName" ng-model="genName">
 						</div>
 
 						<div class="col-md-4" style="display: none;" id="start-date">
 							<span>Start Date<span class="star">*</span></span> <input
 								id="startDate" class="form-control"
 								placeholder="Click here to select date" style="margin-top: 5px;"
-								ng-model="startDate">
+								id="startDate" ng-model="startDate">
 						</div>
 
 						<div class="col-md-4" style="display: none;" id="end-date">
 							<span>End Date<span class="star">*</span></span> <input
 								id="endDate" type="text" class="form-control"
 								placeholder="Click here to select date" style="margin-top: 5px;"
-								ng-model="endDate">
+								id="endDate" ng-model="endDate">
 						</div>
 						
-						<div class="row" style="margin: 7px;">
-							<div class="col-md-9 pull-left"></div>
-							<div class="col-md-3 pull-right" style="margin-top: 5px; display: none;"
+						<div class="row ">
+							<div class="col-md-2 pull-right" style="margin-top: 15px; display: none;"
 								id="button">
 								<button type='button' class="btn btn-success" id="btnSave"
 									ng-click="add()">Save</button>
@@ -194,9 +193,9 @@
 	<!--Add Script-->
 	<jsp:include page="../include/footDashboard.jsp" />
 	<jsp:include page="../include/sweetalert.jsp"/>
-	<script>
+	<!-- <script>
 		$.widget.bridge('uibutton', $.ui.button);
-	</script>
+	</script> -->
 	<script src="${pageContext.request.contextPath}/resources/angularjs/angular.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.js"></script>
@@ -206,7 +205,7 @@
 				
 					//-- bottom add --//
 					$("#btn-sub").click(function() {
-						$("#hide").fadeIn();
+						$("#hide").fadeIn("slow");
 						$("#gen").fadeIn("slow");
 					});
 					
@@ -218,17 +217,20 @@
 						$("#hide").fadeOut("fast");
 					});
 					//--Add Course--//
-					$("#gen").click(function() {
-						$("#start-date").fadeIn("slow");
+					$("#gen").keypress(function(){
+						if($("#genName").val() != '' && $("#genName").val() != null)
+							$("#start-date").fadeIn("slow");
 					});
+					
 					//--Add Class--//
 					$("#start-date").click(function() {
-						$("#end-date").fadeIn("slow");
-
+						if($('#startDate').val() != '' && $('#startDate').val() != null)
+							$("#end-date").fadeIn("slow");
 					});
 
 					$("#end-date").click(function() {
-						$("#button").fadeIn("slow");
+						if($('#endDate').val() != '' && $('#endDate').val() != null)
+							$("#button").fadeIn("slow");
 
 					});
 					$('#datepicker1 , #datepicker2').datetimepicker(
@@ -259,13 +261,16 @@
 				
 				getData();
 				getGenID();
-				
+				clearInputControll();
+				getGenStatus();
+				 
 				function getData(){
 						$http({
 								url:'http://localhost:8080/api/generation/find-all-generation',
 								method:'GET'
 							}).then(function(response){
 								$scope.generations = response.data.DATA;
+								getGenStatus();
 							}, function(response){
 								alert("error");
 							});
@@ -276,7 +281,7 @@
 						url:'http://localhost:8080/api/generation/add-generation',
 						method:'POST',
 						data:{
-							'ACTIVE': true,
+							'STATUS': true,
 							'GENERATION_ID': $scope.id,
 							'GENERATION_NAME': $scope.genName,
 							'GENERATION_START_DATE': $scope.startDate,
@@ -285,6 +290,12 @@
 					}).then(function(response){
 						getData();
 						clearInputControll();
+						getGenID();
+						$("#start-date").fadeOut("fast");
+						$("#end-date").fadeOut("fast");
+						$("#button").fadeOut("fast");
+						$("#hide").fadeOut("fast");
+						$scope.formAddGeneration = false;
 					}, function(response){
 						alert("error");
 					});
@@ -301,18 +312,57 @@
 						});
 				};
 				
+				function getGenStatus(){
+					$http({
+							url:'http://localhost:8080/api/generation/get-generation-status-true',
+							method:'GET'
+						}).then(function(response){
+							$scope.status = response.data.DATA.STATUS;
+							console.log($scope.status)
+						}, function(response){
+							
+						});
+				};
+				
 				$scope.finish = function(id){
 					swal({   title: "Are you sure want finish?",   text: "You want finish!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Finished!",   closeOnConfirm: false }, function(){   
 							swal("Finished!", "Finished.", "success"); 
-							alert(id);
-							
+							updateStatus(id);
 						});
 				}
 				
-				function clearInputControll(){
-					$('input').val("");
-					$("select").prop("selectedIndex",0);
+				function updateStatus(id){
+					$http({
+							url:'http://localhost:8080/api/generation/change-status-true/'+id,
+							method:'PUT'
+						}).then(function(response){
+							getData();
+							$scope.status = false;
+						}, function(response){
+							alert("error");
+						});
+			};
+			
+			$scope.addGen = function(){
+				if($scope.status == true){
+					sweetAlert(
+							  'Generation is not available...',
+							  'The last generation is available!',
+							  'error'
+							)
 				}
+				else $scope.formAddGeneration = true;
+			}
+				
+			function clearInputControll(){
+				$('input').val("");
+				$("select").prop("selectedIndex",0);
+			}
+			
+			$scope.sort = function(keyname){
+		        $scope.sortKey = keyname;   //set the sortKey to the param passed
+		        $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+		    }
 				
 			});
 	</script>
