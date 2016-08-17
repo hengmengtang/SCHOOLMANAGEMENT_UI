@@ -93,12 +93,9 @@
 
 						<span class="input-group-btn">
 							<button class="btn btn-success">Generation</button>
-						</span> <select class="form-control selectpicker">
-							<option value="allgeneration">All Generation</option>
-							<option value="generation1">Generation 1</option>
-							<option value="generation2">Generation 2</option>
-							<option value="generation3">Generation 3</option>
-							<option value="generation4">Generation 4</option>
+						</span> <select class="form-control selectpicker" ng-model="generation">
+							<option value="">Generations</option>
+							<option ng-repeat="gen in generations">{{gen.GENERATION_NAME}}</option>
 						</select>
 					</div>
 
@@ -130,7 +127,6 @@
 								<th>Khmer Name&#x2191;&#x2193;</th>
 								<th>Class&#x2191;&#x2193;</th>
 								<th>Start Date&#x2191;&#x2193;</th>
-								<th>Delete</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -141,55 +137,9 @@
 								<td>{{inst.CLASS_NAME}}</td>
 								<td>{{inst.DATE}}</td>
 								<td>
-									<button type="button" class="btn btn-danger">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
+									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="update(student.STUDENT_ID)"><i class="glyphicon glyphicon-refresh"></i></button>
 								</td>
 							</tr>
-							<!-- <tr>
-								<td>2</td>
-								<td>Aing Techun</td>
-								<td>Battambang</td>
-								<td>2016-5-20</td>
-								<td>
-									<button type="button" class="btn btn-danger">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Phang Pirag</td>
-								<td>Battambang</td>
-								<td>2016-5-20</td>
-								<td>
-									<button type="button" class="btn btn-danger">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td>Pheng Tola</td>
-								<td>Battambang</td>
-								<td>2016-5-20</td>
-								<td>
-									<button type="button" class="btn btn-danger">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
-								</td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td>Lun Sovathana</td>
-								<td>Battambang</td>
-								<td>2016-5-20</td>
-								<td>
-									<button type="button" class="btn btn-danger">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
-								</td>
-							</tr> -->
 						</tbody>
 
 					</table>
@@ -224,7 +174,7 @@
 					Course<span class="star">*</span>
 				</div>
 				<div class="col-md-4">
-					Subject<span class="star">*</span>
+					Instructor<span class="star">*</span>
 				</div>
 				
 			</div>
@@ -232,45 +182,22 @@
 			<div class="row">
 
 				<div class="col-md-4">
-					<!-- <select class="form-control select" id="add-gen"
-						style="display: none;">
-						<option>Select Generation</option>
-						<option value="gen1" id="gen1">Generation 1</option>
-						<option value="gen2" id="gen2">Generation 2</option>
-						<option value="gen3" id="gen3">Generation 3</option>
-						<option value="gen4" id="gen4">Generation 4</option>
-					</select> -->
-					<input type="text" class="form-control select" id="add-gen"
-						style="display: none;" value="Generation4th"  readonly>
+					<label class="form-control select" id="add-gen"
+					style="display: none;" readonly>{{gen_last}}</label>
 				</div>
 
 				<div class="col-md-4">
 					<input type="text" class="form-control select" id="add-course"
-						style="display: none;" value="Advance Course" ng-model="course" >
+						style="display: none;" value="{{course}}" ng-model="course" readonly>
 				</div>
 				<!-- <div id="hide-sub"> -->
 				<div class="col-md-3">
-					<select class="form-control select" id="add-subject-basic"
-						style="display: none; position: absolute;">
-						<option>Select Subject</option>
-						<option value="java">Java</option>
-						<option value="web">Web</option>
-						<option value="korean">Korean</option>
+					<select class="form-control select" id="add-instructor"
+						style="display: none; position: absolute;" >
+						<option value="" selected>Instructors</option>
+						<option ng-repeat="ins in instructors">{{ins.INSTRUCTOR_NAME}}</option>
 					</select>
 				</div>
-				<div class="col-md-3">
-					<select class="form-control select" id="add-subject-advance"
-						style="display: none;position: absolute;" ng-model="subject">
-						<option>Select Subject</option>
-						<option value="ios">IOS</option>
-						<option value="android">Android</option>
-						<option value="delphi">Delphi</option>
-						<option value="spring">Spring</option>
-						<option value="c">C</option>
-					</select>
-				</div>
-			
-				
 
 			</div>
 			<!-- End Row -->
@@ -279,7 +206,7 @@
 					Class<span class="star">*</span>
 				</div>
 				<div class="col-md-4">
-					Instructor<span class="star">*</span>
+					Subject<span class="star">*</span>
 				</div>
 				<div class="col-md-4">
 					Enroll Date<span class="star">*</span>
@@ -289,18 +216,18 @@
 			<div class="row">
 				<div class="col-md-4">
 					<select class="form-control select" id="add-class"
-						style="display: none;" ng-model="Class">
-						<option >Select Class</option>
-						<option value="BTB">Battambang</option>
-						<option value="PP">Phnom Penh</option>
-						<option value="KPS">Kampongsom</option>
-						<option value="SR">Siem Reap</option>
+						style="display: none;" ng-model="class">
+						<option value="">Classes</option>
+						<option ng-repeat="cls in classes">{{cls.CLASS_NAME}}</option>
 					</select>
 				</div>
 				<div class="col-md-4">
 					<div class="form-group" id="add-stu" style="display: none;">
-						<input type="text" class="form-control"
-							placeholder="Instructor Name" ng-model="staff">
+						<select class="form-control select" id="add-subject"
+						style="display: none;" ng-model="subject">
+							<option value="">Subjects</option>
+							<option ng-repeat="sub in subjects">{{sub.SUBJECT_NAME}}</option>
+						</select>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -345,6 +272,15 @@
 								$("#add-gen").fadeToggle("slow", function() {
 								});
 								$("#add-course").fadeIn();
+								$("#add-course").fadeIn("fast");
+								$("#add-class").fadeIn("fast");
+								$("#add-stu").fadeIn("fast");
+								$("#add-btn").fadeIn("fast");
+								$("#add-gen").fadeIn("fast");
+								$("#add-subject").fadeIn("fast");
+								$("#add-date").fadeIn("fast");
+								$("#add-subject").fadeIn("fast");
+								$("#add-instructor").fadeIn("fast");
 							});
 							$("#btnCancel").click(function(){
 								$("#add-course").fadeOut("fast");
@@ -356,7 +292,7 @@
 								$("#add-date").fadeOut("fast");
 							});
 							//--Add Course--//
-							$("#add-gen")
+							/* $("#add-gen")
 									.change(
 											function() {
 												var gen = $(this).val();
@@ -366,21 +302,18 @@
 														'slow')
 														: $("#add-course")
 																.fadeOut('slow');
-											});
+											}); */
 
 							//--Add Subject--//
-							$("#add-course")
+							/* $("#add-course")
 									.change(
 											function() {
 												var course = $(this).val();
-												if(course='Advance Course') $(
-												"#add-subject-advance").fadeIn(
-												"slow")
-												else $("#add-subject-advance")
-														.fadeOut("slow");
-											});
+												$("#add-subject-advance").fadeIn(slow");
+												
+											}); */
 							//--Add Class--//
-							$("#add-subject-basic,#add-subject-advance")
+							/* $("#add-subject-basic,#add-subject-advance")
 									.change(
 											function() {
 												var sub = $(this).val();
@@ -389,9 +322,9 @@
 												if(sub=='Select Subject') $("#add-class")
 																.fadeOut("slow");
 											});
-							
+							 */
 							//--Add Instructor--//
-							$("#add-class")
+							/* $("#add-class")
 									.change(
 											function() {
 												var clas = $(this).val();
@@ -401,19 +334,19 @@
 														"slow")
 														: $("#add-stu")
 																.fadeOut("slow");
-											});
+											}); */
 							//--Add Date--//
-							$("#add-stu")
+							/* $("#add-stu")
 									.click(
 											function() {
 												$("#add-date").fadeIn("slow")
 											});
-
+ */
 							//--Add Button--//
-							$("#add-date").click(function() {
+							/* $("#add-date").click(function() {
 								$("#add-btn").fadeIn("slow");
 							});
-
+ */
 						});
 		
 	</script>
@@ -422,6 +355,14 @@
 		var app = angular.module('appInstructEnroll', ['angularUtils.directives.dirPagination']);
 			app.controller('instEnrollCtrl', function($scope, $http){
 				
+				getData(); 
+				getClass();
+				getSubject();
+				getLastCourse();
+				getGeneration();
+				getLastGeneration();
+				clearInputControll();
+				
 				
 				function getData(){
 						$http({
@@ -429,12 +370,11 @@
 								method:'GET'
 							}).then(function(response){
 								$scope.instructor = response.data.DATA;
-								console.log($scope.instructor)
 							}, function(response){
-								alert("error");
+								/* alert("error"); */
 							});
 				};
-				getData(); 
+				
 				$scope.add=function(){
 					$http({
 						url:'http://localhost:8080/handle-subject-to-staff-to-class',
@@ -449,11 +389,65 @@
 					}).then(function(response){
 						getData();
 						clearInputControll();
-
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}; 
+				
+				function getGeneration(){
+					$http({
+							url:'http://localhost:8080/api/generation/find-all-generation',
+							method:'GET'
+						}).then(function(response){
+							$scope.generations = response.data.DATA;
+						}, function(response){
+							/* alert("error"); */
+						});
+				};
+				
+				function getLastCourse(){
+					$http({
+						url:'http://localhost:8080/api/course/get-last-course',
+						method:'GET'
+					}).then(function(response){
+						$scope.course = response.data.DATA.COURSE_NAME;
+					}, function(response){
+						/* alert("error"); */
+					});
+				}
+				
+				function getLastGeneration(){
+					$http({
+							url:'http://localhost:8080/api/generation/get-last-generation',
+							method:'GET'
+						}).then(function(response){
+							$scope.gen_last = response.data.DATA.GENERATION_NAME;
+						}, function(response){
+							/* alert("error"); */
+						});
+				};
+				
+				function getClass() {
+					$http({
+						url : 'http://localhost:8080/api/class/find-all-class',
+						method : 'GET'
+					}).then(function(response) {
+						$scope.classes = response.data.DATA;
+					}, function(response) {
+						alert("error");
+					});
+				};
+				
+				function getSubject() {
+					$http({
+						url : 'http://localhost:8080/api/subject/find-all-subject',
+						method : 'GET'
+					}).then(function(response) {
+						$scope.subjects = response.data.DATA;
+					}, function(response) {
+						alert("error");
+					});
+				};
 				
 				function clearInputControll(){
 					$('input').val("");

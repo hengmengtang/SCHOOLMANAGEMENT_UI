@@ -99,28 +99,28 @@
 						<table class="table table-hover">
 							<thead>
 									<tr>
-										<th ng-click="sort('id')">N <sup>o</sup><span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</th>
-										<th>Generation</th>
+										<th>N<sup>o</sup></th>
+										<th ng-click="sort('id')">Generation<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</th>
 										<th>Course</th>
 										<th>Start Date</th>
 										<th>End Date</th>
-										<th>Finish</th>
+										<th>Closed</th>
 									</tr>
 								</thead>
 							<tbody>
-									<tr dir-paginate="course in courses|orderBy:sortKey:reverse|filter:{'COURSE_NAME':searchCourse}:{'COURSE_NAME':searchCourse}|itemsPerPage:select">
-										<td>{{course.COURSE_ID}}</td>
-										<td>3rd Generation</td>
+									<tr dir-paginate="course in courses|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':searchGeneration}:{'COURSE_NAME':searchCourse}|itemsPerPage:select|limitTo : 6">
+										<td>{{$index+1}}</td>
+										<td>{{course.GENERATION_NAME}}</td>
 										<td>{{course.COURSE_NAME}}</td>
-										<td>{{course.COURSE_START_DATE}}</td>
-										<td>{{course.COURSE_END_DATE}}</td>
+										<td>{{course.START_DATE}}</td>
+										<td>{{course.END_DATE}}</td>
 										<td>
 											<button type="button" class="btn btn-danger"
-												ng-if="course.STATUS==false">
+												ng-if="course.ACTIVE==false">
 												<span class="glyphicon glyphicon-ok"></span>
 											</button>
 											<button type="button" class="btn btn-success"
-												ng-if="course.STATUS==true" ng-click="finish(course.COURSE_ID)">
+												ng-if="course.ACTIVE==true" ng-click="finish(course.COURSE_ID)">
 												<span class="glyphicon glyphicon-ban-circle"></span>
 											</button>
 										</td>
@@ -140,7 +140,7 @@
 					</div>
 
 					<div class="pull-right">
-						<button class="pull-right btn btn-success" id="btn-plus">
+						<button class="pull-right btn btn-success" id="btn-plus" ng-click="addCourse()">
 							<span class="glyphicon glyphicon-plus"></span>
 						</button>
 					</div>
@@ -150,7 +150,7 @@
 
 				<!-- Start Panel-->
 				<!-- Start Add Generation -->
-				<div class="row">
+				<div class="row" ng-show="formAddCourse">
 					<div id="hide">
 						<div class="col-md-4" id="add-gen" style="display: none;">
 							<span>Course<span class="star">*</span></span> <input
@@ -216,25 +216,49 @@
 
 			function getData() {
 				$http({
-					url : 'http://localhost:8080/api/course/find-all-course',
+					url : 'http://localhost:8080/api/course/list-course-tam-generation',
 					method : 'GET'
 				}).then(function(response) {
 					$scope.courses = response.data.DATA;
+					getLastCourse();
 				}, function(response) {
 					alert("error");
 				});
 			};
 			
-			/* function getCourseStatus() {
+			$scope.addCourse = function(){
+				if($scope.status == true){
+					sweetAlert(
+							  'Course is not available...',
+							  'The last Course is available!',
+							  'error'
+							)
+				}
+				else $scope.formAddCourse = true;
+			}
+			
+			function getLastCourse(){
 				$http({
-					url : 'http://localhost:8080/api/course/find-all-course',
-					method : 'GET'
-				}).then(function(response) {
-					$scope. = response.data.DATA.STATUS;
-				}, function(response) {
-					alert("error");
+					url:'http://localhost:8080/api/course/get-last-course',
+					method:'GET'
+				}).then(function(response){
+					$scope.status = response.data.DATA.STATUS;
+				}, function(response){
+					/* alert("error"); */
 				});
-			}; */
+			}
+			
+			function updateStatus(id){
+				$http({
+						url:'http://localhost:8080/api/generation/change-status-true/'+id,
+						method:'PUT'
+					}).then(function(response){
+						getData();
+						$scope.status = false;
+					}, function(response){
+						/* alert("error"); */
+					});
+			};
 			
 			function getGeneration(){
 				$http({
@@ -243,7 +267,7 @@
 					}).then(function(response){
 						$scope.generations = response.data.DATA;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 			};
 			
@@ -261,8 +285,7 @@
 						 "COURSE_END_DATE": $scope.end_date,
 						 "COURSE_ID": $scope.id,
 						 "COURSE_NAME": $scope.course,
-						 "COURSE_START_DATE": $scope.start_date,
-						 "STATUS": true
+						 "COURSE_START_DATE": $scope.start_date
 					},
 					method: 'POST'
 				}).then(function(response){
@@ -280,7 +303,7 @@
 					}).then(function(response){
 						$scope.id = response.data.DATA.MAX_ID;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 			};
 			
@@ -320,12 +343,12 @@
 							$("#start-date").fadeIn("slow");
 					});
 					//--Add Class--//
-					$("#start-date").mouseleave(function() {
+					$("#start-date").change(function() {
 						if($("#datepicker1").val() != '' && $("#datepicker1").val() != null)
 							$("#end-date").fadeIn("slow");
 					});
 
-					$("#end-date").mouseleave(function() {
+					$("#end-date").change(function() {
 						if($("#datepicker2").val() != '' && $("#datepicker2").val() != null)
 							$("#btn").fadeIn("slow");
 					});

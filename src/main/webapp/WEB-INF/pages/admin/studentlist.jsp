@@ -374,7 +374,7 @@
 					<div class="input-group pull-left">
 						<span class="input-group-addon"
 							style="color: white; background-color: green;"> Class
-						</span> <select class="form-control selectpicker" ng-model="searchClass" ng-init="searchClass | searchClass='Class'" ng-focus="getClass()">
+						</span> <select class="form-control selectpicker" ng-model="searchClass" ng-init="searchClass | searchClass='Class'" ng-mouseover="getClass()">
 							<option value="" selected>Class</option>
 							<option ng-repeat="class in classes | orderBy:'CLASS_NAME'">{{class.CLASS_NAME}}</option>
 						</select>
@@ -416,7 +416,7 @@
 							</tr>
 						</thead>
 						<tbody>
-                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':searchStudent}|itemsPerPage:select">
+                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':searchStudent}|itemsPerPage:select|limitTo : 20">
 								<td>{{student.STUDENT_ID}}</td> 
 								<td>{{student.KHMER_FULL_NAME}}</td>
 								<td>{{student.ENGLISH_FULL_NAME}}</td>
@@ -449,8 +449,8 @@
 			</fieldset>
 			</div>
 		</section>
-		<input type="text" ng-repeat="gen in last_gen" value="{{gen.GENERATION_NAME}}" id="gen" style="display:none">
-		<input type="text" ng-repeat="cou in last_cou" value="{{cou.COURSE_NAME}}" id="course" style="display:none">
+		<!-- <input type="text" ng-repeat="gen in last_gen" value="{{gen.GENERATION_NAME}}" id="gen" style="display:none">
+		<input type="text" ng-repeat="cou in last_cou" value="{{cou.COURSE_NAME}}" id="course" style="display:none"> -->
 	</div>
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footer.jsp" />
@@ -500,7 +500,7 @@
 				}
 								
 				$scope.getClass = function(){
-					getClass($('#gen').val(), $('#course').val());
+					getClass($scope.last_gen, $scope.last_cou);
 					$scope.class2 = true;
 					$scope.class1 = false;
 				}
@@ -512,7 +512,7 @@
 					}).then(function(response){
 						$scope.students = response.data.DATA;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
@@ -526,7 +526,7 @@
 						else
 							getStudentLastGen();
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
@@ -542,7 +542,7 @@
 								$scope.students = response.data.DATA;
 								getClass($scope.searchGeneration, $scope.searchCourse);
 							}, function(response){
-								alert("error");
+								/* alert("error"); */
 							});
 				};
 				
@@ -553,7 +553,7 @@
 						}).then(function(response){
 							$scope.last_gen = response.data.DATA.GENERATION_NAME;
 						}, function(response){
-							alert("error");
+							/* alert("error"); */
 						});
 				};
 				
@@ -562,9 +562,9 @@
 						url:'http://localhost:8080/api/course/get-last-course',
 						method:'GET'
 					}).then(function(response){
-						$scope.last_cou = response.data.DATA;
+						$scope.last_cou = response.data.DATA.COURSE_NAME;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
@@ -580,7 +580,7 @@
 						$scope.classes = response.data.DATA;
 						$scope.searchClass = "";
 					}, function(response) {
-						alert("error");
+						/* alert("error"); */
 					}); 
 				};
 				
@@ -591,7 +591,7 @@
 						}).then(function(response){
 							$scope.generations = response.data.DATA;
 						}, function(response){
-							alert("error");
+							/* alert("error"); */
 						});
 				};
 				
@@ -634,7 +634,7 @@
 						$scope.mother_occupation = $scope.student.MOTHER_OCCUPATION;
 						$scope.mother_phone = $scope.student.MOTHER_PHONE;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
@@ -685,7 +685,7 @@
 						clearInputControll();	
 						getData();
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				

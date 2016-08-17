@@ -199,11 +199,11 @@
 			<div class="row">
 				<div class="col-md-3">
 					<label class="form-control" id="add-gen"
-						style="margin-top: 15px;" readonly ng-repeat="gen in generation">{{gen.GENERATION_NAME}}</label>
+						style="margin-top: 15px;" readonly >{{generation}}</label>
 				</div>
 				<div class="col-md-3">
 					<label class="form-control" id="add-course"
-						style="margin-top: 15px" ng-repeat="cou in course" readonly>{{cou.COURSE_NAME}}</label>
+						style="margin-top: 15px" readonly>{{course}}</label>
 				</div>
 				
 				<div class="col-md-3">
@@ -304,7 +304,7 @@
 									</thead>
 									<tbody>
 										<tr
-											dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
+											dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select|limitTo : 10">
 											<td>{{student.STUDENT_ID}}</td>
 											<td>{{student.KHMER_FULL_NAME}}</td>
 											<td>{{student.ENGLIST_FULL_NAME}}</td>
@@ -322,7 +322,7 @@
 											<td>{{student.UNIVERSITY}}</td>
 											<td>{{student.PERMANENT_ADDRESS}}</td>
 											<td>
-												 <label><input type="checkbox" ng-click="enroll($event, student.ENGLIST_FULL_NAME)"></label>
+												 <label><input type="checkbox" ng-click="enroll($event, student.STUDENT_ID)" ng-model="unchecked"></label>
 											</td>
 										</tr>
 									</tbody>
@@ -351,15 +351,14 @@
 	</div>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp"></jsp:include>
+	<jsp:include page="../include/sweetalert.jsp"/>
 	<script
 		src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath }/resources/angularjs/checklist-model.js"></script>
 	<script
 		src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script>
 		var app = angular.module('app',
-				[ 'angularUtils.directives.dirPagination','checklist-model' ]);
+				[ 'angularUtils.directives.dirPagination']);
 		app.controller('ctrl', function($scope, $http) {
 			
 			getData();
@@ -394,30 +393,29 @@
 						url:'http://localhost:8080/api/generation/get-last-generation',
 						method:'GET'
 					}).then(function(response){
-						$scope.generation = response.data.DATA;
-						/* console.log($scope.generation); */
+						$scope.generation = response.data.DATA.GENERATION_NAME;
 					}, function(response){
 						alert("error");
 					});
 			};
-			
+			 
 			/* function updateStatus(id){
-				http({
+				$http({
 					url:'http://localhost:8080/api/student/updateStatus/'+id,
-					method:'POST'
+					method:'PUT'
 				}).then(function(response){
 					
 				}, function(response){
 					alert("error");
 				});
-			} */
+			}  */
 			
 			function getLastCourse(){
 				$http({
 					url:'http://localhost:8080/api/course/get-last-course',
 					method:'GET'
 				}).then(function(response){
-					$scope.course = response.data.DATA;
+					$scope.course = response.data.DATA.COURSE_NAME;
 				}, function(response){
 					alert("error");
 				});
@@ -437,38 +435,55 @@
 				}
 			}) */
 
-			$scope.studentNames = [];
+			$scope.studentIDs = [];
 
-			$scope.enroll = function(e, name) {
+			$scope.enroll = function(e, id) {
 				if (e.target.checked) {
-					$scope.studentNames.push(name);
+					if($scope.studentIDs.length > 1){
+						swal(
+							  'You mush submit.',
+							  'Data is over 20!',
+							  'warning'
+							)
+						e.target.checked = false;
+						return;
+					}
+					
+					$scope.studentIDs.push(id);
 				}
 				if (!e.target.checked) {
-					$scope.studentNames.splice($scope.studentNames.indexOf(name), 1);
+					$scope.studentIDs.splice($scope.studentIDs.indexOf(id), 1);
 				}
 			}
 
 			$scope.submit = function() {
 				
-				/*$scope.classs = $('#add-class').val();
-				 alert($scope.classs+", "+$('#add-course').val()+", "+$('#add-gen').val()); */
-				angular.forEach($scope.studentNames, function(name){
-					/* $http({
+				$scope.classs = $('#add-class').val();
+				
+				angular.forEach($scope.studentIDs, function(id){
+					/* alert($scope.classs+", "+$scope.course+", "+$scope.generation+" "+id); */
+					$http({
 						url : 'http://localhost:8080/api/enrollment/enroll-student',
 						data:{
-							  "CLASS_NAME": "string",
-							  "COURSE_NAME": "string",
-							  "GENERATION_NAME": "string",
-							  "STUDENT_NAME": "string",
-							  "SUCCESS": 0
+							"CLASS_NAME": $scope.classs,
+							"COURSE_NAME": $scope.course,
+							"GENERATION_NAME": $scope.generation,
+							"STUDENT_ID": id,
+							"SUCCESS": 0
 						},
 						method : 'POST'
 					}).then(function(response) {
-						
+						/* updateStatus(id); */
+						getData();
 					}, function(response) {
 						alert("error");
-					}); */
+					}); 
 				});
+				
+				
+				getClass();
+				getLastGeneration();
+				getLastCourse();
 			}
 		});
 

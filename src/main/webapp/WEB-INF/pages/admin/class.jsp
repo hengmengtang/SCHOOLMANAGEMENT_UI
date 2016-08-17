@@ -70,7 +70,7 @@
 							class="fa fa-align-justify"></i>
 						</span> <select class="form-control selectionpicker" ng-model="No" ng-init="No | No='No'">
 							<option value="">No</option>
-							<option>10</option>
+							<option>1</option>
 							<option>20</option>
 						</select>
 						<!-- End Selection -->
@@ -108,18 +108,18 @@
 						<thead>
 							<tr>
 								<th>N <sup>o</sup></th>
-								<th ng-click="sort('gen_name')">Class<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
+								<th ng-click="sort('CLASS_NAME')">Class<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
 								<th>Course<span style="color: blue; font-weight: bold;"></span></th>
 								<th>Generation<span style="color: blue;"></span></th>
 								<th>Closed</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr dir-paginate="class in classes|orderBy:sortKey:reverse|filter:{'CLASS_NAME':search}|itemsPerPage:No">
+							<tr dir-paginate="class in classes|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':generation, 'CLASS_NAME':search}|itemsPerPage:No|limitTo : 6">
 								<td>{{$index+1}}</td>
 								<td>{{class.CLASS_NAME}}</td>
-								<td>{{class.CLASS_NAME}}</td>
-								<td>{{class.CLASS_NAME}}</td>
+								<td>{{class.COURSE_NAME}}</td>
+								<td>{{class.GENERATION_NAME}}</td>
 								<td>
 									<button type="button" class="btn btn-danger"
 										ng-if="class.ACTIVE==false">
@@ -155,20 +155,20 @@
 				<div class="col-md-3" id="add-gen" style="display: none;">
 					<span>Generation<span class="star">*</span></span> 
 					<lebel class="form-control select controlBottom" id="selection"
-						style="margin-top: 5px;" readonly>Generation4th</lebel>
+						style="margin-top: 5px;" readonly>{{gen_last}}</lebel>
 				</div>
 
 				<div class="col-md-3" id="add-course" style="display: none;">
 					<span>Course<span class="star">*</span></span> <lebel
 						class="form-control select controlBottom" id="course" style="margin-top: 5px;" readonly>
-						Basic</lebel>
+						{{course}}</lebel>
 				</div>
 
 				<div class="col-md-5" id="add-class" style="display: none;">
 					<span>Class<span class="star">*</span></span>
 					<div>
 						<input type="text" class="form-control select controlBottom" placeholder="Class"
-							style="margin-top: 5px;" ng-model="class_name">
+							style="margin-top: 5px;" ng-model="class_name" id="class_name">
 					</div>
 				</div>
 
@@ -189,6 +189,7 @@
 	</div>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
+	<jsp:include page="../include/sweetalert.jsp"/>
 	<script
 		src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
 	<script
@@ -201,6 +202,8 @@
 			getData();
 			getGeneration();
 			getID();
+			getLastCourse();
+			getLastGeneration();
 			
 			$scope.getGeneration = function(){
 				getData();
@@ -208,13 +211,12 @@
 
 			function getData() {
 				$http({
-					url : 'http://localhost:8080/api/class/find-all-class',
+					url : 'http://localhost:8080/api/class/list-class-in-all-generation',
 					method : 'GET'
 				}).then(function(response) {
 					$scope.classes = response.data.DATA;
-					console.log(response.data.DATA.COURSE_START_DATE)
 				}, function(response) {
-					alert("error");
+					/* alert("error"); */
 				});
 			};
 			
@@ -225,7 +227,7 @@
 					}).then(function(response){
 						$scope.generations = response.data.DATA;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 			};
 
@@ -250,24 +252,66 @@
 				})
 			}
 			
+			function getLastCourse(){
+				$http({
+					url:'http://localhost:8080/api/course/get-last-course',
+					method:'GET'
+				}).then(function(response){
+					$scope.course = response.data.DATA.COURSE_NAME;
+				}, function(response){
+					/* alert("error"); */
+				});
+			}
+			
+			function getLastGeneration(){
+				$http({
+						url:'http://localhost:8080/api/generation/get-last-generation',
+						method:'GET'
+					}).then(function(response){
+						$scope.gen_last = response.data.DATA.GENERATION_NAME;
+					}, function(response){
+						/* alert("error"); */
+					});
+			};
+			
 			$scope.submit = function(){
 				
-				$http({
-					url: 'http://localhost:8080/api/class/add-class',
-					data:{
-						 "ACTIVE": true,
-						  "CLASS_END_DATE": "string",
-						  "CLASS_ID": $scope.id,
-						  "CLASS_NAME": $scope.class_name,
-						  "CLASS_START_DATE": "string"
-					},
-					method: 'POST'
-				}).then(function(response){
-					getID();
-					clearInputControll();
-				}, function(response){
-					
-				})
+				$scope.status = false;
+				
+				angular.forEach($scope.classes, function(clas){
+					if(clas.CLASS_NAME == $scope.class_name){
+						sweetAlert(
+								  'Class is not available...',
+								  'The class already exit!',
+								  'error'
+								)
+							return $scope.status = true;
+					}
+				});
+				
+				if($scope.status == false){
+					$http({
+						url: 'http://localhost:8080/api/class/add-class',
+						data:{
+							 "ACTIVE": true,
+							  "CLASS_END_DATE": "string",
+							  "CLASS_ID": $scope.id,
+							  "CLASS_NAME": $scope.class_name,
+							  "CLASS_START_DATE": "string"
+						},
+						method: 'POST'
+					}).then(function(response){
+						getData();
+						getGeneration();
+						getID();
+						getLastCourse();
+						getLastGeneration();
+						clearInputControll();
+					}, function(response){
+						
+					})
+				}
+				
 			}
 		});
 	</script>
@@ -285,7 +329,7 @@
       $("#add-class").fadeIn("slow");
     });
     $("#btnCancel").click(function(){
-		
+    	$("#class_name").val('');
 		$("#add-btn").fadeOut("fast");
 		$("#hide").fadeOut("fast");
 	});

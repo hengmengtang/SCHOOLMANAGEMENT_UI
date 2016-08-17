@@ -102,7 +102,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr dir-paginate="gen in generations|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':search}|itemsPerPage:No">
+								<tr dir-paginate="gen in generations|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':search}|itemsPerPage:No|limitTo : 6">
 									<td>{{$index+1}}</td>
 									<td>{{gen.GENERATION_NAME}}</td>
 									<td>{{gen.GENERATION_START_DATE}}</td>
@@ -223,12 +223,12 @@
 					});
 					
 					//--Add Class--//
-					$("#start-date").click(function() {
+					$("#start-date").change(function() {
 						if($('#startDate').val() != '' && $('#startDate').val() != null)
 							$("#end-date").fadeIn("slow");
 					});
 
-					$("#end-date").click(function() {
+					$("#end-date").change(function() {
 						if($('#endDate').val() != '' && $('#endDate').val() != null)
 							$("#button").fadeIn("slow");
 
@@ -272,7 +272,7 @@
 								$scope.generations = response.data.DATA;
 								getGenStatus();
 							}, function(response){
-								alert("error");
+								/* alert("error"); */
 							});
 				};
 				
@@ -297,7 +297,7 @@
 						$("#hide").fadeOut("fast");
 						$scope.formAddGeneration = false;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				};  
 				
@@ -308,7 +308,7 @@
 						}).then(function(response){
 							$scope.id = response.data.DATA.MAX_ID;
 						}, function(response){
-							alert("error");
+							/* alert("error"); */
 						});
 				};
 				
@@ -331,7 +331,7 @@
 						});
 				}
 				
-				function updateStatus(id){
+			 function updateStatus(id){
 					$http({
 							url:'http://localhost:8080/api/generation/change-status-true/'+id,
 							method:'PUT'
@@ -339,7 +339,7 @@
 							getData();
 							$scope.status = false;
 						}, function(response){
-							alert("error");
+							/* alert("error"); */
 						});
 			};
 			
