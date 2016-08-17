@@ -359,11 +359,22 @@
 					</div>
 				</div>
 				
-				<div class="col-md-2 pull-left">
+				<div class="col-md-2 pull-left" ng-show="class2">
 					<div class="input-group pull-left">
 						<span class="input-group-addon"
 							style="color: white; background-color: green;"> Class
 						</span> <select class="form-control selectpicker" ng-model="searchClass" ng-init="searchClass | searchClass='Class'">
+							<option value="" selected>Class</option>
+							<option ng-repeat="class in classes | orderBy:'CLASS_NAME'">{{class.CLASS_NAME}}</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="col-md-2 pull-left" ng-show="class1">
+					<div class="input-group pull-left">
+						<span class="input-group-addon"
+							style="color: white; background-color: green;"> Class
+						</span> <select class="form-control selectpicker" ng-model="searchClass" ng-init="searchClass | searchClass='Class'" ng-focus="getClass()">
 							<option value="" selected>Class</option>
 							<option ng-repeat="class in classes | orderBy:'CLASS_NAME'">{{class.CLASS_NAME}}</option>
 						</select>
@@ -377,7 +388,7 @@
 							style="color: white; background-color: green;"><i
 							class="fa fa-search" aria-hidden="true" style="font-size: 20px;"></i>
 						</span> <input type="text" class="form-control"
-							placeholder="Search Student..." ng-model="searchStudent"> <span
+							placeholder="Search Student Name..." onkeyup="this.value=this.value.replace(/[^a-z]/g,'');" id="searchStudent" ng-keyup="searchStuName()"> <span
 							class="input-group-btn">
 							<button ng-json-export-excel data="students" report-fields="{'STUDENT_ID': 'Student ID', 'KHMER_FULL_NAME': 'Khmer Name','ENGLISH_FULL_NAME': 'English Name','GENDER':'Gender','DATE_OF_BIRTH': 'Date Of Birth','PLACE_OF_BIRTH': 'Place Of Birth', 'EMAIL': 'Email'}" class="btn btn-danger" id="btn-add" ng-click="test()">Export</button>
 						</span>
@@ -405,7 +416,7 @@
 							</tr>
 						</thead>
 						<tbody>
-                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
+                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':searchStudent}|itemsPerPage:select">
 								<td>{{student.STUDENT_ID}}</td> 
 								<td>{{student.KHMER_FULL_NAME}}</td>
 								<td>{{student.ENGLISH_FULL_NAME}}</td>
@@ -457,6 +468,8 @@
 				getGeneration();
 				getLastGeneration();
 				getLastCourse();
+				
+				$scope.class1 = true;
 			
 				$scope.getCourse = function(){
 					getData();
@@ -464,7 +477,6 @@
 				
 				$scope.getGeneration = function(){
 					getData();
-					getClass($('#gen').val(), $('#course').val());
 				}
 				
 				$scope.inactive = function(id){
@@ -483,13 +495,22 @@
 						});
 				}
 				
+				$scope.searchStuName = function(){
+					$scope.searchStudent = $('#searchStudent').val(); 
+				}
+								
+				$scope.getClass = function(){
+					getClass($('#gen').val(), $('#course').val());
+					$scope.class2 = true;
+					$scope.class1 = false;
+				}
+				
 				function getStudentLastGen(){
 					$http({
 						url:'http://localhost:8080/api/student/get-student-in-last-generation',
 						method:'GET'
 					}).then(function(response){
 						$scope.students = response.data.DATA;
-						getClass($('#gen').val(), $('#course').val());
 					}, function(response){
 						alert("error");
 					});
@@ -500,7 +521,10 @@
 						url:'http://localhost:8080/api/student/updateStatus/'+id,
 						method:'PUT'
 					}).then(function(response){
-						getData();
+						if($scope.searchGeneration)
+							getData();
+						else
+							getStudentLastGen();
 					}, function(response){
 						alert("error");
 					});
@@ -527,7 +551,7 @@
 							url:'http://localhost:8080/api/generation/get-last-generation',
 							method:'GET'
 						}).then(function(response){
-							$scope.last_gen = response.data.DATA;
+							$scope.last_gen = response.data.DATA.GENERATION_NAME;
 						}, function(response){
 							alert("error");
 						});
@@ -554,7 +578,7 @@
 						method : 'POST'
 					}).then(function(response) {
 						$scope.classes = response.data.DATA;
-						$scope.searchClass="";
+						$scope.searchClass = "";
 					}, function(response) {
 						alert("error");
 					}); 
