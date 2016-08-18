@@ -63,7 +63,7 @@
 								ng-model=""  > -->
 								<select class="form-control" ng-model="instructors">
 									<option value="">Select Staff</option>
-									<option ng-repeat="ins in instructor" ng-model="">
+									<option ng-repeat="ins in instructor">
 										{{ins.ENGLISH_FULL_NAME}}
 									</option>
 								</select>
@@ -170,19 +170,15 @@
 									<td>{{stu.COURSE_NAME}}</td>
 									<td>{{stu.CLASS_NAME}}</td>
 									<td><input type="text" pattern="^[0-9]$" maxlength="5"
-										class="koreanScore" placeholder="Score" ng-model="Score"
-										style="display: none;"ng-mouseleave="addScore($event,stu.STUDENT_ID,Score)"> <input type="text"
-										pattern="^[0-9]$" maxlength="5" class="javaScore"
-										placeholder="Java Score" style="display: none;"> <input
-										type="text" pattern="^[0-9]$" maxlength="5" class="webScore"
-										placeholder="Web Score" style="display: none;"></td>
-									<td style="display: none;" ><input  value="{{stu.STUDENT_ID}}"  > </td>
+										class="koreanScore" placeholder="Score" id="score"
+										style="display: none;">
+									 <input value="{{stu.STUDENT_ID}}" id="stu_id" style="display:none;"> </td>
 								</tr>
 							</tbody>
 						</table>
 						<div class="pull-right">
 							<input type="submit" value="Save" class="btn btn-success pull-left"
-								>
+								ng-click="addScore()">
 							<input type="submit" value="Cancel" class="btn btn-danger pull-right"
 								>
 						</div>
@@ -440,22 +436,48 @@
 			    function viewClasses(){
 					return $scope.instructor;
 				}
-				
-			    /* $scope.IDScore = [][];
-			    $scope.i = 0; */
-			    $scope.addScore = function(e, id,score){
-			    	alert(id+","+score);
-			    	/* if(e.tagart.change){
-			    		$scope.IDScore[i] = [id,score];
-			    		$scope.i++;
-			    	} */
+			    
+			    $scope.addScore = function(){
+			    	$scope.score = $("input[id='score']").map(function(){return $(this).val();}).get();
+			    	$scope.stu_id = $("input[id='stu_id']").map(function(){return $(this).val();}).get();
+			    	angular.forEach($scope.stu_id, function(stu_id, $index){
+							$scope.id = stu_id;			    		
+			    		 angular.forEach($scope.score, function(score, key){
+			    			$scope.s = score;
+			    		 if($index == key){
+			    			 alert($scope.id+","+$scope.s+", "+$scope.classes+", "+$scope.instructors+", "+$scope.subject);
+			    			 $http({
+									url:'http://localhost:8080/api/mark/add-mark',
+									method:'POST',
+									data:{
+										'MARK': $scope.s,
+										'PARAMETER_FOR_ADD_MARK': {
+									   		'CLASS_ROOM_NAME': $scope.classes,
+									    	'STAFF_NAME': $scope.instructors,
+									    	'STUDENT_ID': $scope.id,
+									    	'SUBJECT_TYPE_NAME': $scope.subject
+									  	}
+			    			 			
+									}
+			    			 		
+								}).then(function(response){
+									
+								}, function(response){
+									alert("error");
+								});
+			    			 return;
+			    		 }
+				    		
+					
+					})
+				})
+							
+						
+					
+			   
 			    }
 			   
-			  /*  $scope.studentID = [];
-			   $scope.studentScore = [];
-			   $scope.addScore = function(e,stuid,score) {
-				    $scope.studenID.push(stuid);
-				} */
+			 
 			/*    $scope.enroll = function(e, id) {
 					if (e.target.checked) {
 						if($scope.studentIDs.length > 1){

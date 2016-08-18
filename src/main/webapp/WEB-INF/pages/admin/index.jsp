@@ -99,8 +99,8 @@
 						<li><a href="subject"><i class="fa fa-circle-o"></i>
 								Subject</a></li>
 					</ul></li>
-				<li><a href="staff"> <i class="fa fa-user"></i> <span>Staff</span>
-				</a></li>
+				<!-- <li><a href="staff"> <i class="fa fa-user"></i> <span>Staff</span>
+				</a></li> -->
 				<li class="treeview"><a href="#"> <i class="fa fa-pencil-square-o"></i>
 						<span>Enroll</span> <i class="fa fa-angle-left pull-right"></i>
 				</a>
