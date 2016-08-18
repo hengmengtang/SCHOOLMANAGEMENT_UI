@@ -63,7 +63,7 @@
 								ng-model=""  > -->
 								<select class="form-control" ng-model="instructors">
 									<option value="">Select Staff</option>
-									<option ng-repeat="ins in instructor">
+									<option ng-repeat="ins in instructor" ng-model="">
 										{{ins.ENGLISH_FULL_NAME}}
 									</option>
 								</select>
@@ -79,7 +79,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-2 pull-left">
+					<div class="col-md-3 pull-left">
 						<div class="input-group pull-left">
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;"> Course
@@ -88,7 +88,7 @@
 								 id="course" readonly>{{course}}</label>
 						</div>
 					</div>
-					<div class="col-md-2 pull-left">
+					<div class="col-md-3 pull-left">
 						<div class="input-group pull-left">
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;"> Class </span>
@@ -98,36 +98,22 @@
 							</select>
 						</div>
 					</div>
-					<div class="col-md-2 pull-left">
-						<div class="input-group pull-left">
-							<span class="input-group-addon"
-								style="color: white; background-color: #00A65A;"> Subject </span>
-							<select class="form-control selectpicker" ng-model="subject" ng-disabled="!classes" ng-mouseover="getSubject()">
-								<option value=" " selected>Subject</option>
-								<option ng-repeat="s in subjects">{{s.SUBJECT_NAME}}</option>
-							</select>
-						</div>
-					</div>
+					
 		
 				</div>
 				
 				<br>
 				<!-- Start Selection -->
 				<div class="row">
-					<div class="col-md-2" ng-show="pagination">
-						<div class="input-group pull-left">
-							<span class="input-group-addon"
-								style="background-color: #00A65A;"> <i
-								class="fa fa-align-justify" style="color: white;"></i>
-							</span> <select class="form-control selectpicker">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
-							</select>
-
-						</div>
+					<div class="col-md-3 pull-left">
+							<div class="input-group pull-left">
+								<span class="input-group-addon"
+									style="color: white; background-color: #00A65A;" > Subject </span>
+								<select class="form-control selectpicker" ng-model="subject" ng-disabled="!classes" ng-mouseover="getSubject()" >
+									<option value=" " selected >Subject</option>
+									<option ng-repeat="s in subjects">{{s.SUBJECT_NAME}}</option>
+								</select>
+							</div>
 					</div>
 					<!-- End Selection -->
 					<!--Search Location-->
@@ -142,14 +128,28 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-10"></div>
-					<div class="col-md-2">
-						<button class="btn btn-primary" id="addScore" ng-disabled="!subject" ng-click="unViewPage()">Add Score</button>
+					<div class="col-md-2 pull-left" ng-show="pagination">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="background-color: #00A65A;"> <i
+								class="fa fa-align-justify" style="color: white;"></i>
+							</span> <select class="form-control selectpicker">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+							</select>
+						</div>
+					</div>
+				
+					<div class="col-md-2 pull-right">
+						<button class="btn btn-primary" id="addScore" ng-disabled="!subject" ng-click="unViewPage()" >Add Score</button>
 						<button class="btn btn-primary" id="viewScore" ng-disabled="!subject" ng-click="viewPage()">View Score</button>
 						<input type="hidden" id="getUser" value="korean">
 					</div>
 				</div>
-				<!-- End Selection -->
+			
 				<!-- Start Add Score Table Here-->
 				<div style="margin-top: 20px; display: none" id="addScoreTable">
 					<div class="table-responsive">
@@ -170,12 +170,13 @@
 									<td>{{stu.COURSE_NAME}}</td>
 									<td>{{stu.CLASS_NAME}}</td>
 									<td><input type="text" pattern="^[0-9]$" maxlength="5"
-										class="koreanScore" placeholder="Korean Score"
-										style="display: none;"> <input type="text"
+										class="koreanScore" placeholder="Score" ng-model="Score"
+										style="display: none;"ng-mouseleave="addScore($event,stu.STUDENT_ID,Score)"> <input type="text"
 										pattern="^[0-9]$" maxlength="5" class="javaScore"
 										placeholder="Java Score" style="display: none;"> <input
 										type="text" pattern="^[0-9]$" maxlength="5" class="webScore"
 										placeholder="Web Score" style="display: none;"></td>
+									<td style="display: none;" ><input  value="{{stu.STUDENT_ID}}"  > </td>
 								</tr>
 							</tbody>
 						</table>
@@ -354,6 +355,7 @@
 							method:'GET'
 						}).then(function(response){
 							$scope.generation = response.data.DATA.GENERATION_NAME;
+							
 						}, function(response){
 							alert("error");
 						});
@@ -375,8 +377,11 @@
 							url:'http://localhost:8080/api/mark/display-student-to-add-score',
 							method:'GET'
 						}).then(function(response){
-							$scope.getStudent = response.data.DATA;
-							console.log($scope.instructor); 
+							$scope.getStudent = response.data.DATA; 
+							$scope.stu_id=response.data.DATA.STUDENT_ID;
+							/* angular.forEach($scope.getStudent,function(value,index){
+				                alert(value.STUDENT_ID);
+				            }); */
 						}, function(response){
 							alert("error");
 						});
@@ -421,7 +426,7 @@
 					}).then(function(response){
 						/* getData(); */ 
 						$scope.subjects = response.data.DATA; 
-						console.log($scope.subjects);
+						
 					}, function(response){
 						/* alert("error"); */
 					});	
@@ -432,28 +437,68 @@
 				$scope.unViewPage=function(){
 					if(this) $scope.pagination=false;
 				}
+			    function viewClasses(){
+					return $scope.instructor;
+				}
 				
-				 $scope.add=function(){
-					$http({
-						url:'http://localhost:8080/api/class/get-class-by-generation-course'
+			    /* $scope.IDScore = [][];
+			    $scope.i = 0; */
+			    $scope.addScore = function(e, id,score){
+			    	alert(id+","+score);
+			    	/* if(e.tagart.change){
+			    		$scope.IDScore[i] = [id,score];
+			    		$scope.i++;
+			    	} */
+			    }
+			   
+			  /*  $scope.studentID = [];
+			   $scope.studentScore = [];
+			   $scope.addScore = function(e,stuid,score) {
+				    $scope.studenID.push(stuid);
+				} */
+			/*    $scope.enroll = function(e, id) {
+					if (e.target.checked) {
+						if($scope.studentIDs.length > 1){
+							swal(
+								  'You mush submit.',
+								  'Data is over 20!',
+								  'warning'
+								)
+							e.target.checked = false;
+							return;
+						}
+						
+						$scope.studentIDs.push(id);
+					}
+					if (!e.target.checked) {
+						$scope.studentIDs.splice($scope.studentIDs.indexOf(id), 1);
+					}
+				} */
+			  /*  $scope.add=function(){
+				   
+				   angular.forEach($scope.studentID, function(stu){
+				   			alert($scope.);
+				 /* $http({
+						url:'http://localhost:8080/api/class/get-class-by-generation-course',
 						method:'POST',
 						data:{
-							'DATE': $scope.date,
 							'MARK': $scope.score,
-							'PARAMETER_FOR_ADD_MARK'.'STAFF_NAME': $scope.instructors,
-							'PARAMETER_FOR_ADD_MARK'.'SUBJECT_TYPE_NAME': $scope.s.SUBJECT_NAME,
-							'PARAMETER_FOR_ADD_MARK.CLASS_ROOM_NAME': $scope.c.CLASS_NAME,
-							'PARAMETER_FOR_ADD_MARK.STUDENT_NAME': $scope.getStudent
+							'PARAMETER_FOR_ADD_MARK': {
+						   		'CLASS_ROOM_NAME': $scope.classes,
+						    	'STAFF_NAME': $scope.instructors,
+						    	'STUDENT_ID': $scope.getStudent.STUDENT_ID,
+						    	'SUBJECT_TYPE_NAME': $scope.subject
+						  }
 						}
 					}).then(function(response){
-						getData();
+						getStudentInClass();
 					}, function(response){
 						alert("error");
-					});
-				};  
+					});    */
+			 /* }  */
+				 
 				
-				
-			});
+			}); 
 	
 			    
 			
