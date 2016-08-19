@@ -54,8 +54,9 @@
 				<li><a href="monthlyresults"> <i class="fa fa-list-alt"></i> <span>Monthly
 							Result</span>
 				</a></li>
-				<li><a href="documents"> <i class="fa fa-book"></i> <span>Documentation</span>
-				</a></li>
+				<!-- documentation -->
+				<!-- <li><a href="documents"> <i class="fa fa-book"></i> <span>Documentation</span>
+				</a></li> -->
 			</ul>
 		</section>
 	</aside>

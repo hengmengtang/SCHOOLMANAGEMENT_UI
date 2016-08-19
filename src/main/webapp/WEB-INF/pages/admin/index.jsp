@@ -99,6 +99,8 @@
 						<li><a href="subject"><i class="fa fa-circle-o"></i>
 								Subject</a></li>
 					</ul></li>
+				
+				<!-- Staff -->
 				<!-- <li><a href="staff"> <i class="fa fa-user"></i> <span>Staff</span>
 				</a></li> -->
 				<li class="treeview"><a href="#"> <i class="fa fa-pencil-square-o"></i>
@@ -114,9 +116,10 @@
 				<li class="treeview"><a href="monthly-result"> <i class="fa fa-list-alt"></i>
 						<span>Monthly Result</span>
 				</a></li>
-				<li class="treeview"><a href="#"> <i class="fa fa-book"></i>
+				<!-- Documentation: Print Transcript and certificate -->
+				<!-- <li class="treeview"><a href="#"> <i class="fa fa-book"></i>
 						<span>Documentation</span>
-				</a></li>
+				</a></li> -->
 			</ul>
 		</section>
 	</aside>
