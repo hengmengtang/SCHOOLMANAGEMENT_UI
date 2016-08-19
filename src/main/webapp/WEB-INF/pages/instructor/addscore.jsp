@@ -85,7 +85,7 @@
 								style="color: white; background-color: #00A65A;"> Course
 							</span> 
 							<label class="form-control selectpicker" 
-								 id="course" readonly>{{course}}</label>
+								 id="course" ng-model="course" readonly>{{course}}</label>
 						</div>
 					</div>
 					<div class="col-md-3 pull-left">
@@ -134,11 +134,11 @@
 								style="background-color: #00A65A;"> <i
 								class="fa fa-align-justify" style="color: white;"></i>
 							</span> <select class="form-control selectpicker">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
 								<option>5</option>
+								<option>10</option>
+								<option>15</option>
+								<option>20</option>
+								
 							</select>
 						</div>
 					</div>
@@ -170,8 +170,7 @@
 									<td>{{stu.COURSE_NAME}}</td>
 									<td>{{stu.CLASS_NAME}}</td>
 									<td><input type="text" pattern="^[0-9]$" maxlength="5"
-										class="koreanScore" placeholder="Score" id="score"
-										style="display: none;">
+										class="koreanScore" placeholder="Score" id="score">
 									 <input value="{{stu.STUDENT_ID}}" id="stu_id" style="display:none;"> </td>
 								</tr>
 							</tbody>
@@ -186,9 +185,9 @@
 				</div>
 				<!-- End Add Score Table Here -->
 				<!-- Start View Score Table Here -->
-				<div style="margin-top: 20px; display: none" id="viewScoreTable">
+				<div  style="margin-top: 20px; display: none;" id="viewScoreTable">
 					<div class="table-responsive">
-						<table class="table">
+						<table class="table" id="basicCourse" style="display: none">
 							<thead>
 								<tr style="font-size: 16px;">
 									<th>N <sup>o</sup></th>
@@ -208,26 +207,41 @@
 									<td>100</td>
 									<td>100</td>
 									<td>100</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Sam Ol Sam On</td>
-									<td>Battambang</td>
-									<td>100</td>
-									<td>100</td>
-									<td>100</td>
 									<td>100</td>
 								</tr>
 							</tbody>
 						</table>
-					</div>
+					</div> 
+				<!-- End View view Score -->
+				
+				<!-- View Advance Course Score -->
+					 <div class="table-responsive">
+						<table class="table" id="advanceCourse" style="display: none">
+							<thead>
+								<tr style="font-size: 16px;">
+									<th>N <sup>o</sup></th>
+									<th>Student&#x2191;&#x2193;</th>
+									<th>Class&#x2191;&#x2193;</th>
+									<th>IOS&#x2191;&#x2193;</th>
+									<th>Korean&#x2191;&#x2193;</th>
+									<th>Total Score&#x2191;&#x2193;</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="scores in viewStuScore">
+									<td>{{$index+1}}</td>
+									<td>{{scores.MONTHLY_RESULT.STUDENT_NMAE}}</td>
+									<td>{{scores.MONTHLY_RESULT.CLASS_NAME}}</td>
+									<td>{{scores.IOS}}</td>
+									<td>{{scores.SPRING}}</td>
+									<td>{{scores.ANDROID}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div> 
 				</div>
-				<!-- End View Score Table Here -->
-				</div>
-				</div>
-				</div>
-			</div>
-		</div>
+				<!-- End View Advance Course Score -->
+			
 		</fieldset>
 		</div>
 		<!-- End page --> 
@@ -255,7 +269,7 @@
     $("#add-stu").click(function(){
     	$("#add-btn").fadeIn();
     });
-    $("#addScore").click(function(){
+  /*   $("#addScore").click(function(){
     	if($("#getUser").val() =="korean"){
     		$(".koreanScore").show();
     	}
@@ -265,13 +279,26 @@
     	else if($("#getUser").val() =="java"){
     		$(".javaScore").show();
     	}
-    });
+    }); */
     $("#addScore").click(function(){
     	$("#addScoreTable").fadeToggle();
     	$("#viewScoreTable").hide();
     });
     $("#viewScore").click(function(){
-    	$("#viewScoreTable").fadeToggle();
+    	$("#viewScoreTable").fadeToggle("fast",function(){
+    		if($("#course").text()=='Basic Course' ){ 
+    			$('#basicCourse').fadeIn("fast",function(){
+    				getViewScore();
+    			});
+    			$('#advanceCourse').fadeOut("fast");
+    			
+    		}
+    		if($("#course").text() == 'Advance Course'){ 
+    			$('#basicCourse').fadeOut("fast");
+    			$('#advanceCourse').fadeIn("fast");
+    		} 
+    	});
+    	
     	$("#addScoreTable").hide();
     });
     
@@ -335,7 +362,7 @@
 				$scope.date = new Date();
 				 function getInstructor(){
 					$http({
-							url:'http://localhost:8080/api/staff/display-staff-in-class',
+							url:'http://localhost:2222/api/staff/display-staff-in-class',
 							method:'GET'
 						}).then(function(response){
 							$scope.instructor = response.data.DATA;
@@ -347,11 +374,10 @@
 				getInstructor(); 
 				function getGeneration(){
 					$http({
-							url:'http://localhost:8080/api/generation/get-last-generation',
+							url:'http://localhost:2222/api/generation/get-last-generation',
 							method:'GET'
 						}).then(function(response){
 							$scope.generation = response.data.DATA.GENERATION_NAME;
-							
 						}, function(response){
 							alert("error");
 						});
@@ -359,7 +385,7 @@
 				getGeneration();
 				function getCourse(){
 					$http({
-							url:'http://localhost:8080/api/course/get-last-course',
+							url:'http://localhost:2222/api/course/get-last-course',
 							method:'GET'
 						}).then(function(response){
 							$scope.course = response.data.DATA.COURSE_NAME;
@@ -370,11 +396,12 @@
 				getCourse();
 				function getStudentInClass(){
 					$http({
-							url:'http://localhost:8080/api/mark/display-student-to-add-score',
+							url:'http://localhost:2222/api/mark/display-student-to-add-score',
 							method:'GET'
 						}).then(function(response){
 							$scope.getStudent = response.data.DATA; 
 							$scope.stu_id=response.data.DATA.STUDENT_ID;
+							$scope.stu_name=response.data.DATA.ENGLISH_FULL_NAME;
 							/* angular.forEach($scope.getStudent,function(value,index){
 				                alert(value.STUDENT_ID);
 				            }); */
@@ -386,7 +413,7 @@
 				/* Get Class */
 				function getClassBy(course, generation, instructor){
 					$http({
-						url:'http://localhost:8080/api/class/get-class-by-generation-course',
+						url:'http://localhost:2222/api/class/get-class-by-generation-course',
 						method:'POST',
 						data:{
 							"COURSE_NAME": course,
@@ -411,7 +438,7 @@
 				
 				function getSubjectBy(course, generation, instructor, clas){
 					$http({
-						url:'http://localhost:8080/api/subject/get-current-subject-in-course',
+						url:'http://localhost:2222/api/subject/get-current-subject-in-course',
 						method:'POST',
 						data:{
 							"COURSE_NAME": course,
@@ -447,7 +474,7 @@
 			    		 if($index == key){
 			    			 alert($scope.id+","+$scope.s+", "+$scope.classes+", "+$scope.instructors+", "+$scope.subject);
 			    			 $http({
-									url:'http://localhost:8080/api/mark/add-mark',
+									url:'http://localhost:2222/api/mark/add-mark',
 									method:'POST',
 									data:{
 										'MARK': $scope.s,
@@ -467,35 +494,30 @@
 								});
 			    			 return;
 			    		 }
-				    		
-					
 					})
 				})
-							
-						
-					
-			   
 			    }
+			    $scope.getViewScore=function(){
+				    $http({
+						url:'http://localhost:2222/api/monthly-result/monthly-result-advance-course/'+$scope.generation,
+						method:'POST',
+					}).then(function(response){ 
+						$scope.viewStuScore = response.data.DATA; 
+						console.log($scope.viewStuScore);
+					}, function(response){
+						 alert("error"); 
+					});	
+			    }
+			    function getViewBasic(){ alert("Basic");}
+			    
+			    /* function checkViewScore(){
+			    	if($("#course").text=='Advance Course'){
+			    		return $scope.getViewScore();
+			    	}
+			    	
+			    } */
+			    
 			   
-			 
-			/*    $scope.enroll = function(e, id) {
-					if (e.target.checked) {
-						if($scope.studentIDs.length > 1){
-							swal(
-								  'You mush submit.',
-								  'Data is over 20!',
-								  'warning'
-								)
-							e.target.checked = false;
-							return;
-						}
-						
-						$scope.studentIDs.push(id);
-					}
-					if (!e.target.checked) {
-						$scope.studentIDs.splice($scope.studentIDs.indexOf(id), 1);
-					}
-				} */
 			  /*  $scope.add=function(){
 				   
 				   angular.forEach($scope.studentID, function(stu){
@@ -519,11 +541,8 @@
 					});    */
 			 /* }  */
 				 
-				
 			}); 
 	
-			    
-			
 	</script>
 
 </body>
