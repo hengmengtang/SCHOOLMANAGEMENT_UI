@@ -91,7 +91,7 @@
 						<thead>
 							<tr>
 								<th >N <sup>o</sup></th>
-								<th ng-click="sort('SUBJECT_NAME')">Subject<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
+								<th ng-click="sort('SUBJECT_NAME')">Subject<span class="arrow1">&#x2191;&#x2193;</span></th>
 								<th>Description</th>
 								<th>Closed</th>
 							</tr>
@@ -175,12 +175,12 @@
 			
 			function getData() {
 				$http({
-					url : 'http://localhost:8080/api/subject/find-all-subject',
+					url : 'http://localhost:2222/api/subject/find-all-subject',
 					method : 'GET'
 				}).then(function(response) {
 					$scope.subjects = response.data.DATA;
 				}, function(response) {
-					alert("error");
+					/* alert("error"); */
 				});
 			};
 			
@@ -201,7 +201,7 @@
 				
 				if($scope.status == false){
 					$http({
-						url: 'http://localhost:8080/api/subject/add-subject',
+						url: 'http://localhost:2222/api/subject/add-subject',
 						data:{
 							 "ACTIVE": true,
 							 "DESCRIPTION": $scope.des,
@@ -222,7 +222,7 @@
 			
 			function getSubjectID(){
 				$http({
-						url:'http://localhost:8080/api/subject/auto-subject-id',
+						url:'http://localhost:2222/api/subject/auto-subject-id',
 						method:'GET'
 					}).then(function(response){
 						$scope.id = response.data.DATA.MAX_ID;

@@ -94,7 +94,7 @@
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th>N <sup>o</sup>&#x2191;&#x2193;</th>
+									<th>N <sup>o</sup></th>
 									<th ng-click="sort('gen_name')">Genration<span class="arrow1">&#x2191;&#x2193;</span></th>
 									<th>Start Date<span class="arrow1"></span></th>
 									<th>End Date<span class="arrow1"></span></th>
@@ -266,7 +266,7 @@
 				 
 				function getData(){
 						$http({
-								url:'http://localhost:8080/api/generation/find-all-generation',
+								url:'http://localhost:2222/api/generation/find-all-generation',
 								method:'GET'
 							}).then(function(response){
 								$scope.generations = response.data.DATA;
@@ -278,7 +278,7 @@
 				
 				$scope.add=function(){
 					$http({
-						url:'http://localhost:8080/api/generation/add-generation',
+						url:'http://localhost:2222/api/generation/add-generation',
 						method:'POST',
 						data:{
 							'STATUS': true,
@@ -303,7 +303,7 @@
 				
 				function getGenID(){
 					$http({
-							url:'http://localhost:8080/api/generation/auto-generation-id',
+							url:'http://localhost:2222/api/generation/auto-generation-id',
 							method:'GET'
 						}).then(function(response){
 							$scope.id = response.data.DATA.MAX_ID;
@@ -314,7 +314,7 @@
 				
 				function getGenStatus(){
 					$http({
-							url:'http://localhost:8080/api/generation/get-generation-status-true',
+							url:'http://localhost:2222/api/generation/get-generation-status-true',
 							method:'GET'
 						}).then(function(response){
 							$scope.status = response.data.DATA.STATUS;
@@ -325,15 +325,15 @@
 				};
 				
 				$scope.finish = function(id){
-					swal({   title: "Are you sure want finish?",   text: "You want finish!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Finished!",   closeOnConfirm: false }, function(){   
-							swal("Finished!", "Finished.", "success"); 
+					swal({   title: "Are you sure want Closed!?",   text: "You want Closed!!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Finished!",   closeOnConfirm: false }, function(){   
+							swal("Closed!", "Closed!.", "success"); 
 							updateStatus(id);
 						});
 				}
 				
 			 function updateStatus(id){
 					$http({
-							url:'http://localhost:8080/api/generation/change-status-true/'+id,
+							url:'http://localhost:2222/api/generation/change-status-true/'+id,
 							method:'PUT'
 						}).then(function(response){
 							getData();

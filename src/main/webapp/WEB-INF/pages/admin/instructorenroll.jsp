@@ -5,11 +5,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>HRD Student Management</title>
-<script
-	src="${pageContext.request.contextPath }/resources/Jquery-new/jquery-2.2.4.js"></script>
-<script
-	src="${pageContext.request.contextPath }/resources/bootstrap/js/jquery.js"></script>
-<!-- Tell the browser to be responsive to screen width -->
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
@@ -49,19 +44,11 @@
 				<div class="col-md-10 pull-right">
 					<!-- <nav class="page">       -->
 					<ul class="pagination pull-right" style="margin-top: 2px;">
-						<li><a href="#">First</a></li>
-						<li><a href="#" aria-label="Previous"> <span
-								aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#" aria-label="Next"> <span
-								aria-hidden="true">&raquo;</span>
-						</a></li>
-						<li><a href="#">Last</a></li>
+						<dir-pagination-controls
+					       max-size="5"
+					       direction-links="true"
+					       boundary-links="true" >
+				    	</dir-pagination-controls>
 					</ul>
 					<!-- </nav> -->
 				</div>
@@ -70,14 +57,13 @@
 			<!-- Start Row 2 -->
 			<div class="row">
 				<!-- Selection -->
-				<div class="col-md-3">
-
+				<div class="col-md-2">
 					<div class="input-group pull-left">
 						<span class="input-group-addon"
 							style="color: white; background-color: #00A65A;"> <i
 							class="fa fa-align-justify"></i>
-						</span> <select class="form-control selectpicker">
-							<option>1</option>
+						</span> <select class="form-control selectpicker" ng-model="no">
+							<option value="">No</option>
 							<option>2</option>
 							<option>3</option>
 							<option>4</option>
@@ -87,29 +73,16 @@
 
 				</div>
 				<!-- End Selection -->
-				<div class="col-md-3">
-
-					<div class="input-group pull-left">
-
-						<span class="input-group-btn">
-							<button class="btn btn-success">Generation</button>
-						</span> <select class="form-control selectpicker" ng-model="generation">
-							<option value="">Generations</option>
-							<option ng-repeat="gen in generations">{{gen.GENERATION_NAME}}</option>
-						</select>
-					</div>
-
-				</div>
 
 				<!--Search Location-->
-				<div class="col-md-6">
+				<div class="col-md-3">
 					<div class="input-group pull-left">
 						<span class="input-group-addon"
 							style="color: white; background-color: #00A65A"><i
 							class="fa fa-search" aria-hidden="true" style="font-size: 16px;"></i>
 						</span> <input type="text" class="form-control"
 							placeholder="Search Instructor"
-							style="width: 160px; height: 31px;">
+							style="height: 31px;" ng-model="search">
 					</div>
 				</div>
 
@@ -125,16 +98,18 @@
 								<th>N <sup>o</sup></th>
 								<th>Instructor&#x2191;&#x2193;</th>
 								<th>Khmer Name&#x2191;&#x2193;</th>
-								<th>Class&#x2191;&#x2193;</th>
-								<th>Start Date&#x2191;&#x2193;</th>
+								<th>Class</th>
+								<th>Subject</th>
+								<th>Start Date</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="inst in instructor">
+							<tr dir-paginate="inst in instructor|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':search}|itemsPerPage:no|limitTo : 6">
 								<td>{{$index+1}}</td>
 								<td>{{inst.ENGLISH_FULL_NAME}}</td>
 								<td>{{inst.KHMER_FULL_NAME}}</td>
 								<td>{{inst.CLASS_NAME}}</td>
+								<td>{{inst.SUBJECT_NAME}}</td>
 								<td>{{inst.DATE}}</td>
 								<td>
 									<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="update(student.STUDENT_ID)"><i class="glyphicon glyphicon-refresh"></i></button>
@@ -187,15 +162,15 @@
 				</div>
 
 				<div class="col-md-4">
-					<input type="text" class="form-control select" id="add-course"
-						style="display: none;" value="{{course}}" ng-model="course" readonly>
+					<label type="text" class="form-control select" id="add-course"
+						style="display: none;" readonly>{{course}}</label>
 				</div>
 				<!-- <div id="hide-sub"> -->
 				<div class="col-md-3">
 					<select class="form-control select" id="add-instructor"
-						style="display: none; position: absolute;" >
+						style="display: none; position: absolute;" ng-model="ins">
 						<option value="" selected>Instructors</option>
-						<option ng-repeat="ins in instructors">{{ins.INSTRUCTOR_NAME}}</option>
+						<option ng-repeat="ins in instructors">{{ins.ENGLIST_FULL_NAME}}</option>
 					</select>
 				</div>
 
@@ -216,7 +191,7 @@
 			<div class="row">
 				<div class="col-md-4">
 					<select class="form-control select" id="add-class"
-						style="display: none;" ng-model="class">
+						style="display: none;" ng-model="cls" ng-change="checked()" ng-disabled="!ins">
 						<option value="">Classes</option>
 						<option ng-repeat="cls in classes">{{cls.CLASS_NAME}}</option>
 					</select>
@@ -224,7 +199,7 @@
 				<div class="col-md-4">
 					<div class="form-group" id="add-stu" style="display: none;">
 						<select class="form-control select" id="add-subject"
-						style="display: none;" ng-model="subject">
+						style="display: none;" ng-model="subject" ng-disabled="sub">
 							<option value="">Subjects</option>
 							<option ng-repeat="sub in subjects">{{sub.SUBJECT_NAME}}</option>
 						</select>
@@ -233,7 +208,7 @@
 				<div class="col-md-4">
 					<div class="form-group" id="add-date" style="display: none;">
 						<input type="text" class="form-control"
-							placeholder="Enroll Date" id="date" ng-model="date">
+							placeholder="Enroll Date" id="date" ng-model="date" ng-disabled="!subject">
 					</div>
 				</div>
 			</div>
@@ -241,7 +216,7 @@
 			<div class="row">
 				<div class="pull-right" id="add-btn"
 					style="margin: 7px; display: none;">
-					<button type="button" class="btn btn-success" id="btnSave" ng-click="add()">Save</button>
+					<button type="button" class="btn btn-success" id="btnSave" ng-click="enroll()" ng-disabled="!date">Enroll</button>
 					<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 				</div>
 			</div>
@@ -252,6 +227,7 @@
 	</div>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp"></jsp:include>
+	<jsp:include page="../include/sweetalert.jsp"/>
 	<script src="${pageContext.request.contextPath}/resources/angularjs/angular.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.js"></script>
@@ -271,7 +247,7 @@
 								$("#hide").fadeIn();
 								$("#add-gen").fadeToggle("slow", function() {
 								});
-								$("#add-course").fadeIn();
+								
 								$("#add-course").fadeIn("fast");
 								$("#add-class").fadeIn("fast");
 								$("#add-stu").fadeIn("fast");
@@ -288,65 +264,11 @@
 								$("#add-stu").fadeOut("fast");
 								$("#add-btn").fadeOut("fast");
 								$("#add-gen").fadeOut("fast");
-								$("#add-subject-advance").fadeOut("fast");
+								$("#add-subject").fadeOut("fast");
 								$("#add-date").fadeOut("fast");
+								$("#add-instructor").fadeOut("fast");
 							});
-							//--Add Course--//
-							/* $("#add-gen")
-									.change(
-											function() {
-												var gen = $(this).val();
-												(gen == "gen1" || gen == "gen2"
-														|| gen == "gen3" || gen == "gen4") ? $(
-														"#add-course").fadeIn(
-														'slow')
-														: $("#add-course")
-																.fadeOut('slow');
-											}); */
-
-							//--Add Subject--//
-							/* $("#add-course")
-									.change(
-											function() {
-												var course = $(this).val();
-												$("#add-subject-advance").fadeIn(slow");
-												
-											}); */
-							//--Add Class--//
-							/* $("#add-subject-basic,#add-subject-advance")
-									.change(
-											function() {
-												var sub = $(this).val();
-												if(sub) $("#add-class").fadeIn(
-														"slow")
-												if(sub=='Select Subject') $("#add-class")
-																.fadeOut("slow");
-											});
-							 */
-							//--Add Instructor--//
-							/* $("#add-class")
-									.change(
-											function() {
-												var clas = $(this).val();
-												(clas == 'BTB' || clas == 'PP'
-														|| clas == 'KPS' || clas == 'SR') ? $(
-														"#add-stu").fadeIn(
-														"slow")
-														: $("#add-stu")
-																.fadeOut("slow");
-											}); */
-							//--Add Date--//
-							/* $("#add-stu")
-									.click(
-											function() {
-												$("#add-date").fadeIn("slow")
-											});
- */
-							//--Add Button--//
-							/* $("#add-date").click(function() {
-								$("#add-btn").fadeIn("slow");
-							});
- */
+							
 						});
 		
 	</script>
@@ -356,47 +278,71 @@
 			app.controller('instEnrollCtrl', function($scope, $http){
 				
 				getData(); 
-				getClass();
-				getSubject();
-				getLastCourse();
-				getGeneration();
-				getLastGeneration();
 				clearInputControll();
 				
+				$scope.sub = true;
+				$scope.checked = function(){
+					$scope.ins_name = $scope.ins;
+					$scope.cla_name = $scope.cls;
+					angular.forEach($scope.instructor, function(check){
+						if(check.ENGLISH_FULL_NAME == $scope.ins_name && check.CLASS_NAME == $scope.cla_name){
+							$scope.sub = true;
+							$scope.cls = "";
+							$scope.ins = "";
+							sweetAlert(
+									  'Enroll is not available...',
+									  'Instructor and Class already existed!',
+									  'error'
+									)
+							return;
+						}
+						$scope.sub = false;
+					})
+					
+					
+				}
 				
 				function getData(){
 						$http({
-								url:'http://localhost:8080/api/staff/display-staff-in-class',
+								url:'http://localhost:2222/api/staff/display-staff-in-class',
 								method:'GET'
 							}).then(function(response){
 								$scope.instructor = response.data.DATA;
+								getClass();
+								getSubject();
+								getLastCourse();
+								getGeneration();
+								getLastGeneration();
+								getInstructor();
 							}, function(response){
 								/* alert("error"); */
 							});
 				};
 				
-				$scope.add=function(){
+				$scope.enroll = function(){
+					/* alert($scope.course+", "+$scope.subject+", "+$scope.cls+", "+$scope.ins+", "+$scope.date+", "+$scope.gen_last) */
 					$http({
-						url:'http://localhost:8080/handle-subject-to-staff-to-class',
+						url:'http://localhost:2222/handle-subject-to-staff-to-class',
 						method:'POST',
 						data:{
 							'COURSE_NAME': $scope.course,
 							'SUBJECT_TYPE_NAME': $scope.subject,
-							'CLASS_ROOM_NAME': $scope.Class,
-							'STAFF_HANDLE_NAME': $scope.staff,
+							'CLASS_ROOM_NAME': $scope.cls,
+							'STAFF_HANDLE_NAME': $scope.ins,
+							'GENERATION_NAEM': $scope.gen_last,
 							'DATE': $scope.date
 						}
 					}).then(function(response){
 						getData();
 						clearInputControll();
 					}, function(response){
-						/* alert("error"); */
-					});
+						/* alert("error");*/
+					}); 
 				}; 
 				
 				function getGeneration(){
 					$http({
-							url:'http://localhost:8080/api/generation/find-all-generation',
+							url:'http://localhost:2222/api/generation/find-all-generation',
 							method:'GET'
 						}).then(function(response){
 							$scope.generations = response.data.DATA;
@@ -407,7 +353,7 @@
 				
 				function getLastCourse(){
 					$http({
-						url:'http://localhost:8080/api/course/get-last-course',
+						url:'http://localhost:2222/api/course/get-last-course',
 						method:'GET'
 					}).then(function(response){
 						$scope.course = response.data.DATA.COURSE_NAME;
@@ -418,7 +364,7 @@
 				
 				function getLastGeneration(){
 					$http({
-							url:'http://localhost:8080/api/generation/get-last-generation',
+							url:'http://localhost:2222/api/generation/get-last-generation',
 							method:'GET'
 						}).then(function(response){
 							$scope.gen_last = response.data.DATA.GENERATION_NAME;
@@ -429,23 +375,34 @@
 				
 				function getClass() {
 					$http({
-						url : 'http://localhost:8080/api/class/find-all-class',
+						url : 'http://localhost:2222/api/class/find-all-class',
 						method : 'GET'
 					}).then(function(response) {
 						$scope.classes = response.data.DATA;
 					}, function(response) {
-						alert("error");
+						/* alert("error"); */
 					});
 				};
 				
 				function getSubject() {
 					$http({
-						url : 'http://localhost:8080/api/subject/find-all-subject',
+						url : 'http://localhost:2222/api/subject/find-all-subject',
 						method : 'GET'
 					}).then(function(response) {
 						$scope.subjects = response.data.DATA;
 					}, function(response) {
-						alert("error");
+						/* alert("error"); */
+					});
+				};
+				
+				function getInstructor() {
+					$http({
+						url : 'http://localhost:2222/api/staff/find-all-staff',
+						method : 'GET'
+					}).then(function(response) {
+						$scope.instructors = response.data.DATA;
+					}, function(response) {
+						/* alert("error"); */
 					});
 				};
 				

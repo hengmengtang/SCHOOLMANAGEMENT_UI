@@ -100,7 +100,7 @@
 							<thead>
 									<tr>
 										<th>N<sup>o</sup></th>
-										<th ng-click="sort('id')">Generation<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</th>
+										<th ng-click="sort('id')">Generation<span class="arrow1">&#x2191;&#x2193;</span></th>
 										<th>Course</th>
 										<th>Start Date</th>
 										<th>End Date</th>
@@ -216,13 +216,13 @@
 
 			function getData() {
 				$http({
-					url : 'http://localhost:8080/api/course/list-course-tam-generation',
+					url : 'http://localhost:2222/api/course/list-course-tam-generation',
 					method : 'GET'
 				}).then(function(response) {
 					$scope.courses = response.data.DATA;
 					getLastCourse();
 				}, function(response) {
-					alert("error");
+					/* alert("error"); */
 				});
 			};
 			
@@ -239,7 +239,7 @@
 			
 			function getLastCourse(){
 				$http({
-					url:'http://localhost:8080/api/course/get-last-course',
+					url:'http://localhost:2222/api/course/get-last-course',
 					method:'GET'
 				}).then(function(response){
 					$scope.status = response.data.DATA.STATUS;
@@ -250,8 +250,8 @@
 			
 			function updateStatus(id){
 				$http({
-						url:'http://localhost:8080/api/generation/change-status-true/'+id,
-						method:'PUT'
+						url:'http://localhost:2222/api/course/change-status-course/'+id,
+						method:'POST'
 					}).then(function(response){
 						getData();
 						$scope.status = false;
@@ -262,7 +262,7 @@
 			
 			function getGeneration(){
 				$http({
-						url:'http://localhost:8080/api/generation/find-all-generation',
+						url:'http://localhost:2222/api/generation/find-all-generation',
 						method:'GET'
 					}).then(function(response){
 						$scope.generations = response.data.DATA;
@@ -280,7 +280,7 @@
 				$scope.end_date = $('#datepicker1').val();
 				$scope.start_date = $('#datepicker2').val()
 				$http({
-					url: 'http://localhost:8080/api/course/register-course',
+					url: 'http://localhost:2222/api/course/register-course',
 					data:{
 						 "COURSE_END_DATE": $scope.end_date,
 						 "COURSE_ID": $scope.id,
@@ -298,7 +298,7 @@
 			
 			function getCourseID(){
 				$http({
-						url:'http://localhost:8080/api/course/auto-course-id',
+						url:'http://localhost:2222/api/course/auto-course-id',
 						method:'GET'
 					}).then(function(response){
 						$scope.id = response.data.DATA.MAX_ID;
@@ -310,7 +310,7 @@
 			$scope.finish = function(id){
 				swal({   title: "Are you sure want finish?",   text: "You want finish!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Finished!",   closeOnConfirm: false }, function(){   
 						swal("Finished!", "Finished.", "success"); 
-						alert(id);
+						updateStatus(id);
 						
 					});
 			}
