@@ -148,14 +148,14 @@
 							style="font-size: 16px;">Add Class</b>
 					</div>
 					<div class="pull-right">
-						<button class="btn btn-success" id="btn-add">
+						<button class="btn btn-success" id="btn-add" ng-click="check()">
 							<span class="glyphicon glyphicon-plus"> </span>
 						</button>
 					</div>
 				</div>
 				<!--End Add Student-->
 				<!-- Start Add Generation -->
-				<div class="row">
+				<div class="row" ng-show="formClass">
 					<div id="hide">
 						<div class="col-md-3" id="add-gen" style="display: none;">
 							<span>Generation<span class="star">*</span></span>
@@ -210,22 +210,67 @@
 						function($scope, $http) {
 
 							getData();
-							getGeneration();
-							getID();
-							getLastCourse();
-							getLastGeneration();
-
+							$scope.formClass = false;
+							
+							$scope.check = function(){
+								if($scope.student == false && $scope.course_status == false){
+									sweetAlert(
+											'Class is not available...',
+											'Course or Student is not exist!',
+											'error'
+										);
+									return;
+								}
+								$scope.formClass = true;
+							}
+							
 							$scope.getGeneration = function() {
 								getData();
 							}
+							
+							function getStudent() {
+								$http(
+									{
+										url : 'http://localhost:2222/api/student/display-student-not-yet-enroll-to-class',
+										method : 'GET'
+									}).then(function(response) {
+										if(response.data.DATA == "")
+											$scope.student = false;
+										else $scope.student = true;
+								}, function(response) {
+									/* alert("error"); */
+								});
+							};
+							
+							function getLastStatusCourse(){
+								$http({
+									url:'http://localhost:2222/api/course/get-last-course',
+									method:'GET'
+								}).then(function(response){
+									if(response.data.DATA == null)
+										$scope.course_status = false;
+									else
+										$scope.course_status = response.data.DATA.STATUS;
+									/* alert("course "+$scope.status); */
+								}, function(response){
+									/* alert("error"); */
+								});
+							}
+							
 
 							function getData() {
 								$http(
-										{
-											url : 'http://localhost:2222/api/class/list-class-in-all-generation',
-											method : 'GET'
-										}).then(function(response) {
-									$scope.classes = response.data.DATA;
+									{
+										url : 'http://localhost:2222/api/class/list-class-in-all-generation',
+										method : 'GET'
+									}).then(function(response) {
+										$scope.classes = response.data.DATA;
+										getGeneration();
+										getLastStatusCourse();
+										getID();
+										getStudent();
+										getLastCourse();
+										getLastGeneration();
 								}, function(response) {
 									/* alert("error"); */
 								});
@@ -336,9 +381,7 @@
 							}
 						});
 	</script>
-	<script>
-		$.widget.bridge('uibutton', $.ui.button);
-	</script>
+	
 	<!--Add Script-->
 	<script>
 		$(document)

@@ -12,7 +12,7 @@
 <link
 	href="${pageContext.request.contextPath }/resources/style/customStudentList.css"
 	rel="stylesheet" />
-<script src="${pageContext.request.contextPath }/resources/bootstrapcheckbox/bootstrap-checkbox.min.js"></script>
+<%-- <script src="${pageContext.request.contextPath }/resources/bootstrapcheckbox/bootstrap-checkbox.min.js"></script> --%>
 </head>
 <body class="bg">
 	<!-- index is menu -->

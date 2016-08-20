@@ -113,7 +113,7 @@
 											<span class="glyphicon glyphicon-ok"></span>
 										</button>
 										<button type="button" class="btn btn-success"
-											ng-if="gen.STATUS==true" ng-click="finish(gen.GENERATION_ID)">
+											ng-if="gen.STATUS==true" ng-click="finish()">
 											<span class="glyphicon glyphicon-ban-circle"></span>
 										</button>
 									</td>
@@ -318,23 +318,23 @@
 							method:'GET'
 						}).then(function(response){
 							$scope.status = response.data.DATA.STATUS;
-							console.log($scope.status)
+							/* console.log($scope.status) */
 						}, function(response){
 							
 						});
 				};
 				
-				$scope.finish = function(id){
-					swal({   title: "Are you sure want Closed!?",   text: "You want Closed!!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Finished!",   closeOnConfirm: false }, function(){   
+				$scope.finish = function(){
+					swal({   title: "Are you sure want Closed!?",   text: "You want Closed!!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Closed!",   closeOnConfirm: false }, function(){   
 							swal("Closed!", "Closed!.", "success"); 
-							updateStatus(id);
+							updateStatus();
 						});
 				}
 				
-			 function updateStatus(id){
+			 function updateStatus(){
 					$http({
-							url:'http://localhost:2222/api/generation/change-status-true/'+id,
-							method:'PUT'
+							url:'http://localhost:2222/api/generation/close-or-open-last-generation',
+							method:'GET'
 						}).then(function(response){
 							getData();
 							$scope.status = false;
