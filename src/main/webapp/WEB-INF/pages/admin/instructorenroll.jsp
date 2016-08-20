@@ -131,7 +131,7 @@
 				</div>
 
 				<div class="pull-right" style="margin: 0px;">
-					<button class="btn btn-success" id="btn-add">
+					<button class="btn btn-success" id="btn-add" ng-click="enroll_instructor()">
 						<span class="glyphicon glyphicon-plus"></span>
 					</button>
 				</div>
@@ -141,6 +141,7 @@
 			
 
 			<!--Input for gen, stu, class-->
+			<div ng-show="form_enroll_instructor">
 			<div class="row" style="margin-bottom: 5px;">
 				<div class="col-md-4">
 					Generation<span class="star">*</span>
@@ -191,7 +192,7 @@
 			<div class="row">
 				<div class="col-md-4">
 					<select class="form-control select" id="add-class"
-						style="display: none;" ng-model="cls" ng-change="checked()" ng-disabled="!ins">
+						style="display: none;" ng-model="cls" ng-disabled="!ins">
 						<option value="">Classes</option>
 						<option ng-repeat="cls in classes">{{cls.CLASS_NAME}}</option>
 					</select>
@@ -199,7 +200,7 @@
 				<div class="col-md-4">
 					<div class="form-group" id="add-stu" style="display: none;">
 						<select class="form-control select" id="add-subject"
-						style="display: none;" ng-model="subject" ng-disabled="sub">
+						style="display: none;" ng-model="subject" ng-disabled="!cls" ng-change="checked()">
 							<option value="">Subjects</option>
 							<option ng-repeat="sub in subjects">{{sub.SUBJECT_NAME}}</option>
 						</select>
@@ -208,7 +209,7 @@
 				<div class="col-md-4">
 					<div class="form-group" id="add-date" style="display: none;">
 						<input type="text" class="form-control"
-							placeholder="Enroll Date" id="date" ng-model="date" ng-disabled="!subject">
+							placeholder="Enroll Date" id="date" ng-model="date" ng-disabled="add_date">
 					</div>
 				</div>
 			</div>
@@ -219,6 +220,7 @@
 					<button type="button" class="btn btn-success" id="btnSave" ng-click="enroll()" ng-disabled="!date">Enroll</button>
 					<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 				</div>
+			</div>
 			</div>
 		</fieldset>
 		</div>
@@ -280,23 +282,40 @@
 				getData(); 
 				clearInputControll();
 				
-				$scope.sub = true;
+				$scope.add_date = true;
+				$scope.form_enroll_instructor = false;
+				
+				$scope.enroll_instructor = function(){
+					getClass();
+					if($scope.classes == false){
+						sweetAlert(
+								  'Enroll instructor is not available...',
+								  'Student and class is not exist!',
+								  'error'
+								)
+						return;
+					}
+					$scope.form_enroll_instructor = true;
+				}
+				
 				$scope.checked = function(){
 					$scope.ins_name = $scope.ins;
 					$scope.cla_name = $scope.cls;
+					$scope.sub_name = $scope.subject;
 					angular.forEach($scope.instructor, function(check){
-						if(check.ENGLISH_FULL_NAME == $scope.ins_name && check.CLASS_NAME == $scope.cla_name){
-							$scope.sub = true;
+						if(check.ENGLISH_FULL_NAME == $scope.ins_name && check.CLASS_NAME == $scope.cla_name && check.SUBJECT_NAME == $scope.sub_name){
+							$scope.add_date = true;
 							$scope.cls = "";
 							$scope.ins = "";
+							$scope.subject = "";
 							sweetAlert(
 									  'Enroll is not available...',
-									  'Instructor and Class already existed!',
+									  'Instructor, class and subject already existed!',
 									  'error'
 									)
 							return;
 						}
-						$scope.sub = false;
+						$scope.add_date = false;
 					})
 					
 					
@@ -308,10 +327,8 @@
 								method:'GET'
 							}).then(function(response){
 								$scope.instructor = response.data.DATA;
-								getClass();
 								getSubject();
 								getLastCourse();
-								getGeneration();
 								getLastGeneration();
 								getInstructor();
 							}, function(response){
@@ -320,7 +337,6 @@
 				};
 				
 				$scope.enroll = function(){
-					/* alert($scope.course+", "+$scope.subject+", "+$scope.cls+", "+$scope.ins+", "+$scope.date+", "+$scope.gen_last) */
 					$http({
 						url:'http://localhost:2222/handle-subject-to-staff-to-class',
 						method:'POST',
@@ -339,17 +355,6 @@
 						/* alert("error");*/
 					}); 
 				}; 
-				
-				function getGeneration(){
-					$http({
-							url:'http://localhost:2222/api/generation/find-all-generation',
-							method:'GET'
-						}).then(function(response){
-							$scope.generations = response.data.DATA;
-						}, function(response){
-							/* alert("error"); */
-						});
-				};
 				
 				function getLastCourse(){
 					$http({
@@ -375,10 +380,17 @@
 				
 				function getClass() {
 					$http({
-						url : 'http://localhost:2222/api/class/find-all-class',
-						method : 'GET'
-					}).then(function(response) {
-						$scope.classes = response.data.DATA;
+						url : 'http://localhost:2222/api/class/get-class-by-generation-course',
+						data : {
+							"COURSE_NAME" : $scope.course,
+							"GENERATION_NAME" : $scope.gen_last
+						},
+						method : 'POST'
+						}).then(function(response) {
+							if(response.data.DATA == "")
+								$scope.classes = false;
+							else
+								$scope.classes = response.data.DATA;
 					}, function(response) {
 						/* alert("error"); */
 					});
