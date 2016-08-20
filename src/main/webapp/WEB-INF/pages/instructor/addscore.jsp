@@ -537,8 +537,7 @@ input::-webkit-inner-spin-button {
 			   
 			  /*  $scope.add=function(){
 				   
-				   angular.forEach($scope.studentID, function(stu){
-				   			alert($scope.);
+				   
 				 /* $http({
 						url:'http://localhost:8080/api/class/get-class-by-generation-course',
 						method:'POST',
