@@ -328,13 +328,13 @@
 				
 				function getData(){
 						$http({
-								url:'http://localhost:8080/staff/find-all-staff',
+								url:'http://localhost:2222/staff/find-all-staff',
 								method:'GET'
 							}).then(function(response){
 								$scope.staffs = response.data.DATA;
 									
 							}, function(response){
-								alert("error");
+								/* alert("error"); */
 							});
 				};
 				

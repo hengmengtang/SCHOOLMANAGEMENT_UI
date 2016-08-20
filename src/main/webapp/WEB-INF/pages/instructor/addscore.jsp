@@ -63,8 +63,8 @@
 								ng-model=""  > -->
 								<select class="form-control" ng-model="instructors">
 									<option value="">Select Staff</option>
-									<option ng-repeat="ins in instructor " value="{{ins.ENGLISH_FULL_NAME}}">
-									{{ins.ENGLISH_FULL_NAME}}
+									<option ng-repeat="ins in instructor">
+										{{ins.ENGLISH_FULL_NAME}}
 									</option>
 								</select>
 						</div>
@@ -74,75 +74,51 @@
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;">
 								Generation </span> 
-								<input class="form-control selectpicker" ng-model="generation"  value="4 Generation" ng-init="generation='4 Generation' "
-							 readonly> 
+								<label class="form-control selectpicker" id="generation"    
+							 readonly>{{generation}}</label>
 						</div>
 					</div>
 
-					<div class="col-md-2 pull-left">
+					<div class="col-md-3 pull-left">
 						<div class="input-group pull-left">
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;"> Course
 							</span> 
-							<input class="form-control selectpicker" 
-								ng-model="course" value="Advance Course" ng-init="course='Advance Course'"
-								 readonly>
+							<label class="form-control selectpicker" 
+								 id="course" ng-model="course" readonly>{{course}}</label>
 						</div>
 					</div>
-					<div class="col-md-2 pull-left">
-						<div class="input-group pull-left">
-							<span class="input-group-addon"
-								style="color: white; background-color: #00A65A;"> Subject </span>
-							<select class="form-control selectpicker" ng-model="subject">
-								<option value=" ">Subject</option>
-								<option value="ios">IOS</option>
-								<option value="android">Android</option>
-								<option value="delphi">Delphi</option>
-								<option value="spring">Spring</option>
-								<option value="c">C</option>
-							</select>
-						</div>
-					</div>
-					<div class="col-md-2 pull-left">
+					<div class="col-md-3 pull-left">
 						<div class="input-group pull-left">
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;"> Class </span>
-							<select class="form-control selectpicker" ng-model="Class"
-								ng-init="searchClass | searchClass='Class'">
+							<select class="form-control selectpicker" ng-model="classes" ng-mouseover="getClass()" ng-disabled="!instructors">
 								<option value="">Class</option>
-								<option>BTB</option>
-								<option>KSP</option>
-								<option>PP</option>
-								<option>SR</option>
-								
+									<option ng-repeat="c in Class">{{c.CLASS_NAME}}</option>			
 							</select>
 						</div>
 					</div>
 					
+		
 				</div>
 				
 				<br>
 				<!-- Start Selection -->
 				<div class="row">
-					<div class="col-md-2">
-
-						<div class="input-group pull-left">
-							<span class="input-group-addon"
-								style="background-color: #00A65A;"> <i
-								class="fa fa-align-justify" style="color: white;"></i>
-							</span> <select class="form-control selectpicker">
-								<option>1</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
-							</select>
-
-						</div>
+					<div class="col-md-3 pull-left">
+							<div class="input-group pull-left">
+								<span class="input-group-addon"
+									style="color: white; background-color: #00A65A;" > Subject </span>
+								<select class="form-control selectpicker" ng-model="subject" ng-disabled="!classes" ng-mouseover="getSubject()" >
+									<option value=" " selected >Subject</option>
+									<option ng-repeat="s in subjects">{{s.SUBJECT_NAME}}</option>
+								</select>
+							</div>
 					</div>
-					<div class="col-md-1"> </div>
-					<div class="col-md-2 pull-left">
-						<div class="input-group pull-left">
+					<!-- End Selection -->
+					<!--Search Location-->
+					<div class="col-md-2 pull-right">
+						<div class="input-group pull-right">
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;"> Date
 							</span> 
@@ -150,21 +126,30 @@
 								ng-model="date | date:'yyyy-MM-dd'"   readonly>
 						</div>
 					</div>
-					<!-- End Selection -->
-					
-
-					<!--Search Location-->
-					<div class="col-md-5"> </div>
-					
-					
-					
-					<div class="col-md-2">
-						<button class="btn btn-primary" id="addScore">Add Score</button>
-						<button class="btn btn-primary" id="viewScore">View Score</button>
+				</div>
+				<div class="row">
+					<div class="col-md-2 pull-left" ng-show="pagination">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="background-color: #00A65A;"> <i
+								class="fa fa-align-justify" style="color: white;"></i>
+							</span> <select class="form-control selectpicker">
+								<option>5</option>
+								<option>10</option>
+								<option>15</option>
+								<option>20</option>
+								
+							</select>
+						</div>
+					</div>
+				
+					<div class="col-md-2 pull-right">
+						<button class="btn btn-primary" id="addScore" ng-disabled="!subject" ng-click="unViewPage()" >Add Score</button>
+						<button class="btn btn-primary" id="viewScore" ng-disabled="!subject" ng-click="viewPage()">View Score</button>
 						<input type="hidden" id="getUser" value="korean">
 					</div>
 				</div>
-				<!-- End Selection -->
+			
 				<!-- Start Add Score Table Here-->
 				<div style="margin-top: 20px; display: none" id="addScoreTable">
 					<div class="table-responsive">
@@ -179,43 +164,30 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>Sam Ol Sam On</td>
-									<td>Advance Course</td>
-									<td>Battambang</td>
+								<tr ng-repeat="stu in getStudent">
+									<td>{{$index+1}}</td>
+									<td>{{stu.ENGLISH_FULL_NAME}}</td>
+									<td>{{stu.COURSE_NAME}}</td>
+									<td>{{stu.CLASS_NAME}}</td>
 									<td><input type="text" pattern="^[0-9]$" maxlength="5"
-										class="koreanScore" placeholder="Korean Score"
-										style="display: none;"> <input type="text"
-										pattern="^[0-9]$" maxlength="5" class="javaScore"
-										placeholder="Java Score" style="display: none;"> <input
-										type="text" pattern="^[0-9]$" maxlength="5" class="webScore"
-										placeholder="Web Score" style="display: none;"></td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>MengTang</td>
-									<td>Advance Course</td>
-									<td>Battambang</td>
-									<td><input type="text" pattern="^[0-9]$" maxlength="5"
-										class="koreanScore" placeholder="Korean Score"
-										style="display: none;"> <input type="text"
-										pattern="^[0-9]$" maxlength="5" class="javaScore"
-										placeholder="Java Score" style="display: none;"> <input
-										type="text" pattern="^[0-9]$" maxlength="5" class="webScore"
-										placeholder="Web Score" style="display: none;"></td>
+										class="koreanScore" placeholder="Score" id="score">
+									 <input value="{{stu.STUDENT_ID}}" id="stu_id" style="display:none;"> </td>
 								</tr>
 							</tbody>
 						</table>
-						<input type="submit" value="Save" class="btn btn-success"
-							style="margin-left: 1000px">
+						<div class="pull-right">
+							<input type="submit" value="Save" class="btn btn-success pull-left"
+								ng-click="addScore()">
+							<input type="submit" value="Cancel" class="btn btn-danger pull-right"
+								>
+						</div>
 					</div>
 				</div>
 				<!-- End Add Score Table Here -->
 				<!-- Start View Score Table Here -->
-				<div style="margin-top: 20px; display: none" id="viewScoreTable">
+				<div  style="margin-top: 20px; display: none;" id="viewScoreTable">
 					<div class="table-responsive">
-						<table class="table">
+						<table class="table" id="basicCourse" style="display: none">
 							<thead>
 								<tr style="font-size: 16px;">
 									<th>N <sup>o</sup></th>
@@ -228,18 +200,9 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
+								<tr >
 									<td>1</td>
-									<td>Sam Ol Sam On</td>
-									<td>Battambang</td>
-									<td>100</td>
-									<td>100</td>
-									<td>100</td>
-									<td>100</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>Sam Ol Sam On</td>
+									<td>Heng Mengtang</td>
 									<td>Battambang</td>
 									<td>100</td>
 									<td>100</td>
@@ -248,14 +211,37 @@
 								</tr>
 							</tbody>
 						</table>
-					</div>
+					</div> 
+				<!-- End View view Score -->
+				
+				<!-- View Advance Course Score -->
+					 <div class="table-responsive">
+						<table class="table" id="advanceCourse" style="display: none">
+							<thead>
+								<tr style="font-size: 16px;">
+									<th>N <sup>o</sup></th>
+									<th>Student&#x2191;&#x2193;</th>
+									<th>Class&#x2191;&#x2193;</th>
+									<th>IOS&#x2191;&#x2193;</th>
+									<th>Korean&#x2191;&#x2193;</th>
+									<th>Total Score&#x2191;&#x2193;</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="scores in viewStuScore">
+									<td>{{$index+1}}</td>
+									<td>{{scores.MONTHLY_RESULT.STUDENT_NMAE}}</td>
+									<td>{{scores.MONTHLY_RESULT.CLASS_NAME}}</td>
+									<td>{{scores.IOS}}</td>
+									<td>{{scores.SPRING}}</td>
+									<td>{{scores.ANDROID}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div> 
 				</div>
-				<!-- End View Score Table Here -->
-				</div>
-				</div>
-				</div>
-			</div>
-		</div>
+				<!-- End View Advance Course Score -->
+			
 		</fieldset>
 		</div>
 		<!-- End page --> 
@@ -283,7 +269,7 @@
     $("#add-stu").click(function(){
     	$("#add-btn").fadeIn();
     });
-    $("#addScore").click(function(){
+  /*   $("#addScore").click(function(){
     	if($("#getUser").val() =="korean"){
     		$(".koreanScore").show();
     	}
@@ -293,13 +279,26 @@
     	else if($("#getUser").val() =="java"){
     		$(".javaScore").show();
     	}
-    });
+    }); */
     $("#addScore").click(function(){
     	$("#addScoreTable").fadeToggle();
     	$("#viewScoreTable").hide();
     });
     $("#viewScore").click(function(){
-    	$("#viewScoreTable").fadeToggle();
+    	$("#viewScoreTable").fadeToggle("fast",function(){
+    		if($("#course").text()=='Basic Course' ){ 
+    			$('#basicCourse').fadeIn("fast",function(){
+    				getViewScore();
+    			});
+    			$('#advanceCourse').fadeOut("fast");
+    			
+    		}
+    		if($("#course").text() == 'Advance Course'){ 
+    			$('#basicCourse').fadeOut("fast");
+    			$('#advanceCourse').fadeIn("fast");
+    		} 
+    	});
+    	
     	$("#addScoreTable").hide();
     });
     
@@ -361,46 +360,189 @@
 			app.controller('scoreCtrl', function($scope, $http){
 				
 				$scope.date = new Date();
-				function getData(){
+				 function getInstructor(){
 					$http({
-							url:'http://localhost:8080/api/staff/display-staff-in-class',
+							url:'http://localhost:2222/api/staff/display-staff-in-class',
 							method:'GET'
 						}).then(function(response){
 							$scope.instructor = response.data.DATA;
-							console.log($scope.instructor)
+							/* console.log($scope.instructor) */
 						}, function(response){
 							alert("error");
 						});
 				};
-				getData();
-				
-				/* getGenID(); */
-				/*$scope.add=function(){
+				getInstructor(); 
+				function getGeneration(){
 					$http({
-						url:'http://localhost:8080/api/mark/add-mark,
+							url:'http://localhost:2222/api/generation/get-last-generation',
+							method:'GET'
+						}).then(function(response){
+							$scope.generation = response.data.DATA.GENERATION_NAME;
+						}, function(response){
+							alert("error");
+						});
+				};
+				getGeneration();
+				function getCourse(){
+					$http({
+							url:'http://localhost:2222/api/course/get-last-course',
+							method:'GET'
+						}).then(function(response){
+							$scope.course = response.data.DATA.COURSE_NAME;
+						}, function(response){
+							alert("error");
+						});
+				};
+				getCourse();
+				function getStudentInClass(){
+					$http({
+							url:'http://localhost:2222/api/mark/display-student-to-add-score',
+							method:'GET'
+						}).then(function(response){
+							$scope.getStudent = response.data.DATA; 
+							$scope.stu_id=response.data.DATA.STUDENT_ID;
+							$scope.stu_name=response.data.DATA.ENGLISH_FULL_NAME;
+							/* angular.forEach($scope.getStudent,function(value,index){
+				                alert(value.STUDENT_ID);
+				            }); */
+						}, function(response){
+							alert("error");
+						});
+				};
+				getStudentInClass();
+				/* Get Class */
+				function getClassBy(course, generation, instructor){
+					$http({
+						url:'http://localhost:2222/api/class/get-class-by-generation-course',
 						method:'POST',
 						data:{
-							'DATE': $scope.date,
-							'MARK': $scope.score,
-							'PARAMETER_FOR_ADD_MARK': {
-								'STAFF_NAME': $scope.instructors,
-								'SUBJECT_TYPE_NAME': $scope.subject,
-								'CLASS_ROOM_NAME': $scope.Class,
-								'STUDENT_NAME': $scope.student
-							}s
+							"COURSE_NAME": course,
+							"GENERATION_NAME": generation,
+							"STAFF_NAME": instructor
 						}
 					}).then(function(response){
-						getData();
+						/* getData(); */ 
+						$scope.Class= response.data.DATA;  
+					}, function(response){
+						/* alert("error"); */
+					});
+				};   
+				
+				$scope.getClass = function(){
+					getClassBy($scope.course, $scope.generation, $scope.instructors);
+				}
+				
+				$scope.getSubject = function(){
+					getSubjectBy($scope.course, $scope.generation, $scope.instructors, $scope.classes);
+				}
+				
+				function getSubjectBy(course, generation, instructor, clas){
+					$http({
+						url:'http://localhost:2222/api/subject/get-current-subject-in-course',
+						method:'POST',
+						data:{
+							"COURSE_NAME": course,
+							"GENERATION_NAME": generation,
+							"STAFF_NAME": instructor,
+							"CLASS_NAME": clas
+						}
+					}).then(function(response){
+						/* getData(); */ 
+						$scope.subjects = response.data.DATA; 
+						
+					}, function(response){
+						/* alert("error"); */
+					});	
+				}
+				$scope.viewPage=function(){
+					if(this) $scope.pagination=true;
+				}
+				$scope.unViewPage=function(){
+					if(this) $scope.pagination=false;
+				}
+			    function viewClasses(){
+					return $scope.instructor;
+				}
+			    
+			    $scope.addScore = function(){
+			    	$scope.score = $("input[id='score']").map(function(){return $(this).val();}).get();
+			    	$scope.stu_id = $("input[id='stu_id']").map(function(){return $(this).val();}).get();
+			    	angular.forEach($scope.stu_id, function(stu_id, $index){
+							$scope.id = stu_id;			    		
+			    		 angular.forEach($scope.score, function(score, key){
+			    			$scope.s = score;
+			    		 if($index == key){
+			    			 alert($scope.id+","+$scope.s+", "+$scope.classes+", "+$scope.instructors+", "+$scope.subject);
+			    			 $http({
+									url:'http://localhost:2222/api/mark/add-mark',
+									method:'POST',
+									data:{
+										'MARK': $scope.s,
+										'PARAMETER_FOR_ADD_MARK': {
+									   		'CLASS_ROOM_NAME': $scope.classes,
+									    	'STAFF_NAME': $scope.instructors,
+									    	'STUDENT_ID': $scope.id,
+									    	'SUBJECT_TYPE_NAME': $scope.subject
+									  	}
+			    			 			
+									}
+			    			 		
+								}).then(function(response){
+									
+								}, function(response){
+									alert("error");
+								});
+			    			 return;
+			    		 }
+					})
+				})
+			    }
+			    $scope.getViewScore=function(){
+				    $http({
+						url:'http://localhost:2222/api/monthly-result/monthly-result-advance-course/'+$scope.generation,
+						method:'POST',
+					}).then(function(response){ 
+						$scope.viewStuScore = response.data.DATA; 
+						console.log($scope.viewStuScore);
+					}, function(response){
+						 alert("error"); 
+					});	
+			    }
+			    function getViewBasic(){ alert("Basic");}
+			    
+			    /* function checkViewScore(){
+			    	if($("#course").text=='Advance Course'){
+			    		return $scope.getViewScore();
+			    	}
+			    	
+			    } */
+			    
+			   
+			  /*  $scope.add=function(){
+				   
+				   angular.forEach($scope.studentID, function(stu){
+				   			alert($scope.);
+				 /* $http({
+						url:'http://localhost:8080/api/class/get-class-by-generation-course',
+						method:'POST',
+						data:{
+							'MARK': $scope.score,
+							'PARAMETER_FOR_ADD_MARK': {
+						   		'CLASS_ROOM_NAME': $scope.classes,
+						    	'STAFF_NAME': $scope.instructors,
+						    	'STUDENT_ID': $scope.getStudent.STUDENT_ID,
+						    	'SUBJECT_TYPE_NAME': $scope.subject
+						  }
+						}
+					}).then(function(response){
+						getStudentInClass();
 					}, function(response){
 						alert("error");
-					});
-				}; */   
-				
-				
-			});
+					});    */
+			 /* }  */
+				 
+			}); 
 	
-			    
-			
 	</script>
 
 </body>

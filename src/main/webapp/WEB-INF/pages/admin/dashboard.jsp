@@ -115,10 +115,6 @@
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footDashboard.jsp" />
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-	<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
-	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <!-- chart script -->
 <script>
 new Chartist.Bar('.ct-chart', {
@@ -126,8 +122,7 @@ new Chartist.Bar('.ct-chart', {
   series: [
     [5, 4, 3, 7],
     [30, 2, 9, 5],
-    [10, 5, 8, 4],
-    [20, 3, 4, 6]
+    [10, 5, 8, 4]
   ]
 }, {
   // Default mobile configuration

@@ -44,7 +44,10 @@
 	.modal-footer {
       background-color: #FAFAFA;
  	}
-
+	li h3{
+		font-family: Khmer OS Muol Light;
+		font-size: 36px;
+	} 
 </style> 
 </head>
 <body>

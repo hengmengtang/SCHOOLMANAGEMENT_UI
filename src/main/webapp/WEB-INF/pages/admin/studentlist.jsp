@@ -374,7 +374,7 @@
 					<div class="input-group pull-left">
 						<span class="input-group-addon"
 							style="color: white; background-color: green;"> Class
-						</span> <select class="form-control selectpicker" ng-model="searchClass" ng-init="searchClass | searchClass='Class'" ng-focus="getClass()">
+						</span> <select class="form-control selectpicker" ng-model="searchClass" ng-init="searchClass | searchClass='Class'" ng-mouseover="getClass()">
 							<option value="" selected>Class</option>
 							<option ng-repeat="class in classes | orderBy:'CLASS_NAME'">{{class.CLASS_NAME}}</option>
 						</select>
@@ -405,9 +405,9 @@
 					<table class="table table-hover">
 						<thead>
 							<tr style="font-size: 16px;">
-								<th ng-click="sort('id')">Student ID&#x2191;&#x2193;</th>
-								<th ng-click="sort('khmerName')">Khmer Name&#x2191;&#x2193;</th>
-								<th ng-click="sort('LatinName')">English Name&#x2191;&#x2193;</th>
+								<th ng-click="sort('id')">Student ID<span class="arrow1">&#x2191;&#x2193;</span></th>
+								<th ng-click="sort('khmerName')">Khmer Name<span class="arrow1">&#x2191;&#x2193;</span></th>
+								<th ng-click="sort('LatinName')">English Name<span class="arrow1">&#x2191;&#x2193;</span></th>
 								<th><center>Gender</center></th>
 								<th>Birth Date</th>
 								<th>Address</th>
@@ -416,7 +416,7 @@
 							</tr>
 						</thead>
 						<tbody>
-                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':searchStudent}|itemsPerPage:select">
+                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':searchStudent}|itemsPerPage:select|limitTo : 20">
 								<td>{{student.STUDENT_ID}}</td> 
 								<td>{{student.KHMER_FULL_NAME}}</td>
 								<td>{{student.ENGLISH_FULL_NAME}}</td>
@@ -449,8 +449,8 @@
 			</fieldset>
 			</div>
 		</section>
-		<input type="text" ng-repeat="gen in last_gen" value="{{gen.GENERATION_NAME}}" id="gen" style="display:none">
-		<input type="text" ng-repeat="cou in last_cou" value="{{cou.COURSE_NAME}}" id="course" style="display:none">
+		<!-- <input type="text" ng-repeat="gen in last_gen" value="{{gen.GENERATION_NAME}}" id="gen" style="display:none">
+		<input type="text" ng-repeat="cou in last_cou" value="{{cou.COURSE_NAME}}" id="course" style="display:none"> -->
 	</div>
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footer.jsp" />
@@ -500,25 +500,25 @@
 				}
 								
 				$scope.getClass = function(){
-					getClass($('#gen').val(), $('#course').val());
+					getClass($scope.last_gen, $scope.last_cou);
 					$scope.class2 = true;
 					$scope.class1 = false;
 				}
 				
 				function getStudentLastGen(){
 					$http({
-						url:'http://localhost:8080/api/student/get-student-in-last-generation',
+						url:'http://localhost:2222/api/student/get-student-in-last-generation',
 						method:'GET'
 					}).then(function(response){
 						$scope.students = response.data.DATA;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
 				function updateStatus(id){
 					$http({
-						url:'http://localhost:8080/api/student/updateStatus/'+id,
+						url:'http://localhost:2222/api/student/updateStatus/'+id,
 						method:'PUT'
 					}).then(function(response){
 						if($scope.searchGeneration)
@@ -526,13 +526,13 @@
 						else
 							getStudentLastGen();
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
 				function getData(){
 						$http({
-								url:'http://localhost:8080/api/student/select_student-by-generation-and-course',
+								url:'http://localhost:2222/api/student/select_student-by-generation-and-course',
 								data: {
 									"COURSE_NAME": $scope.searchCourse,
 									"GENERATION_NAME": $scope.searchGeneration
@@ -542,35 +542,35 @@
 								$scope.students = response.data.DATA;
 								getClass($scope.searchGeneration, $scope.searchCourse);
 							}, function(response){
-								alert("error");
+								/* alert("error"); */
 							});
 				};
 				
 				function getLastGeneration(){
 					$http({
-							url:'http://localhost:8080/api/generation/get-last-generation',
+							url:'http://localhost:2222/api/generation/get-last-generation',
 							method:'GET'
 						}).then(function(response){
 							$scope.last_gen = response.data.DATA.GENERATION_NAME;
 						}, function(response){
-							alert("error");
+							/* alert("error"); */
 						});
 				};
 				
 				function getLastCourse(){
 					$http({
-						url:'http://localhost:8080/api/course/get-last-course',
+						url:'http://localhost:2222/api/course/get-last-course',
 						method:'GET'
 					}).then(function(response){
-						$scope.last_cou = response.data.DATA;
+						$scope.last_cou = response.data.DATA.COURSE_NAME;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
 				function getClass(generation, course) {
 					$http({
-						url : 'http://localhost:8080/api/class/get-class-by-generation-course',
+						url : 'http://localhost:2222/api/class/get-class-by-generation-course',
 						data:{
 							"COURSE_NAME": course,
 							"GENERATION_NAME": generation
@@ -580,25 +580,25 @@
 						$scope.classes = response.data.DATA;
 						$scope.searchClass = "";
 					}, function(response) {
-						alert("error");
+						/* alert("error"); */
 					}); 
 				};
 				
 				function getGeneration(){
 					$http({
-							url:'http://localhost:8080/api/generation/find-all-generation',
+							url:'http://localhost:2222/api/generation/find-all-generation',
 							method:'GET'
 						}).then(function(response){
 							$scope.generations = response.data.DATA;
 						}, function(response){
-							alert("error");
+							/* alert("error"); */
 						});
 				};
 				
 				$scope.update = function(id){
 					
 					$http({
-						url:'http://localhost:8080/api/student/select-student-by-id/'+id,
+						url:'http://localhost:2222/api/student/select-student-by-id/'+id,
 						method:'POST'
 					}).then(function(response){
 						$scope.student = response.data.DATA;
@@ -634,7 +634,7 @@
 						$scope.mother_occupation = $scope.student.MOTHER_OCCUPATION;
 						$scope.mother_phone = $scope.student.MOTHER_PHONE;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
@@ -649,7 +649,7 @@
 					var id = $scope.stu_id;
 					
 					$http({
-						url:'http://localhost:8080/api/student/updateById',
+						url:'http://localhost:2222/api/student/updateById',
 						data:{
 							  "DATE_OF_BIRTH": $scope.dob,
 							  "EDUCATION_LEVEL": $scope.it_year,
@@ -685,7 +685,7 @@
 						clearInputControll();	
 						getData();
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
