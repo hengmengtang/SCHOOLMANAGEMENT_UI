@@ -10,7 +10,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>School Management</title>
-<jsp:include page="../include/headView.jsp"/>
+<jsp:include page="include/headView.jsp"/>
 </head>
 
 <!-- Modal Center Screen -->
