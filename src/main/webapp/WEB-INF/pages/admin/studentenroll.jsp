@@ -101,7 +101,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr
+								<tr my-filter
 									dir-paginate="student in studentenrolls|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':stuname, 'CLASS_NAME':class}|itemsPerPage:select|limitTo : 10">
 									<td>{{$index+1}}</td>
 									<td>{{student.ENGLISH_FULL_NAME}}</td>
@@ -313,12 +313,10 @@
 	<script
 		src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script>
-		var app = angular.module('app',
-				[ 'angularUtils.directives.dirPagination' ]);
-		app
-				.controller(
-						'ctrl',
-						function($scope, $http) {
+		var app = angular.module('app',[ 'angularUtils.directives.dirPagination' ]);
+		//filter that make function run after angular
+		
+		app.controller('ctrl', function($scope, $http) {
 
 							getData();
 
@@ -330,10 +328,12 @@
 							} 
 							
 							$scope.add_student = function(){
+								getClass();
+								alert($scope.students+", "+$scope.classes)
 								if($scope.students == false || $scope.classes == false){
 									sweetAlert(
 											  'Enroll student is not available...',
-											  'Student and class is not exist!',
+											  'Student or class is not exist!',
 											  'error'
 											)
 									return;
@@ -353,7 +353,6 @@
 									getLastGeneration();
 									getLastCourse();
 									getStudentEnroll();
-									getClass();
 								}, function(response) {
 									/* alert("error"); */
 								});
@@ -485,6 +484,22 @@
 								getLastCourse();
 							}
 						});
+		
+		//filter that make function run after angular
+
+		app.directive('myFilter', [function() {
+				    	return {
+					        restrict: 'A',		 
+					        link: function(scope, element) {
+					        	// wait for the last item in the ng-repeat then call init
+					            if(scope.$last) {
+					            	alert("asdf");
+					            }
+					        }
+					    };
+					}]);
+		
+		
 
 		/* jquery */
 		$(document).ready(
