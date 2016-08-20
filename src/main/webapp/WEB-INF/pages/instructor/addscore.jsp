@@ -6,6 +6,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>HRD Student Management</title>
 <jsp:include page="../include/headDashboard.jsp" />
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+</style>
 </head>
 <body class="bg">
 	<jsp:include page="index.jsp" />
@@ -145,7 +153,7 @@
 				
 					<div class="col-md-2 pull-right">
 						<button class="btn btn-primary" id="addScore" ng-disabled="!subject" ng-click="unViewPage()" >Add Score</button>
-						<button class="btn btn-primary" id="viewScore" ng-disabled="!subject" ng-click="viewPage()">View Score</button>
+						<button class="btn btn-primary" id="viewScore" ng-disabled="!subject" ng-click="viewPage();checkViewScore()">View Score</button>
 						<input type="hidden" id="getUser" value="korean">
 					</div>
 				</div>
@@ -169,8 +177,7 @@
 									<td>{{stu.ENGLISH_FULL_NAME}}</td>
 									<td>{{stu.COURSE_NAME}}</td>
 									<td>{{stu.CLASS_NAME}}</td>
-									<td><input type="text" pattern="^[0-9]$" maxlength="5"
-										class="koreanScore" placeholder="Score" id="score">
+									<td><input type="number"  maxlength="5"  placeholder="Score" id="score" >
 									 <input value="{{stu.STUDENT_ID}}" id="stu_id" style="display:none;"> </td>
 								</tr>
 							</tbody>
@@ -193,21 +200,21 @@
 									<th>N <sup>o</sup></th>
 									<th>Student&#x2191;&#x2193;</th>
 									<th>Class&#x2191;&#x2193;</th>
+									<th>Java&#x2191;&#x2193;</th>
 									<th>Korean&#x2191;&#x2193;</th>
 									<th>Web&#x2191;&#x2193;</th>
-									<th>Java&#x2191;&#x2193;</th>
-									<th>Total Score&#x2191;&#x2193;</th>
+									
 								</tr>
 							</thead>
 							<tbody>
-								<tr >
-									<td>1</td>
-									<td>Heng Mengtang</td>
-									<td>Battambang</td>
-									<td>100</td>
-									<td>100</td>
-									<td>100</td>
-									<td>100</td>
+								<tr ng-repeat="stud in viewBasicScore">
+									<td>{{$index+1}}</td>
+									<td>{{stud.MONTHLY_RESULT.STUDENT_NMAE}}</td>
+									<td>{{stud.MONTHLY_RESULT.CLASS_NAME}}</td>
+									<td>{{stud.JAVA}}</td>
+									<td>{{stud.KOREAN}}</td>
+									<td>{{stud.WEB}}</td>
+									
 								</tr>
 							</tbody>
 						</table>
@@ -228,7 +235,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="scores in viewStuScore">
+								<tr ng-repeat="scores in viewAdvanceScore">
 									<td>{{$index+1}}</td>
 									<td>{{scores.MONTHLY_RESULT.STUDENT_NMAE}}</td>
 									<td>{{scores.MONTHLY_RESULT.CLASS_NAME}}</td>
@@ -287,9 +294,7 @@
     $("#viewScore").click(function(){
     	$("#viewScoreTable").fadeToggle("fast",function(){
     		if($("#course").text()=='Basic Course' ){ 
-    			$('#basicCourse').fadeIn("fast",function(){
-    				getViewScore();
-    			});
+    			$('#basicCourse').fadeIn("fast");
     			$('#advanceCourse').fadeOut("fast");
     			
     		}
@@ -502,20 +507,32 @@
 						url:'http://localhost:2222/api/monthly-result/monthly-result-advance-course/'+$scope.generation,
 						method:'POST',
 					}).then(function(response){ 
-						$scope.viewStuScore = response.data.DATA; 
+						$scope.viewAdvanceScore = response.data.DATA; 
 						console.log($scope.viewStuScore);
 					}, function(response){
 						 alert("error"); 
 					});	
 			    }
-			    function getViewBasic(){ alert("Basic");}
+			     $scope.getViewBasic=function(){ 
+			    	 $http({
+							url:'http://localhost:2222/api/monthly-result/monthly-result-basic-course/'+$scope.generation,
+							method:'POST',
+						}).then(function(response){ 
+							$scope.viewBasicScore = response.data.DATA; 
+							console.log($scope.viewStuScore);
+						}, function(response){
+							 alert("error"); 
+						});			     
+			     }
 			    
-			    /* function checkViewScore(){
-			    	if($("#course").text=='Advance Course'){
-			    		return $scope.getViewScore();
+			     $scope.checkViewScore=function(){
+			    	if($scope.course =='Advance Course'){
+			    		 $scope.getViewScore();
 			    	}
+			    	else $scope.getViewBasic();
 			    	
-			    } */
+			    } 
+			  
 			    
 			   
 			  /*  $scope.add=function(){
