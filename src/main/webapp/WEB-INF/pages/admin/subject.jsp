@@ -122,13 +122,13 @@
 				<div style="color: black;">
 					<i class="fa fa-plus-circle" style="color: green;"></i> <span>Add
 						Subject</span>
-					<button class="pull-right btn btn-success" id="btn-sub">
+					<button class="pull-right btn btn-success" id="btn-sub" ng-click="checkStatus()">
 						<span class="glyphicon glyphicon-plus"></span>
 					</button>
 				</div>
 			</div>
 			<!-- Start Add Generation -->
-			<div class="row" style="margin: 5px;">
+			<div class="row" style="margin: 5px;" ng-show="form_add_class">
 				<div id="hide">
 					<div class="col-md-5" style="display: none;" id="add-sub">
 						<span>Subject<span class="star">*</span></span><br> <input
@@ -172,6 +172,7 @@
 			
 			getData();
 			getSubjectID();
+			$scope.form_add_class = false;
 			
 			function getData() {
 				$http({
@@ -179,10 +180,37 @@
 					method : 'GET'
 				}).then(function(response) {
 					$scope.subjects = response.data.DATA;
+					getClassStatus();
 				}, function(response) {
 					/* alert("error"); */
 				});
 			};
+			
+			function getClassStatus() {
+				$http({
+					url : 'http://localhost:2222/api/class/class-status',
+					method : 'GET'
+				}).then(function(response) {
+					if(response.data.DATA == null)
+						$scope.class_status = false;
+					else
+						$scope.class_status = response.data.DATA.ACTIVE;
+				}, function(response) {
+					/* alert("error"); */
+				});
+			};
+			
+			$scope.checkStatus = function(){
+				if($scope.class_status == false){
+					sweetAlert(
+							  'Subject is not available...',
+							  'Class is not exist!',
+							  'error'
+							)
+					return;
+				}
+				$scope.form_add_class = true;
+			}
 			
 			$scope.submit = function(){
 				

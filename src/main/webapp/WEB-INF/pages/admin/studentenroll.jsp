@@ -101,7 +101,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr
+								<tr my-filter
 									dir-paginate="student in studentenrolls|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':stuname, 'CLASS_NAME':class}|itemsPerPage:select|limitTo : 10">
 									<td>{{$index+1}}</td>
 									<td>{{student.ENGLISH_FULL_NAME}}</td>
@@ -130,7 +130,7 @@
 							style="font-size: 16px;">Add Student Enrollment</b>
 					</div>
 					<div class="pull-right">
-						<button class="btn btn-success" id="btn-add">
+						<button class="btn btn-success" id="btn-add" ng-click="add_student()">
 							<span class="glyphicon glyphicon-plus"> </span>
 						</button>
 					</div>
@@ -138,7 +138,7 @@
 				<!--End Add Student-->
 
 				<!--Input for gen, stu, class-->
-				<div id="hide">
+				<div id="hide" ng-show="form_add_student">
 					<div class="row">
 						<div class="col-md-3">
 							Generation<sup style="color: red">*</sup>
@@ -244,11 +244,11 @@
 											<table class="table table-hover">
 												<thead>
 													<tr style="font-size: 16px;">
-														<th ng-click="sort('id')">Student No <span
+														<th ng-click="sort('STUDENT_ID')">Student No <span
 															class="arrow1">&#x2191;&#x2193;</span></th>
-														<th ng-click="sort('khmerName')">Khmer Name<span
+														<th ng-click="sort('KHMER_FULL_NAME')">Khmer Name<span
 															class="arrow1">&#x2191;&#x2193;</span></th>
-														<th ng-click="sort('LatinName')">English Name<span
+														<th ng-click="sort('ENGLIST_FULL_NAME')">English Name<span
 															class="arrow1">&#x2191;&#x2193;</span></th>
 														<th><center>Gender</center></th>
 														<th style="width: 200px;">Email</th>
@@ -313,30 +313,46 @@
 	<script
 		src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script>
-		var app = angular.module('app',
-				[ 'angularUtils.directives.dirPagination' ]);
-		app
-				.controller(
-						'ctrl',
-						function($scope, $http) {
+		var app = angular.module('app',[ 'angularUtils.directives.dirPagination' ]);
+		//filter that make function run after angular
+		
+		app.controller('ctrl', function($scope, $http) {
 
 							getData();
-							getLastGeneration();
-							getLastCourse();
-							getStudentEnroll();
 
 							$scope.save = true;
+							$scope.form_add_student = false;
+							
 							$scope.getAllClass = function() {
 								getClass();
+							} 
+							
+							$scope.add_student = function(){
+								getClass();
+								alert($scope.students+", "+$scope.classes)
+								if($scope.students == false || $scope.classes == false){
+									sweetAlert(
+											  'Enroll student is not available...',
+											  'Student or class is not exist!',
+											  'error'
+											)
+									return;
+								}
+								$scope.form_add_student = true;
 							}
 
 							function getData() {
-								$http(
-										{
-											url : 'http://localhost:2222/api/student/display-student-not-yet-enroll-to-class',
-											method : 'GET'
-										}).then(function(response) {
-									$scope.students = response.data.DATA;
+								$http({
+									url : 'http://localhost:2222/api/student/display-student-not-yet-enroll-to-class',
+									method : 'GET'
+								}).then(function(response) {
+									if(response.data.DATA == "")
+										$scope.students = false;
+									else
+										$scope.students = response.data.DATA;
+									getLastGeneration();
+									getLastCourse();
+									getStudentEnroll();
 								}, function(response) {
 									/* alert("error"); */
 								});
@@ -352,16 +368,18 @@
 							}
 
 							function getClass() {
-								$http(
-										{
-											url : 'http://localhost:2222/api/class/get-class-by-generation-course',
-											data : {
-												"COURSE_NAME" : $scope.course,
-												"GENERATION_NAME" : $scope.generation
-											},
-											method : 'POST'
-										}).then(function(response) {
-									$scope.classes = response.data.DATA;
+								$http({
+									url : 'http://localhost:2222/api/class/get-class-by-generation-course',
+									data : {
+										"COURSE_NAME" : $scope.course,
+										"GENERATION_NAME" : $scope.generation
+									},
+									method : 'POST'
+									}).then(function(response) {
+										if(response.data.DATA == "")
+											$scope.classes = false;
+										else
+											$scope.classes = response.data.DATA;
 								}, function(response) {
 									/* alert("error"); */
 								});
@@ -396,17 +414,6 @@
 							}
 							;
 
-							/* function updateStatus(id){
-								$http({
-									url:'http://localhost:8080/api/student/updateStatus/'+id,
-									method:'PUT'
-								}).then(function(response){
-									
-								}, function(response){
-									alert("error");
-								});
-							}  */
-
 							function getLastCourse() {
 								$http(
 										{
@@ -425,14 +432,6 @@
 								$scope.sortKey = keyname; //set the sortKey to the param passed
 								$scope.reverse = !$scope.reverse; //if true make it false and vice versa
 							};
-
-							/* $(document).on('change', '#enroll', function(){
-								if($(this).is(':checked')){
-									$scope.enroll = function(id){
-										alert(id);
-									} 
-								}
-							}) */
 
 							$scope.studentIDs = [];
 
@@ -454,45 +453,53 @@
 								}
 							}
 
+							
 							$scope.submit = function() {
 
 								$scope.classs = $('#add-class').val();
 
-								angular
-										.forEach(
-												$scope.studentIDs,
-												function(id) {
-													/* alert($scope.classs+", "+$scope.course+", "+$scope.generation+" "+id);*/
-													$http(
-															{
-																url : 'http://localhost:8080/api/enrollment/enroll-student',
-																data : {
-																	"CLASS_NAME" : $scope.classs,
-																	"COURSE_NAME" : $scope.course,
-																	"GENERATION_NAME" : $scope.generation,
-																	"STUDENT_ID" : id,
-																	"SUCCESS" : 0
-																},
-																method : 'POST'
-															})
-															.then(
-																	function(
-																			response) {
-																		/* updateStatus(id); */
-																		getData();
-																		$scope.save = true;
-																	},
-																	function(
-																			response) {
-																		alert("error");
-																	});
-												});
+								angular.forEach($scope.studentIDs, function(id) {
+									$http({
+										url : 'http://localhost:2222/api/enrollment/enroll-student',
+										data : {
+												"CLASS_NAME" : $scope.classs,
+												"COURSE_NAME" : $scope.course,
+												"GENERATION_NAME" : $scope.generation,
+												"STUDENT_ID" : id,
+												"SUCCESS" : 0
+											},
+											method : 'POST'
+										}).then(function(response) {
+											getData();
+											$scope.save = true;
+										},
+										function(
+												response) {
+											/* alert("error"); */
+										});
+								});
 
 								getClass();
 								getLastGeneration();
 								getLastCourse();
 							}
 						});
+		
+		//filter that make function run after angular
+
+		app.directive('myFilter', [function() {
+				    	return {
+					        restrict: 'A',		 
+					        link: function(scope, element) {
+					        	// wait for the last item in the ng-repeat then call init
+					            if(scope.$last) {
+					            	alert("asdf");
+					            }
+					        }
+					    };
+					}]);
+		
+		
 
 		/* jquery */
 		$(document).ready(
