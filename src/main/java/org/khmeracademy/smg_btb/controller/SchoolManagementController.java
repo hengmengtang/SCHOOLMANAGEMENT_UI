@@ -6,17 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SchoolManagementController {
 
-	@RequestMapping(value = { "/", "/view", "/index" })
-	public String viewIndexPage() {
-		return "view";
-	}
-
 	@RequestMapping(value = { "/admin/dashboard"})
 	public String view() {
 		return "/admin/dashboard";
 	}
 	
-	@RequestMapping(value = { "/login"})
+	@RequestMapping(value = { "/login","/"})
 	public String login() {
 		return "login";
 	}
