@@ -27,18 +27,18 @@ public class UserServiceImpl implements UserService {
 	private RestTemplate rest;
 	
 	@Autowired
-	private String WS_URL;
+	private String WS_API_URL;
 	
 	@Override
-	public User findUserByUsername(String username) {
+	public User findUserByEmail(String email) {
 		
 		UserLogin login = new UserLogin();
-		login.setUsername(username);
-		
+		login.setEmail(email);
+		System.out.println(email);
 		HttpEntity<Object> request = new HttpEntity<Object>(login);
 		@SuppressWarnings("rawtypes")
-		ResponseEntity<Map> response = rest.exchange(WS_URL+"/get-user-by-email/" + username, HttpMethod.GET , request , Map.class) ;
-		
+		ResponseEntity<Map> response = rest.exchange(WS_API_URL + "/user/get-user-by-email", HttpMethod.POST , request , Map.class) ;
+		System.out.println(WS_API_URL + "/user/get-user-by-email");
 		@SuppressWarnings("unchecked")
 		Map<String, Object> map = (HashMap<String, Object>)response.getBody();
 		System.out.println(map);
@@ -47,19 +47,24 @@ public class UserServiceImpl implements UserService {
 			@SuppressWarnings("unchecked")
 			Map<String , Object> data = (HashMap<String , Object>) map.get("DATA");
 			User u = new User();
-			u.setUser_id((Integer)data.get("user_id"));
-			u.setEmail((String)data.get("email"));
-			u.setUsername((String)data.get("username"));
-			u.setPassword((String) data.get("password"));
+			u.setUser_id((String) data.get("USER_ID"));
+			u.setEmail((String)data.get("EMAIL"));
+			u.setUsername((String)data.get("USERNAME"));
+			u.setPassword((String) data.get("PASSWORD"));
 			
-			List<Role> roles = new ArrayList<Role>();
+			List<Role> roles=new ArrayList<>();
+			Role role=new Role();
+			role.setRole_name((String) data.get("ROLE"));
+			roles.add(role);
+			u.setRoles(roles);
+			//List<Role> roles = new ArrayList<Role>();
 			
-			@SuppressWarnings("unchecked")
-			List<HashMap<String, Object>> dataRole = (List<HashMap<String, Object>>) data.get("roles");
+			/*@SuppressWarnings("unchecked")
+			List<HashMap<String, Object>> dataRole = (List<HashMap<String, Object>>) data.get("ROLE");
 			for (Map<String , Object> datas  : dataRole) {
 				Role role = new Role();
-				role.setRole_id((Integer)datas.get("role_id"));
-				role.setRole_name((String) datas.get("role_name"));
+				role.setRole_id((Integer)datas.get("ROLE_ID"));
+				role.setRole_name((String) datas.get("ROLE_NAME"));
 				roles.add(role);
 				
 				System.out.println(role.getRole_id() + role.getRole_name());
@@ -69,7 +74,7 @@ public class UserServiceImpl implements UserService {
 			u.setRole(roles);
 			
 			System.out.println(map);
-			
+			*/
 			return u;
 		}
 		

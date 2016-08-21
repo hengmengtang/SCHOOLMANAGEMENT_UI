@@ -10,21 +10,32 @@ public class User implements UserDetails{
 
 	private static final long serialVersionUID = 1L;
 
-	private int user_id;
+	private String user_id;
 	private String username;
 	private String password;
 	private String email;
-	private List<Role> role;
-	private String phone;
-	private String date;
-	private boolean status;
+	private Role role;
+	private List<Role> roles;
 
+	public User(){
+		username="";
+		password="";
+		role=new Role();
+	}
 	
-	public int getUser_id() {
+	public User(String username, String password, Role role) {
+		super();
+		this.username = username;
+		this.password = password;
+		
+		this.role = role;
+	}
+	
+	public String getUser_id() {
 		return user_id;
 	}
 
-	public void setUser_id(int user_id) {
+	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
 
@@ -36,91 +47,66 @@ public class User implements UserDetails{
 		this.email = email;
 	}
 
-	public List<Role> getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(List<Role> role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
-	public String getPhone() {
-		return phone;
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
+	
+	public String getUsername() {
+		return username;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	
-	private boolean accountNonExpired = true;
-	private boolean accountNonLocked = true;
-    private boolean credentialsNonExpired = true;
-    private boolean enabled = true;
-    
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {	
-		return role;
-	}
-
-	@Override
-	public String getPassword() {
-	
-		return password;
-	}
-
-	@Override
-	public String getUsername() {
-		
-		return username;
+		return roles;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
 		
-		return accountNonExpired;
+		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-	
-		return accountNonLocked;
+		
+		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		
-		return credentialsNonExpired;
+		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-	
-		return enabled;
+		
+		return true;
 	}
 
+	
 }

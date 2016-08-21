@@ -50,7 +50,7 @@ public class SchoolConfiguration extends WebMvcConfigurerAdapter {
 	}
 	
 	@Bean
-	public String WS_URL(){
+	public String WS_API_URL(){
 		return environment.getProperty("SMG.API.URL");
 	}
 	
