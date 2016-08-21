@@ -101,7 +101,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr my-filter
+								<tr 
 									dir-paginate="student in studentenrolls|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':stuname, 'CLASS_NAME':class}|itemsPerPage:select|limitTo : 10">
 									<td>{{$index+1}}</td>
 									<td>{{student.ENGLISH_FULL_NAME}}</td>
@@ -308,10 +308,8 @@
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp"></jsp:include>
 	<jsp:include page="../include/sweetalert.jsp" />
-	<script
-		src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script>
 		var app = angular.module('app',[ 'angularUtils.directives.dirPagination' ]);
 		//filter that make function run after angular
@@ -329,7 +327,6 @@
 							
 							$scope.add_student = function(){
 								getClass();
-								alert($scope.students+", "+$scope.classes)
 								if($scope.students == false || $scope.classes == false){
 									sweetAlert(
 											  'Enroll student is not available...',
@@ -485,7 +482,7 @@
 							}
 						});
 		
-		//filter that make function run after angular
+		/* //filter that make function run after angular
 
 		app.directive('myFilter', [function() {
 				    	return {
@@ -497,7 +494,7 @@
 					            }
 					        }
 					    };
-					}]);
+					}]); */
 		
 		
 

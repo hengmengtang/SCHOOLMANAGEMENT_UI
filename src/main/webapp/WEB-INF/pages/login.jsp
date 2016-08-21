@@ -97,10 +97,10 @@ li h3 {
 }
 </style>
 </head>
-<body>
+<body ng-app="app" ng-controller="ctrl">
 
 	<!-- Modal Check -->
-	<div class="container">
+	<div class="container" >
 
 		<!-- Modal -->
 		<div class="modal fade" id="check" role="dialog">
@@ -120,23 +120,21 @@ li h3 {
 									placeholder="Enter Username" name="username">
 							</div>
 							<div class="form-group">
+				
 								<label for="psw"><span
 									class="glyphicon glyphicon-earphone"></span> Phone</label> <input
 									type="text" class="form-control" id="phone"
-									placeholder="Enter password" name="password">
+									placeholder="Enter Phone" name="phone">
 							</div>
-							<button type="submit"
-								class="btn btn-danger btn-default pull-right"
-								data-dismiss="modal">Login</button>
 						</form>
 					</div>
 					<div class="modal-footer" style="padding: 10px 20px;">
 						<button type="submit"
 							class="btn btn-danger btn-default pull-right"
 							data-dismiss="modal">Cancel</button>
-						<button type="submit" class="btn btn-primary pull-right"
-							data-dismiss="modal" data-toggle="modal" href="#lost"
-							data-target="#register">Check</button>
+						<button type="button" class="btn btn-primary pull-right"
+							data-dismiss="{{dismiss}}" data-toggle="{{toggle}}" href="#lost"
+							data-target="#register" ng-click="check()">Check</button>
 					</div>
 				</div>
 
@@ -516,94 +514,6 @@ $(document).ready(function(){
 				</div>
 			</div>
 
-			<!-- Model -->
-			<!--  <div id="check" class="modal fade" role="dialog">
-		  <div class="modal-dialog">
-			Sign up
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal">&times;</button>
-		        <h3 class="modal-title ">Operation</h3>
-		      </div>
-		      <div class="modal-body form-horizontal">
-		        <div class="form-group">
-				    <label  class="col-sm-2 control-label " style="color:black">Name:</label>
-				    <div class="col-sm-10">
-				      <input type="text" class="form-control" id="Name" placeholder="Input Name" ng-model="name" required>
-				    </div>
-				  </div>
-				<div class="form-group">
-				    <label for="Age" class="col-sm-2 control-label black">Age: </label>
-				    <div class="col-sm-10">
-				      <input type="text" class="form-control" name="age" placeholder="Input age" ng-model="age" ng-pattern="/^[0-9]{9,10}$/" required>
-				    </div>
- 			 	</div>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="add()" ng-disabled="!name ||  !age || name.$invalid ">Sumbit</button>
-		      </div>
-		    </div>
-
-  		  </div>
-		</div>
-     CONTACT SECTION END
-    <div id="footer">
-        <div class="row">
-          <div class="col-lg-9 col-md-9 col-sm-9">
-            &copy 2014 Korea Software HRD Center. All right reserved.
-          </div>
-          <div class="col-lg-3 col-md-3 col-sm-3" style="  text-align: right;">
-            <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
-            <a href="#"><i class="fa fa-google-plus-square fa-2x"></i></a>
-            <a href="#"><i class="fa fa-twitter-square fa-2x"></i></a>
-            <a href="#"> <i class="fa fa-youtube fa-2x"></i></a>
-          </div>
-      </div>   
-    </div> -->
-			<!-- FOOTER SECTION END-->
-	<!-- <script type="text/javascript">
-	$(function() {
-		$("#defaultForm").submit(function(e){		
-			alert("true");
-	   		  /* e.preventDefault();
-	   		  console.log($("#defaultForm").serialize());
-	   		  $.ajax({
-		            url: "login",
-		            type: "POST",
-		            data: $("#defaultForm").serialize(),
-		            success: function(data) {
-		            	if(data == "User account is locked"){
-		            		alert(data);
-		            	}else if(data == "User is disabled"){
-		            		swal("LOGIN FAILED!", data, "error");
-		            	}else if(data == "Bad credentials"){
-		            		swal("LOGIN FAILED!", data, "error");
-		            	}else{
-		            		swal({   
-		          			title: "LOGIN SUCCESSFULLY!",   
-		          			text: "THANK YOU",   
-		          			type: "success",   
-		          			confirmButtonColor: "#007d3d",   
-							closeOnConfirm: false,   
-		          			closeOnCancel: false }, 
-		          			function(isConfirm){   
-		          				if(isConfirm) {     				
-		          					window.location.href="http://localhost:1111/"+data;
-	
-		          				}else {     
-		          					swal("Cancelled", "Your imaginary file is safe :)", "error");   
-		          				} 
-		          			}); 
-	   		  
-		            	}
-		            },
-		         	error: function(data){
-		         		console.log(data);
-		         	}
-	   		  });	*/  
-		}); 
-	});
-</script> -->
 			<!--  Jquery Core Script -->
 			<script
 				src="${pageContext.request.contextPath }/resources/jquery/jquery/jquery.js"></script>
@@ -621,5 +531,37 @@ $(document).ready(function(){
 				src="${pageContext.request.contextPath }/resources/assets/js/jquery.easing.min.js"></script>
 				<!--  Custom Scripts -->
 	<script src="${pageContext.request.contextPath }/resources/assets/js/custom.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
+	<script>
+		var app = angular.module('app',	[]);
+		app.controller('ctrl', function($scope, $http) {
+			
+			$scope.check = function() {
+				$scope.name = $('#usrname').val();
+				$scope.phone = $('#phone').val();
+				$http({
+					url : 'http://localhost:2222/api/student/check-user-is-exist',
+					data: {
+						"PHONE": $scope.phone,
+						"USERNAME": $scope.name
+					},
+					method : 'POST'
+				}).then(function(response) {
+					if(response.data.DATA == null){
+						sweetAlert(
+								  'not available...',
+								  'You are not student in KSHRD Center! sorry,..',
+								  'error'
+								)
+					}
+					$scope.users = response.data.DATA;
+					console.log($scope.users)
+				}, function(response) {
+					//alert("error"); 
+				}); 
+			};
+			
+		});
+	</script>
 </body>
 </html>
