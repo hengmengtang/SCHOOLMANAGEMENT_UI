@@ -39,6 +39,7 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 			roles.add(authority.getAuthority());
 			System.out.println("Extract Role: " + authority.getAuthority());
 		}
+		
 		if(roles.contains("ROLE_ADMIN")) {
 			return "admin/dashboard";
 		}else if(roles.contains("ROLE_INSTRUCTOR")){
@@ -50,12 +51,5 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 		}
 
 	}
-	
-	/*// Get API User from HttpSession
-	private APIUser getAPIUser(){
-		Authentication authentication =  SecurityContextHolder.getContext().getAuthentication();
-		APIUser user = (APIUser) authentication.getPrincipal();
-		return user;
-	}*/
 
 }
