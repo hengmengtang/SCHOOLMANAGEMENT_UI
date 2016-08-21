@@ -183,7 +183,7 @@ input::-webkit-inner-spin-button {
 							</tbody>
 						</table>
 						<div class="pull-right">
-							<input type="submit" value="Save" class="btn btn-success pull-left"
+							<input type="submit" id="save" value="Save" class="btn btn-success pull-left"
 								ng-click="addScore()">
 							<input type="submit" value="Cancel" class="btn btn-danger pull-right"
 								>
@@ -203,7 +203,7 @@ input::-webkit-inner-spin-button {
 									<th>Java&#x2191;&#x2193;</th>
 									<th>Korean&#x2191;&#x2193;</th>
 									<th>Web&#x2191;&#x2193;</th>
-									
+									<th>Update</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -214,6 +214,12 @@ input::-webkit-inner-spin-button {
 									<td>{{stud.JAVA}}</td>
 									<td>{{stud.KOREAN}}</td>
 									<td>{{stud.WEB}}</td>
+									<td>
+										<button type="button" class="btn btn-primary"
+											ng-click="updateScore()">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+									</td>
 									
 								</tr>
 							</tbody>
@@ -287,6 +293,12 @@ input::-webkit-inner-spin-button {
     		$(".javaScore").show();
     	}
     }); */
+    $("#save").click(function(){
+    	$("#addScore").prop("disabled",true);
+    	$("#addScoreTable").hide();
+    	
+    });
+    
     $("#addScore").click(function(){
     	$("#addScoreTable").fadeToggle();
     	$("#viewScoreTable").hide();
@@ -363,6 +375,12 @@ input::-webkit-inner-spin-button {
 <script>
 		var app = angular.module('appAddScore', []);
 			app.controller('scoreCtrl', function($scope, $http){
+				
+				$scope.updateScore = function(){
+					angular.forEach($scope.viewBasicScore, function(subject){
+						$scope.subject_name = subject
+					})
+				}
 				
 				$scope.date = new Date();
 				 function getInstructor(){
@@ -515,8 +533,13 @@ input::-webkit-inner-spin-button {
 			    }
 			     $scope.getViewBasic=function(){ 
 			    	 $http({
-							url:'http://localhost:2222/api/monthly-result/monthly-result-basic-course/'+$scope.generation,
+							url:'http://localhost:2222/api/monthly-result/monthly-result-basic-course',
 							method:'POST',
+							data:{
+								 'CLASS_NAME':  $scope.classes,
+								 'STAFF_NAME': $scope.instructors,
+								 'SUBJECT_NAME': $scope.subject
+							} 
 						}).then(function(response){ 
 							$scope.viewBasicScore = response.data.DATA; 
 							console.log($scope.viewStuScore);
