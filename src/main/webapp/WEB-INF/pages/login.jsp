@@ -532,7 +532,7 @@ $(document).ready(function(){
 				<!--  Custom Scripts -->
 	<script src="${pageContext.request.contextPath }/resources/assets/js/custom.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
-	<script>
+	<!-- <script>
 		var app = angular.module('app',	[]);
 		app.controller('ctrl', function($scope, $http) {
 			
@@ -562,6 +562,6 @@ $(document).ready(function(){
 			};
 			
 		});
-	</script>
+	</script> -->
 </body>
 </html>

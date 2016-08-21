@@ -13,9 +13,75 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
+	.modal-content{
+			background-color: #FAFAFA; 
+		}
 </style>
 </head>
 <body class="bg">
+
+	<!-- model update score author mengtang -->
+	<div class="modal fade" id="update" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Update Score</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-3 form-group">
+							<label>Student ID: </label>
+						</div>
+						<div class="col-md-9 form-group">
+							<input type="text" class="form-control" name="stu_id"
+								ng-model="stu_id">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 form-group">
+							<label>Student Name: </label>
+						</div>
+						<div class="col-md-9 form-group">
+							<input type="text" class="form-control" ng-model="stu_name">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 form-group">
+							<label>Class Name: </label>
+						</div>
+						<div class="col-md-9 form-group">
+							<input type="text" class="form-control" ng-model="class_name">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 form-group">
+							<label>Score: </label>
+						</div>
+						<div class="col-md-9 form-group">
+							<input type="text" class="form-control" ng-model="score">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="" type="button" class="btn btn-default"
+						ng-click="update()"
+						ng-disabled="!username || !age || age < 0 || name.$invalid"
+						disabled> Update </a>
+					<button type="button" class="btn btn-primary" data-dismiss="modal">
+						Close</button>
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal  Update-->
+	<!-- end model update score -->
+
 	<jsp:include page="index.jsp" />
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper boxcontent"
@@ -145,8 +211,7 @@ input::-webkit-inner-spin-button {
 								<option>5</option>
 								<option>10</option>
 								<option>15</option>
-								<option>20</option>
-								
+								<option>20</option>				
 							</select>
 						</div>
 					</div>
@@ -200,9 +265,9 @@ input::-webkit-inner-spin-button {
 									<th>N <sup>o</sup></th>
 									<th>Student&#x2191;&#x2193;</th>
 									<th>Class&#x2191;&#x2193;</th>
-									<th>Java&#x2191;&#x2193;</th>
-									<th>Korean&#x2191;&#x2193;</th>
-									<th>Web&#x2191;&#x2193;</th>
+									<th>{{subject}}&#x2191;&#x2193;</th>
+									<!-- <th>Korean&#x2191;&#x2193;</th>
+									<th>Web&#x2191;&#x2193;</th> -->
 									<th>Update</th>
 								</tr>
 							</thead>
@@ -211,12 +276,12 @@ input::-webkit-inner-spin-button {
 									<td>{{$index+1}}</td>
 									<td>{{stud.MONTHLY_RESULT.STUDENT_NMAE}}</td>
 									<td>{{stud.MONTHLY_RESULT.CLASS_NAME}}</td>
-									<td>{{stud.JAVA}}</td>
-									<td>{{stud.KOREAN}}</td>
-									<td>{{stud.WEB}}</td>
+									<td>{{stud.SCORE}}</td>
+									<!-- <td class="korean">{{stud.KOREAN}}</td>
+									<td class="web">{{stud.WEB}}</td> -->
 									<td>
 										<button type="button" class="btn btn-primary"
-											ng-click="updateScore()">
+											ng-click="sendDataTo(stud)">
 											<span class="glyphicon glyphicon-pencil"></span>
 										</button>
 									</td>
@@ -375,13 +440,45 @@ input::-webkit-inner-spin-button {
 <script>
 		var app = angular.module('appAddScore', []);
 			app.controller('scoreCtrl', function($scope, $http){
-				
-				$scope.updateScore = function(){
-					angular.forEach($scope.viewBasicScore, function(subject){
-						$scope.subject_name = subject
-					})
+				//author mengtang
+				//get data from table cell for update score
+				$scope.sendDataTo=function(stud){
+					$scope.stu_id=stud.STUDENT_ID;
+					$scope.stu_name=stud.STUDENT_NAME;
+					$scope.class_name=stud.CLASS_NAME;
+					$scope.score=stud.SCORE;
 				}
-				
+				//update score
+				$scope.updateScore = function(){
+					swal({   
+			            title: "Update Person",   
+			            text: "Do You Want to update!",   
+			            type: "success",   
+			            showCancelButton: true,   
+			            closeOnConfirm: false,   
+			            showLoaderOnConfirm: true, 
+			        }, 
+			        function(){   
+			            setTimeout(function(){ 
+			            	$http({
+								url: 'http://localhost:2222/api/monthly-result/update-mark',
+								method: 'PUT',
+								data:{
+									'STUDENT_ID':$scope.stu_id,
+									'STUDENT_NAME':$scope.stu_name,
+									'CLASS_NAME':$scope.class_name,
+									'SCORE':$scope.score
+								}
+							})then(function(response){
+								$scope.getViewBasic;
+								swal("Good job!", "You update successful!", "success");
+							},function(response){
+								swal("Error!", "You cannot update!", "error");
+							});
+			            }, 1000); 
+			        });
+				}
+				//end update score
 				$scope.date = new Date();
 				 function getInstructor(){
 					$http({
@@ -538,7 +635,8 @@ input::-webkit-inner-spin-button {
 							data:{
 								 'CLASS_NAME':  $scope.classes,
 								 'STAFF_NAME': $scope.instructors,
-								 'SUBJECT_NAME': $scope.subject
+								 'SUBJECT_NAME': $scope.subject,
+								 'COURSE_NAME': $scope.course
 							} 
 						}).then(function(response){ 
 							$scope.viewBasicScore = response.data.DATA; 
