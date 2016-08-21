@@ -26,8 +26,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler;
 	
 	@Autowired
-	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		
+	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {		
 		auth.userDetailsService(userDetailsService);
 		
 	}
@@ -63,7 +62,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.accessDeniedPage("/access-denied");
 		
 		http.csrf().disable();
-		//http.exceptionHandling().accessDeniedPage("/access-denied");
 	}
 	
 //	@Bean

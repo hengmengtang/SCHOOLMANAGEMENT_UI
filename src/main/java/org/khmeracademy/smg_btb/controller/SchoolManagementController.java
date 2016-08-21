@@ -15,6 +15,11 @@ public class SchoolManagementController {
 	public String view() {
 		return "/admin/dashboard";
 	}
+	
+	@RequestMapping(value = { "/login"})
+	public String login() {
+		return "login";
+	}
 
 	@RequestMapping(value = { "/admin/course" })
 	public String course() {

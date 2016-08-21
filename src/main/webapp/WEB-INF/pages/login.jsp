@@ -41,7 +41,7 @@ $(document).ready(function(){
 	          			closeOnCancel: false }, 
 	          			function(isConfirm){   
 	          				if(isConfirm) {     				
-	          					window.location.href="${pageContext.request.contextPath}/"+data;
+	          					window.location.href="${pageContext.request.contextPath}/" + data;
 	          				}else {     
 	          					swal("Cancelled", "Your imaginary file is safe :)", "error");   
 	          				} 
@@ -54,7 +54,7 @@ $(document).ready(function(){
 	         	}
   		  });
     });
-});
+}); 
 </script>
 </head>
 
@@ -225,13 +225,13 @@ $(document).ready(function(){
 					<form action="login" method="post">
 						<ul class="nav navbar-nav navbar-right">
 
-							<li><a> <label style="color: white; margin-top: 8px;">Email:</label>
+							<!-- <li><a> <label style="color: white; margin-top: 8px;">Email:</label>
 							</a></li>
 							<li><a> <input type="email" class="form-control"
 									placeholder="Enter email" name="email" id="email" />
-							</a></li>
+							</a></li> -->
 							
-							<li><a> <label style="color: white; margin-top: 8px;">Username:</label>
+							<li><a> <label style="color: white; margin-top: 8px;">Email:</label>
 							</a></li>
 							<li><a> <input type="text" class="form-control"
 									placeholder="Enter username" name="username" id="username" />
