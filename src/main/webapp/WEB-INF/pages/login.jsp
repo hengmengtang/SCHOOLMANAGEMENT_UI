@@ -223,12 +223,6 @@ $(document).ready(function(){
 					<form action="login" method="post">
 						<ul class="nav navbar-nav navbar-right">
 
-							<!-- <li><a> <label style="color: white; margin-top: 8px;">Email:</label>
-							</a></li>
-							<li><a> <input type="email" class="form-control"
-									placeholder="Enter email" name="email" id="email" />
-							</a></li> -->
-							
 							<li><a> <label style="color: white; margin-top: 8px;">Email:</label>
 							</a></li>
 							<li><a> <input type="text" class="form-control"
@@ -240,7 +234,9 @@ $(document).ready(function(){
 									placeholder="Enter password" name="password" id="password" /> </a></li>
 							<li>
 								<a><input type="submit" class="btn btn-default" value="Login"></a> 
-								<a href="#" class="btn btn-info" style="top: -16px; padding: 8px; left: 86px" data-toggle="modal" data-target="#check">Sign Up</a>
+							</li>
+							<li>
+								<a href="#" class="btn btn-info" style="top: 22px; padding: 6px;" data-toggle="modal" data-target="#check">Sign Up</a>
 							</li>
 						</ul>
 					</form>
