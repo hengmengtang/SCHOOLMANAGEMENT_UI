@@ -97,11 +97,11 @@ li h3 {
 }
 </style>
 </head>
-<body ng-app="app" ng-controller="ctrl">
-
+<body>
+	<div  ng-app="app" ng-controller="ctrl">
 	<!-- Modal Check -->
 	<div class="container" >
-
+	
 		<!-- Modal -->
 		<div class="modal fade" id="check" role="dialog">
 			<div class="modal-dialog">
@@ -194,6 +194,7 @@ li h3 {
 			</div>
 		</div>
 	</div>
+</div>
 	<!-- End Modal -->
 	<script>
 $(document).ready(function(){
@@ -528,7 +529,7 @@ $(document).ready(function(){
 				<!--  Custom Scripts -->
 	<script src="${pageContext.request.contextPath }/resources/assets/js/custom.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
-	<!-- <script>
+	<script>
 		var app = angular.module('app',	[]);
 		app.controller('ctrl', function($scope, $http) {
 			
@@ -551,13 +552,12 @@ $(document).ready(function(){
 								)
 					}
 					$scope.users = response.data.DATA;
-					console.log($scope.users)
 				}, function(response) {
 					//alert("error"); 
 				}); 
 			};
 			
 		});
-	</script> -->
+	</script>
 </body>
 </html>
