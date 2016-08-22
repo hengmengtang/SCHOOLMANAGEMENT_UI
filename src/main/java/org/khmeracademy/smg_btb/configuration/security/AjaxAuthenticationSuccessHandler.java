@@ -21,6 +21,10 @@ public class AjaxAuthenticationSuccessHandler implements AuthenticationSuccessHa
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
+			/**
+			 * set session time out
+			 */
+			request.getSession().setMaxInactiveInterval(10*60);
 			
 			response.getWriter().print(determineTargetUrl(auth));
 	        response.getWriter().flush();

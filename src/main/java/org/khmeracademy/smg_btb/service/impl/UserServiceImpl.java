@@ -37,16 +37,14 @@ public class UserServiceImpl implements UserService {
 		System.out.println(email);
 		HttpEntity<Object> request = new HttpEntity<Object>(login);
 		
+		@SuppressWarnings("rawtypes")
 		ResponseEntity<Map> response = rest.exchange(WS_API_URL + "/user/get-user-by-email", HttpMethod.POST , request , Map.class) ;
-		System.out.println(WS_API_URL + "/user/get-user-by-email");
-		
+		@SuppressWarnings("unchecked")
 		Map<String, Object> map = (HashMap<String, Object>)response.getBody();
 		
-		System.out.println(map);
-		
 		if(map.get("DATA") != null){
-			
-			
+				
+			@SuppressWarnings("unchecked")
 			Map<String , Object> data = (HashMap<String , Object>) map.get("DATA");
 			User u = new User();
 			u.setUser_id((String) data.get("USER_ID"));
