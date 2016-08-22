@@ -12,7 +12,6 @@
 <link
 	href="${pageContext.request.contextPath }/resources/style/customStudentList.css"
 	rel="stylesheet" />
-<%-- <script src="${pageContext.request.contextPath }/resources/bootstrapcheckbox/bootstrap-checkbox.min.js"></script> --%>
 </head>
 <body class="bg">
 	<!-- index is menu -->
@@ -83,7 +82,7 @@
 											class="star"> * </span></label> <span
 											class="glyphicons glyphicons-user"></span> <input type="text"
 											class="form-control " placeholder="Enter ID"
-											ng-model="stu_id">
+											ng-model="stu_id" readonly>
 									</div>
 								</div>
 
@@ -103,7 +102,7 @@
 											class="glyphicons glyphicons-user"></span> <input type="text"
 											class="form-control " 
 											placeholder="Enter Your First Latin Name"
-											ng-model="latin_name">
+											ng-model="latin_name" onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<!--Radio-->
@@ -127,7 +126,8 @@
 										<label for="exampleInputPOB">Place Of Birth<span
 											class="star"> * </span></label> <input type="text"
 											class="form-control" 
-											placeholder="Place Of Birth" ng-model="pob">
+											placeholder="Place Of Birth" ng-model="pob"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<div class="row">
@@ -135,7 +135,8 @@
 										<label for="exampleInputAddress">Permanent Address<span
 											class="star"> * </span></label> <input type="text"
 											class="form-control" 
-											placeholder="Address" ng-model="address">
+											placeholder="Address" ng-model="address"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 
@@ -187,20 +188,21 @@
 								<div class="row">
 									<div class="form-group col-md-4">
 										<label for="Phone">Phone <span class="star"> *
-										</span></label> <input type="text" class="form-control" 
-											placeholder="Phone" ng-model="phone">
+										</span></label> <input type="text" class="form-control" id="phone"
+											placeholder="Phone" ng-model="phone" data-mask='"mask": "(999) 999-9999"' required>
 									</div>
 									<div class="form-group col-md-4">
 										<label for="exampleInputNationality">Nationality<span
 											class="star"> * </span></label> <input type="text"
 											class="form-control" 
-											placeholder="Nationality" ng-model="nationality">
+											placeholder="Nationality" ng-model="nationality"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 									<div class="form-group col-md-4">
 										<label for="exampleInputSocialID">Social ID<span
 											class="star"> * </span></label> <input type="text"
-											class="form-control"  placeholder="Social id"
-											ng-model="social_id">
+											class="form-control"  placeholder="Social id" id="social_id"
+											ng-model="social_id" data-mask='"mask": "(999999999)"'>
 									</div>
 								</div>
 
@@ -222,26 +224,30 @@
 											Name<span class="star"> * </span>
 										</label> <input type="text" class="form-control" 
 											placeholder="Father's Latin Name"
-											ng-model="father_latin_name">
+											ng-model="father_latin_name"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<div class="row">
 									<div class="form-group col-md-12">
 										<label for="Address">Address<span class="star">
 												* </span></label> <input type="text" class="form-control" 
-											placeholder="Address" ng-model="father_address">
+											placeholder="Address" ng-model="father_address"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<div class="row">
 									<div class="form-group col-md-6">
 										<label for="FOccupation">Occupation<span class="star">
 												* </span></label> <input type="text" class="form-control" 
-											placeholder="Father Occupation" ng-model="father_occupation">
+											placeholder="Father Occupation" ng-model="father_occupation"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 									<div class="form-group col-md-6">
 										<label for="FPhone">Father's Phone<span class="star">
 												* </span></label> <input type="text" class="form-control" 
-											placeholder="Father's Phone " ng-model="father_phone">
+											placeholder="Father's Phone " ng-model="father_phone"
+											data-mask='"mask": "(999) 999-9999"' id="fphone">
 									</div>
 
 								</div>
@@ -257,24 +263,29 @@
 											class="star"> * </span></label> <input type="text"
 											class="form-control" i
 											placeholder="Mother's Latin Name"
-											ng-model="mother_latin_name">
+											ng-model="mother_latin_name"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<div class="row">
 									<div class="form-group col-md-12">
 										<label for="FAddress">Address<span class="star">
 												* </span></label> <input type="text" class="form-control"
-											placeholder="Address" ng-model="mother_address">
+											placeholder="Address" ng-model="mother_address"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<div class="row">
 					              <div class="form-group col-md-6">
 					                  <label for="FOccupation">Occupation<span class="star"> * </span></label>
-					                  <input type="text" class="form-control" placeholder="Mother Occupation" ng-model="mother_occupation">
+					                  <input type="text" class="form-control" placeholder="Mother Occupation" 
+					                  ng-model="mother_occupation"
+					                  onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 					              </div>
 					              <div class="form-group col-md-6">
 					                  <label for="FPhone">Mother's Phone<span class="star"> * </span></label>
-					                  <input type="text" class="form-control" placeholder="Mother's Phone " ng-model="mother_phone">
+					                  <input type="text" class="form-control" placeholder="Mother's Phone " 
+					                  ng-model="mother_phone" data-mask='"mask": "(999) 999-9999"' id="mphone">
 					              </div>
 					           </div>
 					           <div class="row pull-right" style="margin: 7px;">
@@ -456,10 +467,31 @@
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
 	<jsp:include page="../include/sweetalert.jsp"/>
+	<jsp:include page="../include/inputmask.jsp"/>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/FileSaver.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/json-export-excel.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#phone').inputmask({
+				'mask' : "(999) 999-9999"
+			});
+			
+			$('#fphone').inputmask({
+				'mask' : "(999) 999-9999"
+			});
+			
+			$('#mphone').inputmask({
+				'mask' : "(999) 999-9999"
+			});
+			
+			$('#social_id').inputmask({
+				'mask' : "999999999"
+			});
+			
+		});
+	</script>
 	<script>
 		var app = angular.module('appListStu', ['angularUtils.directives.dirPagination','ngJsonExportExcel']);
 			app.controller('ctrlListStu', function($scope, $http){
