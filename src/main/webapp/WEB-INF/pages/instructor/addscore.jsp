@@ -6,7 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>HRD Student Management</title>
 <jsp:include page="../include/headDashboard.jsp" />
-<style>
+<jsp:include page="../include/sweetalert.jsp" />
+<!-- Delete Arrow key on input type number -->
+<!-- <style>
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
@@ -16,71 +18,9 @@ input::-webkit-inner-spin-button {
 	.modal-content{
 			background-color: #FAFAFA; 
 		}
-</style>
+</style> -->
 </head>
 <body class="bg">
-
-	<!-- model update score author mengtang -->
-	<div class="modal fade" id="update" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Update Score</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-3 form-group">
-							<label>Student ID: </label>
-						</div>
-						<div class="col-md-9 form-group">
-							<input type="text" class="form-control" name="stu_id"
-								ng-model="stu_id">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3 form-group">
-							<label>Student Name: </label>
-						</div>
-						<div class="col-md-9 form-group">
-							<input type="text" class="form-control" ng-model="stu_name">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3 form-group">
-							<label>Class Name: </label>
-						</div>
-						<div class="col-md-9 form-group">
-							<input type="text" class="form-control" ng-model="class_name">
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3 form-group">
-							<label>Score: </label>
-						</div>
-						<div class="col-md-9 form-group">
-							<input type="text" class="form-control" ng-model="score">
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<a href="" type="button" class="btn btn-default"
-						ng-click="update()"
-						ng-disabled="!username || !age || age < 0 || name.$invalid"
-						disabled> Update </a>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">
-						Close</button>
-				</div>
-
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
-	<!-- /.modal  Update-->
-	<!-- end model update score -->
 
 	<jsp:include page="index.jsp" />
 	<!-- Content Wrapper. Contains page content -->
@@ -171,8 +111,7 @@ input::-webkit-inner-spin-button {
 									<option ng-repeat="c in Class">{{c.CLASS_NAME}}</option>			
 							</select>
 						</div>
-					</div>
-					
+					</div>					
 		
 				</div>
 				
@@ -237,12 +176,13 @@ input::-webkit-inner-spin-button {
 								</tr>
 							</thead>
 							<tbody>
-								<tr ng-repeat="stu in getStudent">
+								<tr ng-repeat="stu in getStudent" my-filter>
 									<td>{{$index+1}}</td>
 									<td>{{stu.ENGLISH_FULL_NAME}}</td>
 									<td>{{stu.COURSE_NAME}}</td>
 									<td>{{stu.CLASS_NAME}}</td>
-									<td><input type="number"  maxlength="5"  placeholder="Score" id="score" >
+									<td>
+									 <input type="text" id="score" class="score_" placeholder="Score" data-mask="99.99">
 									 <input value="{{stu.STUDENT_ID}}" id="stu_id" style="display:none;"> </td>
 								</tr>
 							</tbody>
@@ -281,7 +221,7 @@ input::-webkit-inner-spin-button {
 									<td class="web">{{stud.WEB}}</td> -->
 									<td>
 										<button type="button" class="btn btn-primary"
-											ng-click="sendDataTo(stud)">
+											ng-click="sendDataTo(stud)"  data-toggle="modal" data-target="#update">
 											<span class="glyphicon glyphicon-pencil"></span>
 										</button>
 									</td>
@@ -324,9 +264,71 @@ input::-webkit-inner-spin-button {
 		</div>
 		<!-- End page --> 
 		</section>
+		<!-- model update score author mengtang -->
+	<div class="modal fade" id="update" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content" >
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Update Score</h4>
+				</div>
+				<div class="modal-body" >
+					<div class="row">
+						<div class="col-md-3 form-group">
+							<label>Mark ID: </label>
+						</div>
+						<div class="col-md-9 form-group">
+							<input type="text" class="form-control" name="stu_id"
+								ng-model="mark_id" disabled="disabled">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 form-group">
+							<label>Student Name: </label>
+						</div>
+						<div class="col-md-9 form-group">
+							<input type="text" class="form-control" ng-model="stuName" disabled="disabled">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 form-group">
+							<label>Class Name: </label>
+						</div>
+						<div class="col-md-9 form-group">
+							<input type="text" class="form-control" ng-model="class_name" disabled="disabled">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 form-group">
+							<label>Score: </label>
+						</div>
+						<div class="col-md-9 form-group">
+							<input type="text" class="form-control updateScore" ng-model="score" data-mask="99.99">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="" type="button" class="btn btn-default"
+						ng-click="updateScore()"
+						ng-disabled="!score"
+						disabled> Update </a>
+					<button type="button" id="close" class="btn btn-primary" data-dismiss="modal">
+						Close</button>
+				</div>
+
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal  Update-->
+	<!-- end model update score -->
 	</div>
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
+	<jsp:include page="../include/inputmask.jsp" />
 	<script src="${pageContext.request.contextPath}/resources/angularjs/angular.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script>
@@ -358,13 +360,16 @@ input::-webkit-inner-spin-button {
     		$(".javaScore").show();
     	}
     }); */
+
+    
     $("#save").click(function(){
     	$("#addScore").prop("disabled",true);
     	$("#addScoreTable").hide();
     	
-    });
+    }); 
     
     $("#addScore").click(function(){
+    	
     	$("#addScoreTable").fadeToggle();
     	$("#viewScoreTable").hide();
     });
@@ -439,15 +444,34 @@ input::-webkit-inner-spin-button {
 </script>
 <script>
 		var app = angular.module('appAddScore', []);
+		app.directive('myFilter', [function() {
+            return {
+                restrict: 'A',       
+                link: function(scope, element) {
+                    // wait for the last item in the ng-repeat then call init
+                    if (scope.$last){
+                        $('.score_,.updateScore').inputmask({
+                        	'mask' : "99.99"
+                    	});
+                    }
+                    
+                }
+            };
+        }]);
+		
+		
+		
+		
 			app.controller('scoreCtrl', function($scope, $http){
 				//author mengtang
 				//get data from table cell for update score
 				$scope.sendDataTo=function(stud){
-					$scope.stu_id=stud.STUDENT_ID;
-					$scope.stu_name=stud.STUDENT_NAME;
-					$scope.class_name=stud.CLASS_NAME;
-					$scope.score=stud.SCORE;
+					$scope.mark_id=stud.MONTHLY_RESULT.MARK_ID;
+					$scope.stuName=stud.MONTHLY_RESULT.STUDENT_NMAE;
+					$scope.class_name=stud.MONTHLY_RESULT.CLASS_NAME;
+					$scope.score=stud.SCORE; 
 				}
+			
 				//update score
 				$scope.updateScore = function(){
 					swal({   
@@ -461,23 +485,23 @@ input::-webkit-inner-spin-button {
 			        function(){   
 			            setTimeout(function(){ 
 			            	$http({
-								url: 'http://localhost:2222/api/monthly-result/update-mark',
+								url: 'http://localhost:2222/api/mark/update-mark',
 								method: 'PUT',
 								data:{
-									'STUDENT_ID':$scope.stu_id,
-									'STUDENT_NAME':$scope.stu_name,
-									'CLASS_NAME':$scope.class_name,
-									'SCORE':$scope.score
+									'MARK_ID':$scope.mark_id,
+									'MARK':$scope.score
 								}
-							})then(function(response){
-								$scope.getViewBasic;
+							}).then(function(response){
+								$scope.getViewBasic();
 								swal("Good job!", "You update successful!", "success");
+								$('#close').trigger('click');
+								 
 							},function(response){
 								swal("Error!", "You cannot update!", "error");
 							});
 			            }, 1000); 
 			        });
-				}
+				} 
 				//end update score
 				$scope.date = new Date();
 				 function getInstructor(){
@@ -533,7 +557,7 @@ input::-webkit-inner-spin-button {
 				/* Get Class */
 				function getClassBy(course, generation, instructor){
 					$http({
-						url:'http://localhost:2222/api/class/get-class-by-generation-course',
+						url:'http://localhost:2222/api/class/get-class-by-staff-generation-course',
 						method:'POST',
 						data:{
 							"COURSE_NAME": course,

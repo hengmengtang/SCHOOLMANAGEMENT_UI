@@ -19,100 +19,110 @@
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 		<h1>
-			<b>HRD</b> Student Score
+			Monthly Results <small>Preview</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Monthly Result</li>
+			<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>
+					Home</a></li>
+			<li class="active">Monthly Results</li>
 		</ol>
 		</section>
+		<!-- Main content -->
+		<section class="content" ng-app="app" ng-controller="ctrl">
 
-		<!-- Main content-->
-		<div class="container-fluid">
+		<div class="container-fluid"
+			style="border: 2px solid green; background-color: #e0f2f2">
 			<fieldset>
-				<!-- Main content-->
-				<section class="content">
-				<div class="container-fluid"
-					style="border: 2px solid green; background-color: #e0f2f2">
-					<div class="row">
+				<div class="row">
+					<!----------- pagination ------------>
+					<div class="col-md-2 pull-left">
+						<i class="fa fa-book" style="color: black;font-size: 18px"></i> <small
+							style="color: black; font-size: 18px">&nbsp Monthly Results</small>
+					</div>
+					<br>
+					</br>
+					<div class="col-md-10">
+						<ul class="pagination pull-right" style="margin-top: 2px;">
+							<dir-pagination-controls
+						       max-size="5"
+						       direction-links="true"
+						       boundary-links="true" >
+					    	</dir-pagination-controls>
+						</ul>
+					</div>
 
-						<div class="col-md-2 pull-left" style="font-size: 18px;">
-							<i class="fa fa-users" aria-hidden="true"></i> Student Score
-						</div>
-
-						<div class="col-md-10 pull-right" style="margin-bottom: -20px">
-							<nav class="page">
-							<ul class="pagination pull-right toptable"
-								style="margin-top: 2px;">
-								<dir-pagination-controls max-size="5" direction-links="true"
-									boundary-links="true"> </dir-pagination-controls>
-							</ul>
-							</nav>
+				</div>
+				<!-- End Row 1 -->
+				<!-- Start Row 2(Generation and Search) -->
+				<div class="row">
+					<!-- <div class="col-md-2"> -->
+					<div class="col-md-2">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;"> <i
+								class="fa fa-align-justify"></i>
+							</span> <select class="form-control selectionpicker" ng-init="select | select='No'" ng-model="select">
+								<option value="">All</option>
+								<option>10</option>
+								<option>30</option>
+								<option>60</option>
+							</select>
+							<!-- End Selection -->
 						</div>
 					</div>
-					<!-- end pagination(Row 1) -->
+					<!--div class="col-md-3" -->
+					<div class="col-sm-3">
 
-					<!-- Start Row 2 -->
-					<div class="row" style="margin-top: 15px;">
-						<div class="col-md-2 pull-left">
-							<div class="input-group pull-left">
-								<span class="input-group-addon" style="background-color: green;">
-									<i class="fa fa-align-justify"
-									style="color: white; font-size: 20px"></i>
-								</span><select class="form-control" ng-init="select | select='5'"
-									ng-model="select">
-									<option value="">10</option>
-									<option>15</option>
-									<option>20</option>
-								</select>
-							</div>
-						</div>
-						<!-- End Selection -->
-
-						<div class="col-md-3 pull-left">
-							<div class="input-group pull-left">
-								<span class="input-group-addon"
-									style="color: white; background-color: green;">
-									Generation </span> <select class="form-control selectpicker"
-									ng-model="searchGeneration">
-									<option value=" ">Select Generation</option>
-									<option value="BTB">1st</option>
-									<option value="KSP">2nd</option>
-									<option value="SR">3rd</option>
-									<option value="PP">4th</option>
-								</select>
-							</div>
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;">
+								Generation </span> <select class="form-control selectpicker" ng-init="searchGeneration | searchGeneration='Generation'" ng-model="searchGeneration" ng-mouseleave="getGeneration()">
+								<option value="">Generation</option>
+								<option ng-repeat="gen in generations | orderBy:'GENERATION_NAME'">{{gen.GENERATION_NAME}}</option>
+							</select>
 						</div>
 
-						<div class="col-md-3 pull-left">
-							<div class="input-group pull-left">
-								<span class="input-group-addon"
-									style="color: white; background-color: green;"> Class </span> <select
-									class="form-control selectpicker" ng-model="searchClass">
-									<option value=" ">Select Class</option>
-									<option value="BTB">BTB</option>
-									<option value="KSP">KSP</option>
-									<option value="SR">SR</option>
-									<option value="PP">PP</option>
-								</select>
-							</div>
-						</div>
-						<!--Search Location-->
-						<div class="col-md-3 pull-left">
-							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1"
-									style="color: white; background-color: green;"><i
-									class="fa fa-search" aria-hidden="true"
-									style="font-size: 20px;"></i> </span> <input type="text"
-									class="form-control" placeholder="Search Student..."
-									ng-model="searchStudent"> <span class="input-group-btn">
-								</span>
-							</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;">
+								Course </span> <select class="form-control selectpicker" ng-init="searchGeneration | searchGeneration='Generation'" ng-model="searchGeneration" ng-mouseleave="getGeneration()">
+								<option value="">Generation</option>
+								<option ng-repeat="gen in generations | orderBy:'GENERATION_NAME'">{{gen.COURSE_NAME}}</option>
+							</select>
 						</div>
 					</div>
-					<!-- End Search Location-->
-
-					<!-- End Row 2 -->
+					<div class="col-sm-2">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;">
+								Date </span> 
+								<input type="text" placeholder="Date" id="date" class="form-control selectpicker" ng-init="searchGeneration | searchGeneration='Generation'" ng-model="searchGeneration" ng-mouseleave="getGeneration()">
+						</div>
+						
+					</div>
+					<!-- End Selection -->
+					<!-- Text Search -->
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon" style="background-color: #00A65A;"><i
+								class="fa fa-search" style="color: white;"></i> </span> <input
+								type="text" class="form-control" placeholder="Search Name" id="search_course"
+								onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');" ng-keypress="searchCourse()">
+						
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-danger"
+													id="btn-preview">Print</button>
+							<button type="button" class="btn btn-success"
+													id="btn-export">Export</button>
+						</div>
+						</div>
+						
+					</div>
+					<!-- End Text Search -->
+				</div>
+				<!-- End Row 2 -->
 
 					<!-- Start Table -->
 					<div class="row" style="margin: 0px;">
@@ -120,13 +130,13 @@
 							<table class="table table-hover">
 								<thead>
 									<tr style="font-size: 16px;">
-										<th>N <sup>o</sup></th>
+										<th>Rank</th>
 										<th>Student&#x2191;&#x2193;</th>
 										<th>Gender</th>
 										<th>Class&#x2191;&#x2193;</th>
+										<th>Java&#x2191;&#x2193;</th>
 										<th>Korean&#x2191;&#x2193;</th>
 										<th>Web&#x2191;&#x2193;</th>
-										<th>Java&#x2191;&#x2193;</th>
 										<th>Total Score&#x2191;&#x2193;</th>
 									</tr>
 								</thead>
@@ -171,6 +181,10 @@
 	<jsp:include page="../include/footDashboard.jsp" />
 
 	<script>
+		$(function() {
+			/* initialize date picker */
+			$("#date").datepicker();
+		});
 		$.widget.bridge('uibutton', $.ui.button);
 	</script>
 

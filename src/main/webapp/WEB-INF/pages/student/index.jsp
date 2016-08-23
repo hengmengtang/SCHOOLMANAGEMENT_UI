@@ -1,3 +1,24 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<style>
+	.navbar-login
+	{
+	    width: 305px;
+	    padding: 10px;
+	    padding-bottom: 0px;
+	}
+	
+	.navbar-login-session
+	{
+	    padding: 10px;
+	    padding-bottom: 0px;
+	    padding-top: 0px;
+	}
+	
+	.icon-size
+	{
+	    font-size: 87px;
+	}
+</style>
 <div class="hold-transition skin-green sidebar-mini">
 	<!-- <div class="wrapper"> -->
 	<header class="main-header">
@@ -16,13 +37,68 @@
 			<a href="" class="sidebar-toggle" data-toggle="offcanvas"
 				role="button"> <span class="sr-only">Toggle navigation</span>
 			</a>
-
-			<div class="navbar-custom-menu">
-				<ul class="nav navbar-nav">
-					<li><a href="#" data-toggle="control-sidebar"><i
-							class="fa fa-frown-o" aria-hidden="true"></i></i> Heng MengTang</a></li>
-				</ul>
+			<!--------  drop down menu for profile -->
+			<div class="row">
+				<div class="col-md-11 pull-left">
+					<ul class="nav navbar-nav navbar-right">
+               			<li class="dropdown">
+	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                        <span class="glyphicon glyphicon-user"></span> 
+	                        <strong>
+	                        	 <sec:authorize access="isAuthenticated()">
+								   <sec:authentication property="principal.username" /> 
+								</sec:authorize>
+	                        </strong>
+	                        <span class="glyphicon glyphicon-chevron-down"></span>
+	                    </a>
+	                    	<!-- start sub drop down profile -->
+					             <ul class="dropdown-menu">
+			                        <li>
+			                            <div class="navbar-login">
+			                                <div class="row">
+			                                    <div class="col-lg-4">
+			                                        <p class="text-center">
+			                                            <span class="glyphicon glyphicon-user icon-size"></span>
+			                                        </p>
+			                                    </div>
+			                                    <div class="col-lg-8">
+			                                        <p class="text-left">
+			                                        	<sec:authorize access="isAuthenticated()">
+														   <sec:authentication property="principal.username" /> 
+														</sec:authorize>
+													</p>
+			                                        <p class="text-left small">
+			                                        	<sec:authorize access="isAuthenticated()">
+														   <sec:authentication property="principal.email" /> 
+														</sec:authorize>
+			                                        </p>
+			                                        <p class="text-left">
+			                                            <a href="#" class="btn btn-primary btn-block btn-sm">Show Profile</a>
+			                                        </p>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </li>
+			                        <li class="divider"></li>
+			                        <li>
+			                            <div class="navbar-login navbar-login-session">
+			                                <div class="row">
+			                                    <div class="col-lg-12">
+			                                        <p>
+			                                            <a href="/logout" class="btn btn-danger btn-block">Logout</a>
+			                                        </p>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </li>
+			                    </ul>
+		                    <!-- end sub drop down profile -->
+                		</li>
+            		</ul>
+				</div>
 			</div>
+<!--------  drop menu for profile -->
+			
 		</nav>
 	</header>
 	<!-- Left side column. contains the logo and sidebar -->
