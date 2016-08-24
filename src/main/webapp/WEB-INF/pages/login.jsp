@@ -14,50 +14,6 @@
 <script src="${pageContext.request.contextPath }/resources/jquery/jquery/jquery-2.2.4.min.js"></script>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
 <jsp:include page="include/sweetalert.jsp" />
-<link>
-<script>
-$(document).ready(function(){
-    $("form").submit(function(e){
-    	e.preventDefault();
-    	console.log($(this).serialize());
-  		  $.ajax({
-	            url: "${pageContext.request.contextPath}/login",
-	            type: "POST",
-	            data: $(this).serialize(),
-	            success: function(data) {
-	            	if(data == "User account is locked"){
-	            		alert(data);
-	            	}else if(data == "User is disabled"){
-	            		swal("LOGIN FAILED!", data, "error");
-	            	}else if(data == "Bad credentials"){
-	            		swal("LOGIN FAILED!", data, "error");
-	            	}else{
-	            		swal({   
-	          			title: "LOGIN SUCCESSFULLY!",   
-	          			text: "THANK YOU",   
-	          			type: "success",   
-	          			confirmButtonColor: "#007d3d",   
-						closeOnConfirm: false,   
-	          			closeOnCancel: false }, 
-	          			function(isConfirm){   
-	          				if(isConfirm) {     				
-	          					window.location.href="${pageContext.request.contextPath}/" + data;
-	          				}else {     
-	          					swal("Cancelled", "Your imaginary file is safe :)", "error");   
-	          				} 
-	          			}); 
-  		  
-	            	}
-	            },
-	         	error: function(data){
-	         		console.log(data);
-	         	}
-  		  });
-    });
-}); 
-</script>
-</head>
-
 <!-- Modal Center Screen -->
 <style>
 .modal {
@@ -98,113 +54,13 @@ li h3 {
 </style>
 </head>
 <body>
-	<div  ng-app="app" ng-controller="ctrl">
-	<!-- Modal Check -->
-	<div class="container" >
-	
-		<!-- Modal -->
-		<div class="modal fade" id="check" role="dialog">
-			<div class="modal-dialog">
-
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header" style="padding: 5px 30px;">
-						<h4>Check Position</h4>
-					</div>
-					<div class="modal-body" style="padding: 30px 50px;">
-						<form role="form" action="/admin" method="post">
-							<div class="form-group">
-								<label for="usrname"><span
-									class="glyphicon glyphicon-user"></span> Username</label> <input
-									type="text" class="form-control" id="usrname"
-									placeholder="Enter Username" name="username">
-							</div>
-							<div class="form-group">
-				
-								<label for="psw"><span
-									class="glyphicon glyphicon-earphone"></span> Phone</label> <input
-									type="text" class="form-control" id="phone"
-									placeholder="Enter Phone" name="phone">
-							</div>
-						</form>
-					</div>
-					<div class="modal-footer" style="padding: 10px 20px;">
-						<button type="submit"
-							class="btn btn-danger btn-default pull-right"
-							data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary pull-right"
-							data-dismiss="{{dismiss}}" data-toggle="{{toggle}}" href="#lost"
-							data-target="#register" ng-click="check()">Check</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-	<!-- End Check Modal -->
-
-	<!-- Modal For Set User and Password -->
-	<div class="container">
-
-		<!-- Modal -->
-		<div class="modal fade" id="register" role="dialog">
-			<div class="modal-dialog">
-
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header" style="padding: 10px 20px;">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4>
-							<i class="fa fa-registered" aria-hidden="true"
-								style="font-size: 34px;""></i> Register
-						</h4>
-					</div>
-					<div class="modal-body" style="padding: 40px 50px;">
-						<form role="form">
-							<div class="form-group">
-								<label for="usrname"><span
-									class="glyphicon glyphicon-user"></span> Username</label> <input
-									type="text" class="form-control" id="usrname"
-									placeholder="Enter username">
-							</div>
-							<div class="form-group">
-								<label for="psw"><span
-									class="glyphicon glyphicon-eye-open"></span> Password</label> <input
-									type="text" class="form-control" id="psw"
-									placeholder="Enter password">
-							</div>
-							<div class="form-group">
-								<label for="psw"><span
-									class="glyphicon glyphicon-eye-open"></span> Re-Enter Password</label>
-								<input type="text" class="form-control" id="psw"
-									placeholder="Enter re- enter password">
-							</div>
-					</div>
-					<div class="modal-footer" style="padding: 10px 20px;">
-						<button type="submit"
-							class="btn btn-danger btn-default pull-right"
-							data-dismiss="modal">Cancel</button>
-						<button type="submit" class="btn btn-primary pull-right"
-							data-dismiss="modal" data-toggle="modal" href="#lost"
-							data-target="#register" name="register">Submit</button>
-
-					</div>
-				</div>
-
-			</div>
-		</div>
-	</div>
-</div>
-	<!-- End Modal -->
-	<script>
+<script>
 $(document).ready(function(){
     $("#myBtn").click(function(){
         $("#myModal").modal();
     });
 });
 </script>
-<body>
-	<h1>hello</h1>
 	<div class="navbar navbar-inverse navbar-fixed-top " id="menu">
 		<div class="container">
 			<div class="navbar-header">
@@ -221,7 +77,7 @@ $(document).ready(function(){
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
-					<form action="login" method="post">
+					<form method="post" id="frmLogin">
 						<ul class="nav navbar-nav navbar-right">
 
 							<li><a> <label style="color: white; margin-top: 8px;">Email:</label>
@@ -234,17 +90,16 @@ $(document).ready(function(){
 							<li><a><input type="password" class="form-control"
 									placeholder="Enter password" name="password" id="password" /> </a></li>
 							<li>
-								<a><input type="submit" class="btn btn-default" value="Login"></a> 
+								<a><input type="submit" id="btLog" class="btn btn-default" value="Login"></a> 
 							</li>
 							<li>
-								<a href="#" class="btn btn-info" style="top: 22px; padding: 6px;" data-toggle="modal" data-target="#check">Sign Up</a>
+								<a href="#"  class="btn btn-info" style="top: 22px; padding: 6px;" data-toggle="modal" data-target="#register">Sign Up</a>
 							</li>
 						</ul>
 					</form>
 				</div>
 				<!-- /.navbar-collapse -->
 			</div>
-
 		</div>
 	</div>
 	<!--NAVBAR SECTION END-->
@@ -256,7 +111,7 @@ $(document).ready(function(){
 					<div class="col-lg-12  col-md-12 col-sm-12">
 
 						<div class="flexslider set-flexi" id="main-section">
-							<ul class="slides move-me">
+							<ul class="slides move-me" style="margin-top: 100px">
 								<!-- Slider 01 -->
 								<li>
 									<h3>មជ្ឈមណ្ឌលកូរ៉េ សហ្វវែរ អេច អ ឌី</h3>
@@ -305,259 +160,189 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
-	<!--HOME SECTION TAG LINE END-->
-	<div id="features-sec" class="container set-pad">
-		<div class="row text-center">
-			<div
-				class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
-				<h1 data-scroll-reveal="enter from the bottom after 0.2s"
-					class="header-line">WHAT OUR TRAINING INCLUDE</h1>
-			</div>
-		</div>
-		<!--/.HEADER LINE END-->
-		<div class="row">
-			<div class="col-lg-4  col-md-4 col-sm-4"
-				data-scroll-reveal="enter from the bottom after 0.4s">
-				<div class="about-div">
-					<i class="fa fa-lightbulb-o fa-4x icon-round-border"></i>
-					<h3>Java Programming</h3>
-					<hr />
-					<hr />
-					<p>Learn OOP Concept, J2SE (JDBC), J2EE (Servlet, JSP) and MVC
-						pattern.</p>
-				</div>
-			</div>
-			<div class="col-lg-4  col-md-4 col-sm-4"
-				data-scroll-reveal="enter from the bottom after 0.5s">
-				<div class="about-div">
-					<i class="fa fa-database fa-4x icon-round-border"></i>
-					<h3>Database Management</h3>
-					<hr />
-					<hr />
-					<p>Learn database concept and perform several projects with
-						popular DBMSs such as Oracle, PostgreSQL, and MySQL.</p>
-				</div>
-			</div>
-			<div class="col-lg-4  col-md-4 col-sm-4"
-				data-scroll-reveal="enter from the bottom after 0.6s">
-				<div class="about-div">
-					<i class="fa fa-pencil fa-4x icon-round-border"></i>
-					<h3>Web Design</h3>
-					<hr />
-					<hr />
-					<p>Learn the latest design trend and perform web and mobile
-						design project by using Photoshop and Illustrator.</p>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-4  col-md-4 col-sm-4"
-				data-scroll-reveal="enter from the bottom after 0.4s">
-				<div class="about-div">
-					<i class="fa fa-globe fa-4x icon-round-border"></i>
-					<h3>Web Development</h3>
-					<hr />
-					<hr />
-					<p>Learn front-end web technologies of HTML, CSS, Java Script,
-						jQuery, AJAX, and JSON.</p>
-				</div>
-			</div>
-			<div class="col-lg-4  col-md-4 col-sm-4"
-				data-scroll-reveal="enter from the bottom after 0.5s">
-				<div class="about-div">
-					<i class="fa fa-mobile fa-4x icon-round-border"></i>
-					<h3>Mobile Development</h3>
-					<hr />
-					<hr />
-					<p>Learn most popular mobile application development platform
-						and perform mobile application projects.</p>
-				</div>
-			</div>
-			<div class="col-lg-4  col-md-4 col-sm-4"
-				data-scroll-reveal="enter from the bottom after 0.6s">
-				<div class="about-div">
-					<i class="fa fa-search fa-4x icon-round-border"></i>
-					<h3>New Technology</h3>
-					<hr />
-					<hr />
-					<p>There are other up-to-date SW technologies to learn.</p>
-				</div>
-			</div>
-		</div>
-		<!-- FEATURES SECTION END-->
-		<div id="faculty-sec">
-			<div class="container set-pad">
-				<div class="row text-center">
-					<div
-						class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
-						<h1 data-scroll-reveal="enter from the bottom after 0.1s"
-							class="header-line">OUR VISION</h1>
-						<p data-scroll-reveal="enter from the bottom after 0.3s">To be
-							the top 1 IT Tower in Cambodia</p>
-					</div>
-				</div>
-				<!--/.HEADER LINE END-->
-				<div class="row">
-					<div class="col-lg-6  col-md-6 col-sm-6"
-						data-scroll-reveal="enter from the bottom after 0.4s">
-						<div class="faculty-div">
-							<h3>OUR MISSION</h3>
-							<hr />
-							<h4>
-								<i class="fa fa-check"></i> To provide high quality IT
-								training, and job opportunity <br /> <i class="fa fa-check"></i>
-								To develop SW technologies in Cambodia
-							</h4>
-						</div>
-					</div>
-					<div class="col-lg-6  col-md-6 col-sm-6"
-						data-scroll-reveal="enter from the bottom after 0.6s">
-						<div class="faculty-div">
-							<img
-								src="${pageContext.request.contextPath }/resources/assets/img/about-us.png"
-								class="about-us">
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- FACULTY SECTION END-->
-			<div id="contact-sec">
-				<div class="overlay">
-					<div class="container set-pad">
-						<div class="row text-center">
-							<div
-								class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
-								<h1 data-scroll-reveal="enter from the bottom after 0.1s"
-									class="header-line">OUR PARTNERS</h1>
-								<p data-scroll-reveal="enter from the bottom after 0.3s">We
-									cooperate with many local and international partners such as
-									KOSIGN Co., Ltd, government, and universities for mutual
-									improvement.</p>
-							</div>
-						</div>
-					</div>
-					<!--.HEADER LINE END-->
-					<div class="row set-row-pad"
-						data-scroll-reveal="enter from the bottom after 0.1s">
-						<div class="col-lg-2 col-md-2 col-sm-2">
-							<span><img
-								src="${pageContext.request.contextPath }/resources/assets/img/anhlab.png"
-								class="img"></span>
-						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2">
-							<span><img
-								src="${pageContext.request.contextPath }/resources/assets/img/koica.png"
-								class="img"></span>
-						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2">
-							<span><img
-								src="${pageContext.request.contextPath }/resources/assets/img/ckcc.png"
-								class="img"></span>
-						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2">
-							<span><img
-								src="${pageContext.request.contextPath }/resources/assets/img/Rsupport.png"
-								class="img"></span>
-						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2">
-							<span><img
-								src="${pageContext.request.contextPath }/resources/assets/img/kosign-1.png"
-								class="img"></span>
-						</div>
-						<div class="col-lg-2 col-md-2 col-sm-2">
-							<span><img
-								src="${pageContext.request.contextPath }/resources/assets/img/webcash.png"
-								class="img"></span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--.LOCATION SOCIAL BLOCK-->
-			<div class="container bg">
-				<div class="row set-row-pad">
-					<div
-						class="col-lg-4 col-md-4 col-sm-4   col-lg-offset-1 col-md-offset-1 col-sm-offset-1 "
-						data-scroll-reveal="enter from the bottom after 0.4s">
-						<h2>
-							<strong>ABOUT US </strong>
-						</h2>
-						<hr />
-						<div">
-							<p data-scroll-reveal="enter from the bottom after 0.3s">
-								Korea Software HRD Center is an IT academy for training SW
-								professionals established by Korea International Cooperation
-								Agency (KOICA) and Webcash Co., Ltd in April, 2013. Our mission
-								is to train SW experts, provide job opportunities for them, and
-								improve SW technologies in Cambodia.</p>
-						</div>
-					</div>
-					<div
-						class="col-lg-4 col-md-4 col-sm-4   col-lg-offset-1 col-md-offset-1 col-sm-offset-1"
-						data-scroll-reveal="enter from the bottom after 0.4s">
-						<h2>
-							<strong>CONTACT US</strong>
-						</h2>
-						<hr />
-						<div>
-							<p data-scroll-reveal="enter from the bottom after 0.3s">
-								Address: #12, St 323, Sangkat Boeung Kak II, KhanToul Kork,
-								Phnom Penh, Cambodia. Tel: (855)23 99 13 14 (855)77 77 12 36
-								(Khmer, English) (855)15 4 5555 2 (Khmer, English) (855)17 52 81
-								69(Korean, English)<br /> <a href="#">Email:
-									info.kshrd@gmail.com</a> <a href="#">phirum.gm@gmail.com</a>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!--  Jquery Core Script -->
-			<script
-				src="${pageContext.request.contextPath }/resources/jquery/jquery/jquery.js"></script>
-			<!--  Core Bootstrap Script -->
-			<script
-				src="${pageContext.request.contextPath }/resources/bootstrap/js/bootstrap.js"></script>
-			<!--  Flexslider Scripts -->
-			<script
-				src="${pageContext.request.contextPath }/resources/assets/js/jquery.flexslider.js"></script>
-			<!--  Scrolling Reveal Script -->
-			<script
-				src="${pageContext.request.contextPath }/resources/assets/js/scrollReveal.js"></script>
-			<!--  Scroll Scripts -->
-			<script
-				src="${pageContext.request.contextPath }/resources/assets/js/jquery.easing.min.js"></script>
+	
+<!--  Jquery Core Script -->
+<script
+	src="${pageContext.request.contextPath }/resources/jquery/jquery/jquery.js"></script>
+<!--  Core Bootstrap Script -->
+<script
+	src="${pageContext.request.contextPath }/resources/bootstrap/js/bootstrap.js"></script>
+<!--  Flexslider Scripts -->
+<script
+	src="${pageContext.request.contextPath }/resources/assets/js/jquery.flexslider.js"></script>
+<!--  Scrolling Reveal Script -->
+<script
+	src="${pageContext.request.contextPath }/resources/assets/js/scrollReveal.js"></script>
+<!--  Scroll Scripts -->
+<script
+	src="${pageContext.request.contextPath }/resources/assets/js/jquery.easing.min.js"></script>
 				<!--  Custom Scripts -->
-	<script src="${pageContext.request.contextPath }/resources/assets/js/custom.js"></script>
-	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
-	<script>
-		var app = angular.module('app',	[]);
-		app.controller('ctrl', function($scope, $http) {
-			
-			$scope.check = function() {
-				$scope.name = $('#usrname').val();
-				$scope.phone = $('#phone').val();
-				$http({
-					url : 'http://localhost:2222/api/student/check-user-is-exist',
-					data: {
-						"PHONE": $scope.phone,
-						"USERNAME": $scope.name
-					},
-					method : 'POST'
-				}).then(function(response) {
-					if(response.data.DATA == null){
-						sweetAlert(
-								  'not available...',
-								  'You are not student in KSHRD Center! sorry,..',
-								  'error'
-								)
-					}
-					$scope.users = response.data.DATA;
-				}, function(response) {
-					//alert("error"); 
-				}); 
-			};
-			
-		});
-	</script>
+<script src="${pageContext.request.contextPath }/resources/assets/js/custom.js"></script>
+	
+<script>
+$(document).ready(function(){
+    $("#frmLogin").submit(function(e){
+    	e.preventDefault();
+  		  $.ajax({
+	            url: "${pageContext.request.contextPath}/login",
+	            type: "POST",
+	            data: $("#frmLogin").serialize(),
+	            success: function(data) {
+	            	if(data == "User account is locked"){
+	            	}else if(data == "User is disabled"){
+	            		swal("LOGIN FAILED!", data, "error");
+	            	}else if(data == "Bad credentials"){
+	            		swal("LOGIN FAILED!", data, "error");
+	            	}else{
+	            		swal({   
+	          			title: "LOGIN SUCCESSFULLY!",   
+	          			text: "THANK YOU",   
+	          			type: "success",   
+	          			confirmButtonColor: "#007d3d",   
+						closeOnConfirm: false,   
+	          			closeOnCancel: false }, 
+	          			function(isConfirm){   
+	          				if(isConfirm) {     				
+	          					window.location.href="${pageContext.request.contextPath}/" + data;
+	          				}else {     
+	          					swal("Cancelled", "Your imaginary file is safe :)", "error");   
+	          				} 
+	          			}); 
+  		  
+	            	}
+	            },
+	         	error: function(data){
+	         	}
+  		  });
+    });
+    
+	$('#re_pwd').on('keyup',function(){
+    	 var password = $("#pwd").val();
+         var confirmPassword = $("#re_pwd").val();
+         if (password != confirmPassword){
+    	   $(this).tooltip({'trigger':'focus','placement': 'bottom'});
+    	   $(this).trigger('focusin');
+
+    	 }
+         else{
+        	 $(this).tooltip("hide");
+         }
+    });
+	
+	 $("#frmRegister").submit(function(e){
+		e.preventDefault();
+		var ursname = $('#usrname').val();
+		var email = $('#email').val();
+		var password = $('#pwd').val();
+		
+		if( password == $('#re_pwd').val()){
+			if(ursname != "" && ursname != null && password != "" && password !=null && email != "" && email != null){
+				$.ajax({
+				    url: 'http://localhost:2222/api/user/register-user',
+				    dataType: 'json',
+				    type: 'post',
+				    contentType: 'application/json',
+				    data: JSON.stringify( { "EMAIL": email, "PASSWORD": password, "USERNAME" : ursname } ),
+				    processData: false,
+				    success: function( data, textStatus, jQxhr ){
+				    	if(data.CODE == 406){
+							sweetAlert(
+									  'not available...',
+									  'You are not student in KSHRD Center! sorry,..',
+									  'error'
+									)
+						}
+						else{
+							swal({
+							     title: 'Congratulation!',
+							     text: 'You register successfully.',
+							     type: 'success',
+							     },
+							     function () {
+							    	 $("#register .close").click()
+							 		 clearInputControll();
+							     });
+						} 
+				    },
+				    error: function( jqXhr, textStatus, errorThrown ){
+				        console.log( errorThrown );
+				    }
+				});
+			}
+		}else{
+			$(this).tooltip({'trigger':'focus','placement': 'bottom'});
+	    	$(this).trigger('focusin');
+		}
+		
+	}); 
+	
+	function clearInputControll(){
+		$('#usrname').val("");
+		$('#pwd').val('');
+		$('#re_pwd').val('');
+		$('#email').val('');
+	}
+});
+	
+</script>
+<!-- Modal For Set User and Password -->
+	<div class="container">
+		<!-- Modal -->
+		<div class="modal fade" id="register" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header" style="padding: 10px 20px;">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4>
+							<i class="fa fa-registered" aria-hidden="true"
+								style="font-size: 34px;""></i> Register
+						</h4>
+					</div>
+					<div class="modal-body" style="padding: 40px 50px;">
+						<form id="frmRegister">
+							<div class="form-group">
+								<label for="usrname"><span
+									class="glyphicon glyphicon-user"></span> Username</label> <input
+									type="text" class="form-control" id="usrname"
+									placeholder="Enter username" required ng-click="click()">
+							</div>
+							<div class="form-group">
+								<label for="psw"><span
+									class="glyphicon glyphicon-eye-open"></span> Password</label> <input
+									type="password" class="form-control" id="pwd" required
+									placeholder="Enter password" minlength="8" maxlength="8" name="pwd">
+							</div>
+							<div class="form-group">
+								<label for="psw"><span
+									class="glyphicon glyphicon-eye-open"></span> Re-Enter Password</label>
+								<input type="password" class="form-control" id="re_pwd" name="pwd" required
+									placeholder="Enter re- enter password" minlength="8" maxlength="8"
+									data-toggle="tooltip" title="Password you enter doesn't match!">
+							</div>
+							<div class="form-group">
+								<label for="email"><span
+									class="glyphicon glyphicon-envelope"></span> Email</label>
+								<input type="email" class="form-control" id="email" required
+									placeholder="Enter Email">
+							</div>
+							<div class="modal-footer" style="padding: 10px 20px;">
+								<input type="button" class="close"
+									class="btn btn-danger btn-default pull-right"
+									data-dismiss="modal" style="display:none">
+								<input type="button" 
+									class="btn btn-danger btn-default pull-right"
+									data-dismiss="modal" value="Cancel">
+								<input type="submit" class="btn btn-primary pull-right"
+									name="register" value="Register">
+							</div>
+						</form>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 </body>
 </html>
