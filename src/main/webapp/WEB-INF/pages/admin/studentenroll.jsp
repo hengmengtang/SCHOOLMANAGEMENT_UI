@@ -11,7 +11,7 @@
 	rel="stylesheet" />
 	<style type="text/css">
 		#buggySelect option[value="? number:10 ?"] {
-			display:none;
+			display : none;
 		}
 	</style>
 </head>
