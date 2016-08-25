@@ -294,7 +294,7 @@
 												function(response) {
 													$scope.course = response.data.DATA.COURSE_NAME;
 													$scope.courseStatus = response.data.DATA.STATUS;
-													alert($scope.course)
+													
 												}, function(response) {
 													/* alert("error"); */
 												});
@@ -308,7 +308,7 @@
 										function(response) {
 											$scope.gen_last = response.data.DATA.GENERATION_NAME;
 											$scope.gen_lastStatus = response.data.DATA.STATUS;
-											alert($scope.gen_last)
+									
 										}, function(response) {
 											/* alert("error"); */
 									});
