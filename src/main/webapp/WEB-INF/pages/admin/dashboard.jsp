@@ -251,5 +251,6 @@
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footDashboard.jsp" />
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
 </body>
 </html>

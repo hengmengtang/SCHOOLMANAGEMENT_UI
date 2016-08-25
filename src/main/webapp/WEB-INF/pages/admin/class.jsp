@@ -75,23 +75,6 @@
 							<!-- End Selection -->
 						</div>
 					</div>
-					<!--div class="col-md-3" -->
-					<div class="col-sm-3">
-
-						<div class="input-group pull-left">
-							<span class="input-group-addon"
-								style="color: white; background-color: green;">
-								Generation </span> <select class="form-control selectpicker"
-								ng-model="generation"
-								ng-init="generation | generation='Generation'">
-								<option value="">Generation</option>
-								<option
-									ng-repeat="gen in generations | orderBy:'GENERATION_NAME'">{{gen.GENERATION_NAME}}</option>
-							</select>
-						</div>
-
-					</div>
-					<!-- End Selection -->
 					<!-- Text Search -->
 					<div class="col-md-3">
 						<div class="input-group">
@@ -113,8 +96,6 @@
 									<th>N <sup>o</sup></th>
 									<th ng-click="sort('CLASS_NAME')">Class<span
 										class="arrow1">&#x2191;&#x2193;</span></th>
-									<th>Course</th>
-									<th>Generation</th>
 									<th>Closed</th>
 								</tr>
 							</thead>
@@ -123,11 +104,9 @@
 									dir-paginate="class in classes|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':generation, 'CLASS_NAME':search}|itemsPerPage:No|limitTo : 6">
 									<td>{{$index+1}}</td>
 									<td>{{class.CLASS_NAME}}</td>
-									<td>{{class.COURSE_NAME}}</td>
-									<td>{{class.GENERATION_NAME}}</td>
 									<td>
 										<button type="button" class="btn btn-danger"
-											ng-if="class.ACTIVE==false">
+											ng-if="class.ACTIVE==false" ng-click="changeStatus(class.CLASS_NAME)">
 											<span class="glyphicon glyphicon-ok"></span>
 										</button>
 										<button type="button" class="btn btn-success"
@@ -223,24 +202,32 @@
 								}
 								$scope.formClass = true;
 							}
-							
-							$scope.getGeneration = function() {
-								getData();
+													
+							$scope.changeStatus = function(name){
+								swal({   title: "Are you sure want to be active?",   text: "You want to class be active!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Active!",   closeOnConfirm: false }, function(){   
+									swal("Active!", "Record has been active.", "success"); 
+									updateStatus(name);
+								});
 							}
 							
-							function getStudent() {
-								$http(
-									{
-										url : 'http://localhost:2222/api/student/display-student-not-yet-enroll-to-class',
-										method : 'GET'
-									}).then(function(response) {
-										if(response.data.DATA == "")
-											$scope.student = false;
-										else $scope.student = true;
-								}, function(response) {
-									/* alert("error"); */
-								});
-							};
+							function updateStatus(name){
+								if($scope.courseStatus == true && $scope.gen_lastStatus == true){
+									$http({
+										url:'http://localhost:2222/api/class/change-status-class/'+name,
+										method:'GET'
+									}).then(function(response){
+										getData();
+									}, function(response){
+										/* alert("error"); */
+									});
+								}else{
+									sweetAlert(
+											'Class is not available...',
+											'Course or Generation is not exist!',
+											'error'
+										);
+								}
+							}
 							
 							function getLastStatusCourse(){
 								$http({
@@ -261,7 +248,7 @@
 							function getData() {
 								$http(
 									{
-										url : 'http://localhost:2222/api/class/list-class-in-all-generation',
+										url : 'http://localhost:2222/api/class/find-all-class',
 										method : 'GET'
 									}).then(function(response) {
 										$scope.classes = response.data.DATA;
@@ -271,19 +258,6 @@
 										getStudent();
 										getLastCourse();
 										getLastGeneration();
-								}, function(response) {
-									/* alert("error"); */
-								});
-							}
-							;
-
-							function getGeneration() {
-								$http(
-										{
-											url : 'http://localhost:2222/api/generation/find-all-generation',
-											method : 'GET'
-										}).then(function(response) {
-									$scope.generations = response.data.DATA;
 								}, function(response) {
 									/* alert("error"); */
 								});
@@ -321,25 +295,24 @@
 										.then(
 												function(response) {
 													$scope.course = response.data.DATA.COURSE_NAME;
+													$scope.courseStatus = response.data.DATA.STATUS;
 												}, function(response) {
 													/* alert("error"); */
 												});
 							}
 
 							function getLastGeneration() {
-								$http(
-										{
-											url : 'http://localhost:2222/api/generation/get-last-generation',
-											method : 'GET'
-										})
-										.then(
-												function(response) {
-													$scope.gen_last = response.data.DATA.GENERATION_NAME;
-												}, function(response) {
-													/* alert("error"); */
-												});
-							}
-							;
+								$http({
+										url : 'http://localhost:2222/api/generation/get-last-generation',
+										method : 'GET'
+									}).then(
+										function(response) {
+											$scope.gen_last = response.data.DATA.GENERATION_NAME;
+											$scope.gen_lastStatus = response.data.DATA.STATUS;
+										}, function(response) {
+											/* alert("error"); */
+									});
+							};
 
 							$scope.submit = function() {
 
@@ -355,24 +328,21 @@
 								});
 
 								if ($scope.status == false) {
-									$http(
-											{
-												url : 'http://localhost:2222/api/class/add-class',
-												data : {
-													"ACTIVE" : true,
-													"CLASS_END_DATE" : "",
-													"CLASS_ID" : $scope.id,
-													"CLASS_NAME" : $scope.class_name,
-													"CLASS_START_DATE" : ""
-												},
-												method : 'POST'
-											}).then(function(response) {
-										getData();
-										getGeneration();
-										getID();
-										getLastCourse();
-										getLastGeneration();
-										clearInputControll();
+									$http({
+											url : 'http://localhost:2222/api/class/add-class',
+											data : {
+												"ACTIVE" : true,
+												"CLASS_ID" : $scope.id,
+												"CLASS_NAME" : $scope.class_name,
+											},
+											method : 'POST'
+										}).then(function(response) {
+											getData();
+											getGeneration();
+											getID();
+											getLastCourse();
+											getLastGeneration();
+											clearInputControll();
 									}, function(response) {
 
 									})

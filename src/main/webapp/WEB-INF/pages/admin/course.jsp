@@ -68,27 +68,14 @@
 							<!-- End Selection -->
 						</div>
 					</div>
-					<!--div class="col-md-3" -->
-					<div class="col-sm-3">
-
-						<div class="input-group pull-left">
-							<span class="input-group-addon"
-								style="color: white; background-color: green;">
-								Generation </span> <select class="form-control selectpicker" ng-init="searchGeneration | searchGeneration='Generation'" ng-model="searchGeneration" ng-mouseleave="getGeneration()">
-								<option value="">Generation</option>
-								<option ng-repeat="gen in generations | orderBy:'GENERATION_NAME'">{{gen.GENERATION_NAME}}</option>
-							</select>
-						</div>
-
-					</div>
-					<!-- End Selection -->
+					
 					<!-- Text Search -->
 					<div class="col-md-3">
 						<div class="input-group">
 							<span class="input-group-addon" style="background-color: green;"><i
 								class="fa fa-search" style="color: white;"></i> </span> <input
 								type="text" class="form-control" placeholder="Course" id="search_course"
-								onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');" ng-keypress="searchCourse()">
+								onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');" ng-keyup="searchCourse()">
 						</div>
 					</div>
 					<!-- End Text Search -->
@@ -101,27 +88,25 @@
 							<thead>
 									<tr>
 										<th>N<sup>o</sup></th>
-										<th ng-click="sort('id')">Generation<span class="arrow1">&#x2191;&#x2193;</span></th>
-										<th>Course</th>
+										<th ng-click="sort('COURSE_NAME')">Course</th>
 										<th>Start Date</th>
 										<th>End Date</th>
 										<th>Closed</th>
 									</tr>
 								</thead>
 							<tbody>
-									<tr dir-paginate="course in courses|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':searchGeneration, 'COURSE_NAME':search_course}|itemsPerPage:select|limitTo : 6">
+									<tr dir-paginate="course in courses|orderBy:sortKey:reverse|filter:{'COURSE_NAME':search_course}|itemsPerPage:select|limitTo : 6">
 										<td>{{$index+1}}</td>
-										<td>{{course.GENERATION_NAME}}</td>
 										<td>{{course.COURSE_NAME}}</td>
-										<td>{{course.START_DATE}}</td>
-										<td>{{course.END_DATE}}</td>
+										<td>{{course.COURSE_START_DATE}}</td>
+										<td>{{course.COURSE_END_DATE}}</td>
 										<td>
 											<button type="button" class="btn btn-danger"
-												ng-if="course.ACTIVE==false" ng-click="active()">
+												ng-if="course.STATUS==false" ng-click="active(course.COURSE_ID)">
 												<span class="glyphicon glyphicon-ok"></span>
 											</button>
 											<button type="button" class="btn btn-success"
-												ng-if="course.ACTIVE==true" ng-click="finish()">
+												ng-if="course.STATUS==true" ng-click="finish(course.COURSE_ID)">
 												<span class="glyphicon glyphicon-ban-circle"></span>
 											</button>
 										</td>
@@ -233,12 +218,11 @@
 			
 			$scope.searchCourse = function(){
 				$scope.search_course = $('#search_course').val();
-				alert($scope.search_course);
 			}
 
 			function getData() {
 				$http({
-					url : 'http://localhost:2222/api/course/list-course-tam-generation',
+					url : 'http://localhost:2222/api/course/find-all-course',
 					method : 'GET'
 				}).then(function(response) {
 					$scope.courses = response.data.DATA;
@@ -280,9 +264,9 @@
 				});
 			}
 			
-			function updateStatus(){
+			function updateStatus(id){
 				$http({
-						url:'http://localhost:2222/api/course/change-status-course-class',
+						url:'http://localhost:2222/api/course/change-status-course/'+id,
 						data:{
 							"COURSE_NAME": $scope.course_name,
 							"GENERATION_NAME": $scope.generation_name,
@@ -344,21 +328,35 @@
 			$scope.submit = function(){
 				$scope.end_date = $('#datepicker1').val();
 				$scope.start_date = $('#datepicker2').val()
-				$http({
-					url: 'http://localhost:2222/api/course/register-course',
-					data:{
-						 "COURSE_END_DATE": $scope.end_date,
-						 "COURSE_ID": $scope.id,
-						 "COURSE_NAME": $scope.course,
-						 "COURSE_START_DATE": $scope.start_date
-					},
-					method: 'POST'
-				}).then(function(response){
-					getData();
-					clearInputControll();
-				}, function(response){
-					
-				})
+				
+				$scope.courseStatus = false;
+
+				angular.forEach($scope.courses, function(course) {
+					if (course.COURSE_NAME == $scope.course) {
+						sweetAlert('Course is not available...',
+								'The course already exit! You just click active in close action.',
+								'error')
+						return $scope.courseStatus = true;
+					}
+				});
+
+				if ($scope.courseStatus == false) {
+					$http({
+						url: 'http://localhost:2222/api/course/register-course',
+						data:{
+							 "COURSE_END_DATE": $scope.end_date,
+							 "COURSE_ID": $scope.id,
+							 "COURSE_NAME": $scope.course,
+							 "COURSE_START_DATE": $scope.start_date
+						},
+						method: 'POST'
+					}).then(function(response){
+						getData();
+						clearInputControll();
+					}, function(response){
+						
+					})
+				}
 			}
 			
 			function getCourseID(){
@@ -372,25 +370,33 @@
 					});
 			};
 			
-			$scope.finish = function(){
+			$scope.finish = function(id){
 				swal({   title: "Are you sure want closed?",   text: "You want closed!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Closed!",   closeOnConfirm: false }, function(){   
 						swal("Closed!", "Closed.", "success"); 
-						updateStatus();
+						updateStatus(id);
 						
 					});
 			}
 			
 			$scope.active = function(id){
-				swal({   title: "Are you sure want active?",   
-						 text: "You want active!",   
-						 type: "warning",   
-						 showCancelButton: true,  
-						 confirmButtonColor: '#009688', 
-						 confirmButtonText: "Yes, Active!", 
-						 closeOnConfirm: false }, function(){
-						 swal("Active!", "Active.", "success"); 
-						 updateStatus();
-					});
+				if($scope.status == false){
+					swal({   title: "Are you sure want active?",   
+							 text: "You want active!",   
+							 type: "warning",   
+							 showCancelButton: true,  
+							 confirmButtonColor: '#009688', 
+							 confirmButtonText: "Yes, Active!", 
+							 closeOnConfirm: false }, function(){
+							 swal("Active!", "Active.", "success"); 
+							 updateStatus(id);
+						});
+				}else{
+					sweetAlert(
+							'Course is not available...',
+							'The last Course is available',
+							'error'
+						);
+				}
 			}
 			
 			function clearInputControll(){
