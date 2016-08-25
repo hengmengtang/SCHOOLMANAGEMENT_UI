@@ -124,9 +124,9 @@
 				<li class="active treeview"><a href="dashboard"> <i
 						class="fa fa-dashboard"></i><span>Dashboard</span>
 				</a></li>
-				<li><a href="myprofile"> <i class="fa fa-user"></i> <span>My
+				<!-- <li><a href="myprofile"> <i class="fa fa-user"></i> <span>My
 							Profile</span>
-				</a></li>
+				</a></li> -->
 				<li><a href="monthlyresults"> <i class="fa fa-list-alt"></i> <span>Monthly
 							Result</span>
 				</a></li>

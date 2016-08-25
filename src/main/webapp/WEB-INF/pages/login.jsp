@@ -194,7 +194,8 @@ $(document).ready(function(){
 	            	}else if(data == "Bad credentials"){
 	            		swal("LOGIN FAILED!", data, "error");
 	            	}else{
-	            		swal({   
+	            		window.location.href="${pageContext.request.contextPath}/" + data;
+	            		/* swal({   
 	          			title: "LOGIN SUCCESSFULLY!",   
 	          			text: "THANK YOU",   
 	          			type: "success",   
@@ -207,7 +208,7 @@ $(document).ready(function(){
 	          				}else {     
 	          					swal("Cancelled", "Your imaginary file is safe :)", "error");   
 	          				} 
-	          			}); 
+	          			});  */
   		  
 	            	}
 	            },

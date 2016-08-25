@@ -137,9 +137,10 @@
 				<li class="active treeview"><a href="dashboard"> <i
 						class="fa fa-dashboard"></i><span>Dashboard</span>
 				</a></li>
-				<li ><a href="#"> <i class="fa fa-user"></i>
+				
+				<!-- <li ><a href="#"> <i class="fa fa-user"></i>
 						<span>My Profile</span>
-				</a></li>
+				</a></li> -->
 				<li class="treeview"><a href="add-score"> <i class="fa fa-star-o"></i> <span>Score</span>
 					<span class="label label-primary pull-right"></span>	
 				</a>	
