@@ -42,7 +42,7 @@
 			<div class="row">
 				<div class="col-md-11 pull-left">
 					<ul class="nav navbar-nav navbar-right">
-               			<li class="dropdown">
+               			<%-- <li class="dropdown">
 	                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 	                        <span class="glyphicon glyphicon-user"></span> 
 	                        <strong>
@@ -98,7 +98,51 @@
             		</ul>
 				</div>
 			</div>
-<!--------  drop menu for profile -->
+<!--------  drop menu for profile --> --%>
+		<!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              
+               	 <span class="glyphicon glyphicon-user"></span>
+	                        <strong>
+	                        	 <sec:authorize access="isAuthenticated()">
+								   <sec:authentication property="principal.username" /> 
+								</sec:authorize>
+	                        </strong>
+	                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
+                <p class="text-center">
+			       <span class="glyphicon glyphicon-user icon-size"></span>
+			    </p>
+
+                <p>
+					<sec:authorize access="isAuthenticated()">
+							<sec:authentication property="principal.username" />
+					</sec:authorize>
+					<small>
+						<sec:authorize access="isAuthenticated()">
+							 <sec:authentication property="principal.email" /> 
+						</sec:authorize>
+					</small>
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <!-- <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div> -->
+                <div class="pull-right">
+                  <a href="/logout" class="btn btn-default center">Log out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
 			<%-- <div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
 					<li><a href="#" data-toggle="control-sidebar">
