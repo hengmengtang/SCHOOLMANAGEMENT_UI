@@ -18,35 +18,74 @@
 		    margin-right: 0;
     		margin-left: 0;
 	}
+	<!-- Char styel start here-->
+	.vertical-skills {
+    margin-top: 60px;
+    text-align: center; }
+    .vertical-skills li {
+      display: inline-block;
+      position: relative;
+      width: 30px;
+      height: 200px;
+      background: #f0f0f0;
+      margin: 0 10px; }
+      @media (max-width: 400px) {
+        .vertical-skills li {
+          width: 25px; } }
+      .vertical-skills li span.skill {
+        position: absolute;
+        animation-duration: 3s;
+       animation-name: height;
+        left: 0;
+        right: 0;
+        bottom: 0; }
+      .vertical-skills li span.title {
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        bottom: -20px; }
+
+        /* ANIMATIONS */
+@keyframes height {
+  0%, 100% {
+    transition-timing-function: cubic-bezier(1, 0, 0.65, 0.85);
+  }
+  0% {
+    height: 0;
+  }
+  100% {
+    max-height: 100%;
+  }
+ 
+	<!-- Char styel end here-->
 </style>
 </head>
 
 <body class="bg">
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
-
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper boxcontent" style="padding-left:15px; padding-right:15px">
 		<section class="content-header">
-		<h1>Dashboard</h1>
-		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Dashboard</li>
-		</ol>
+			<h1>Dashboard</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li class="active">Dashboard</li>
+			</ol>
 		</section>
-
 		<!-- Main content-->
 		<section class="content">
-		<div class="row" style="margin: 0 !important">
-			<div class="small-box" style="background-color: #e0f2f2;">
-				<div class="inner" style="padding-bottom: 35px">
-					<div class="row">
-						<div
-							class="col-sm-3 col-md-3 col-md-offset-0 col-xs-8 col-xs-offset-2">
-							<img
+			<div class="row" style="margin: 0 !important">
+				<div class="small-box" style="background-color: #e0f2f2;">
+					<div class="inner" style="padding-bottom: 35px">
+						<div class="row">
+							<div
+								class="col-sm-3 col-md-3 col-md-offset-0 col-xs-8 col-xs-offset-2">
+								<img
 								src="${pageContext.request.contextPath }/resources/images/logo.png"
 								class="logodash">
-						</div>
+							</div>
 						<div class="col-sm-9 col-md-7 col-xs-12"
 							style="color: black; text-align: center; top: 25px; font-size: 19px;">
 							<b>#12, St 323, Sangkat Boeung Kak II, Khan Toul Kork, Phnom
@@ -61,52 +100,149 @@
 		</div>
 		<!--statistic-->
 		<div class="row">
-
-			<div class="col-md-8 col-sm-12 col-xs-12" style="padding-left:0">
-				<div class="small-box bgcolor">
-					<div style="width:100%; height:365px" class="ct-chart"></div>
+			<!--Chart start here -->
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<script type="text/javascript">
+						  window.onload = function () {
+						    var chart = new CanvasJS.Chart("chartContainer",
+						    {
+						      title:{
+						        text: "Score by subject in each class",
+						        fontFamily: "arial",
+						        color:"black",
+						        fontWeight: "normal"
+						      },
+						
+						      legend:{
+						        verticalAlign: "bottom",
+						        horizontalAlign: "center"
+						      },
+						      data: [
+						      {
+						        //startAngle: 45,
+						       indexLabelFontSize: 14,
+						       indexLabelFontFamily: "Garamond",
+						       indexLabelFontColor: "black",
+						       indexLabelPlacement: "outside",
+						       type: "doughnut",
+						       showInLegend: true,
+						       dataPoints: [
+								   {  y: 20, legendText:"BTB Korean", indexLabel: "BTB Korea" },
+							       {  y: 20, legendText:"BTB Web", indexLabel: "BTB Web" },
+							       {  y: 20, legendText:"BTB Java", indexLabel: "BTB Java" },
+							       {  y: 20, legendText:"PP Korean", indexLabel: "PP Korea" },
+							       {  y: 20, legendText:"PP Web", indexLabel: "PP Web" },
+							       {  y: 20, legendText:"PP Java", indexLabel: "PP Java" },
+							       {  y: 20, legendText:"SR Korean", indexLabel: "SR Korean" },
+							       {  y: 20, legendText:"SR Web", indexLabel: "SR Web" },
+							       {  y: 20, legendText:"SR Java", indexLabel: "SR Java%" },
+							       {  y: 20, legendText:"KS Korean", indexLabel: "KS Korean" },
+							       {  y: 20, legendText:"KS Web", indexLabel: "KS Web" },
+							       {  y: 20, legendText:"KS Java", indexLabel: "KS Java" }
+								]
+						     }
+						     ]
+						   });
+						
+						    chart.render();
+  							}
+ 						 </script>
+ 						 <div id="chartContainer" style="height: 300px; width: 100%;">
+   						 </div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<h3>Score</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2 col-sm-2 col-xs-2">
+						<p>Battambang class:</p>
+						<p>Phnom Penh class:</p>
+						<p>Siemreap class:</p>
+						<p>Kampongsom class:</p>
+					</div>
+					<div class="col-md-2 col-sm-2 col-xs-2 pull-left">
+						<p>30%</p>
+						<p>70%</p>
+						<p>90%</p>
+						<p>100%</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<h3>Generation Detail</h3>
+					</div>
+				</div>
+				<div class="row" style="margin-bottom:10px;">
+				<div class="col-md-3 col-sm-3 col-xs-3 pull-center">
+					<h5>Generation 1</h5>
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-3 pull-center">
+					<h5>Generation 2</h5>
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-3 pull-center">
+					<h5>Generation 3</h5>
+				</div>
+				<div class="col-md-3 col-sm-3 col-xs-3 pull-center">
+					<h5>Generation 4</h5>
 				</div>
 			</div>
-
-			<div class="col-md-4 col-sm-8 col-xs-8 bgcolor"
-				style="padding-left: 10px; padding-right: 10px;">
-				<h5>Student summary</h5>
-				<hr style="height: 2px; background: #e0f2f2">
-				<!-- Generation 1 -->
-				<div class="row"
-					style="margin-left: 0 !important; margin-right: 0 !important">
-
-					<div class="col-md-3 col-sm-12 col-xs-12 small-box bg-aqua">
-
-						<div class="first">
-							<h2>
-								1<sup>st</sup>
-							</h2>
-						</div>
-
-					</div>
-					<div class="col-md-9 col-sm-12 col-xs-12 small-box bg-aqua"
-						style="background: #FF5722 !important;">
-
-						<div class="generation">
-							1<sup>st</sup> GENERATION &nbsp&nbsp&nbsp&nbsp56
-							<div class="progress" style="margin-top: 11px;">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60"
-									aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-									60%</div>
-							</div>
-							<ul class="nav nav-pills" role="tablist">
-								<li role="presentation">Male<span class="badge">50</span></li>
-								<li role="presentation">&nbsp&nbsp&nbsp&nbspFemale<span
-									class="badge">6</span></li>
+				<div class="row" style="background-color: #fff">
+					<div class="col-md-3 col-sm-3 col-xs-3">
+						<div class="vertical-skills pull-right xs-center">
+							<ul class="list-inline">
+								<li><span class="skill" style="height:90%; background:#ff0000;"></span><span class="title">Female</span></li>
+								<li><span class="skill" style="height:85%; background:#00bbff;"></span><span class="title">Male</span></li>
+								<li><span class="skill" style="height:75%; background:#9168e5;"></span><span class="title">Total</span></li>
 							</ul>
 						</div>
 					</div>
-					<!-- End Generation -->
+					<div class="col-md-3 col-sm-3 col-xs-3">
+						<div class="vertical-skills pull-right xs-center">
+							<ul class="list-inline" >
+								<li><span class="skill" style="height:90%; background:#ff0000;"></span><span class="title">Female</span></li>
+								<li><span class="skill" style="height:85%; background:#00bbff;"></span><span class="title">Male</span></li>
+								<li><span class="skill" style="height:75%; background:#9168e5;"></span><span class="title">Total</span></li>
+							</ul> 
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-3 col-xs-3">
+						<div class="vertical-skills pull-right xs-center">
+							<ul class="list-inline" >
+								<li><span class="skill" style="height:90%; background:#ff0000;"></span><span class="title">Female</span></li>
+								<li><span class="skill" style="height:85%; background:#00bbff;"></span><span class="title">Male</span></li>
+								<li><span class="skill" style="height:75%; background:#9168e5;"></span><span class="title">Total</span></li>
+							</ul> 
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-3 col-xs-3">
+						<div class="vertical-skills pull-right xs-center">
+							<ul class="list-inline" >
+								<li><span class="skill" style="height:90%; background:#ff0000;"></span><span class="title">Female</span></li>
+								<li><span class="skill" style="height:85%; background:#00bbff;"></span><span class="title">Male</span></li>
+								<li><span class="skill" style="height:75%; background:#9168e5;"></span><span class="title">Total</span></li>
+							</ul> 
+						</div>
+					</div>
 				</div>
-				<!-- Generation Summary -->
-			</div>
-			<!-- End Calendar -->
+				<div class="row">
+					<div class="col-md-2 col-sm-2 col-xs-2">
+						<p>Generation 1:</p>
+						<p>Generation 2:</p>
+						<p>Generation 3:</p>
+						<p>Generation 4:</p>
+					</div>
+					<div class="col-md-2 col-sm-2 col-xs-2 pull-left">
+						<p>30%</p>
+						<p>70%</p>
+						<p>90%</p>
+						<p>100%</p>
+					</div>
+				</div>
+		<!--Chart end here -->
 		</section>
 	</div>
 	<div>
@@ -115,52 +251,5 @@
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footDashboard.jsp" />
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<!-- chart script -->
-<script>
-new Chartist.Bar('.ct-chart', {
-  labels: ['KSP', 'PP', 'SRP', 'BTB'],
-  series: [
-    [5, 4, 3, 7],
-    [30, 2, 9, 5],
-    [10, 5, 8, 4]
-  ]
-}, {
-  // Default mobile configuration
-  stackBars: true,
-  axisX: {
-    labelInterpolationFnc: function(value) {
-      return value.split(/\s+/).map(function(word) {
-        return word[0];
-      }).join('');
-    }
-  },
-  axisY: {
-    offset: 20
-  }
-}, [
-  // Options override for media > 400px
-  ['screen and (min-width: 400px)', {
-    reverseData: true,
-    horizontalBars: true,
-    axisX: {
-      labelInterpolationFnc: Chartist.noop
-    },
-    axisY: {
-      offset: 60
-    }
-  }],
-  // Options override for media > 800px
-  ['screen and (min-width: 800px)', {
-    stackBars: false,
-    seriesBarDistance: 10
-  }],
-  // Options override for media > 1000px
-  ['screen and (min-width: 1000px)', {
-    reverseData: false,
-    horizontalBars: false,
-    seriesBarDistance: 38
-  }]
-]);
-</script>
 </body>
 </html>

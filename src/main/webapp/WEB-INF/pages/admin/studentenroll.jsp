@@ -9,6 +9,11 @@
 <link
 	href="${pageContext.request.contextPath }/resources/style/customSubject.css"
 	rel="stylesheet" />
+	<style type="text/css">
+		#buggySelect option[value="? number:10 ?"] {
+			display:none;
+		}
+	</style>
 </head>
 <body class="bg">
 	<!-- index is menu -->
@@ -38,8 +43,12 @@
 
 					<div class="col-md-9">
 						<ul class="pagination pull-right" style="margin-top: 3px;">
-							<dir-pagination-controls max-size="5" direction-links="true"
-								boundary-links="true"> </dir-pagination-controls>
+							<dir-pagination-controls 
+								max-size="5" 
+								direction-links="true"
+								pagination-id="student"
+								boundary-links="true"> 
+							</dir-pagination-controls>
 						</ul>
 					</div>
 
@@ -51,11 +60,13 @@
 							<span class="input-group-addon" style="background-color: green;">
 								<i class="fa fa-align-justify"
 								style="color: white; font-size: 20px"></i>
-							</span> <select class="form-control select" ng-model="select">
-								<option value="">No</option>
-								<option>1</option>
-								<option>20</option>
-							</select>
+							</span> 
+							<div class="form-group">	
+								<select id="buggySelect" class="form-control select" ng-init="select=10" ng-model="select">
+									<option ng-selected="true">10</option>
+									<option value="20">20</option>
+								</select>
+							</div>					
 						</div>
 					</div>
 					<!-- End Selection -->
@@ -102,20 +113,20 @@
 							</thead>
 							<tbody>
 								<tr 
-									dir-paginate="student in studentenrolls|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':stuname, 'CLASS_NAME':class}|itemsPerPage:select|limitTo : 10">
+									dir-paginate="studentenroll in studentenrolls|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':stuname, 'CLASS_NAME':class}|itemsPerPage:select|limitTo : 20" pagination-id="student">
 									<td>{{$index+1}}</td>
-									<td>{{student.ENGLISH_FULL_NAME}}</td>
-									<td>{{student.CLASS_NAME}}</td>
+									<td>{{studentenroll.ENGLISH_FULL_NAME}}</td>
+									<td>{{studentenroll.CLASS_NAME}}</td>
 									<td><center>
 											<span class="label label-danger" style="font-size: 13px;"
-												ng-if="student.GENDER=='F' || student.GENDER=='f'">{{student.GENDER
+												ng-if="studentenroll.GENDER=='F' || studentenroll.GENDER=='f'">{{studentenroll.GENDER
 												| uppercase}}</span> <span class="label label-info"
 												style="font-size: 13px;"
-												ng-if="student.GENDER=='M' || student.GENDER=='m'">{{student.GENDER
+												ng-if="studentenroll.GENDER=='M' || studentenroll.GENDER=='m'">{{studentenroll.GENDER
 												| uppercase}}</span>
 										</center></td>
-									<td>{{student.UNIVERSITY}}</td>
-									<td>{{student.EMAIL}}</td>
+									<td>{{studentenroll.UNIVERSITY}}</td>
+									<td>{{studentenroll.EMAIL}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -190,12 +201,16 @@
 											<i class="fa fa-users" aria-hidden="true"></i> Student List
 										</div>
 
-										<div class="col-md-10 pull-right" style="margin-bottom: -20px">
+										<div class="col-md-10 pull-right" style="margin-bottom: 20px">
 											<nav class="page">
 											<ul class="pagination pull-right toptable"
 												style="margin-top: 2px;">
-												<dir-pagination-controls max-size="5" direction-links="true"
-													boundary-links="true"> </dir-pagination-controls>
+												<dir-pagination-controls
+											       max-size="5"
+											       direction-links="true"
+											       pagination-id="enrolled"
+											       boundary-links="true" >
+										    	</dir-pagination-controls>
 											</ul>
 											</nav>
 										</div>
@@ -211,10 +226,10 @@
 													class="fa fa-align-justify"
 													style="color: white; font-size: 20px"></i>
 												</span><select class="form-control select"
-													ng-init="select | select='5'" ng-model="select">
-													<option value="">10</option>
-													<option>15</option>
-													<option>20</option>
+													ng-model="selectenroll">
+													<option value="">No</option>
+													<option>5</option>
+													<option>10</option>
 												</select>
 											</div>
 										</div>
@@ -259,10 +274,10 @@
 												</thead>
 												<tbody>
 													<tr
-														dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select|limitTo : 10">
+														dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':searchStudent}|itemsPerPage:selectenroll|limitTo : 10" pagination-id="enrolled">
 														<td>{{student.STUDENT_ID}}</td>
 														<td>{{student.KHMER_FULL_NAME}}</td>
-														<td>{{student.ENGLIST_FULL_NAME}}</td>
+														<td>{{student.ENGLISH_FULL_NAME}}</td>
 
 														<td><center>
 																<span class="label label-danger"
@@ -468,6 +483,7 @@
 											method : 'POST'
 										}).then(function(response) {
 											getData();
+											alert(id)
 											$scope.save = true;
 										},
 										function(
@@ -475,10 +491,10 @@
 											/* alert("error"); */
 										});
 								});
-
 								getClass();
 								getLastGeneration();
 								getLastCourse();
+								$scope.studentIDs.length = 0;
 							}
 						});
 		
