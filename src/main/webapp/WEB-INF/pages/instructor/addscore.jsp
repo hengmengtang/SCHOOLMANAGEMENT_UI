@@ -680,7 +680,7 @@ input::-webkit-inner-spin-button {
 			  
 			    
 			   
-			  /*  $scope.add=function(){
+			  /*  $scope.add=functin(){
 				   
 				   
 				 /* $http({
