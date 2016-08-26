@@ -102,10 +102,10 @@
 
  					<div class="row" ng-app='app' ng-controller='BarCtrl'>
 						<canvas id="bar" class="chart chart-bar"
-							chart-data="data" chart-labels="labels" chart-series="series"> 
+  								chart-data="data" chart-labels="labels" chart-series="series">
 						</canvas>
 				 	</div>
-				<div class="row">
+				<!-- <div class="row">
 					<div class="col-md-2 col-sm-2 col-xs-2">
 						<p>Generation 1:</p>
 						<p>Generation 2:</p>
@@ -118,7 +118,7 @@
 						<p>90%</p>
 						<p>100%</p>
 					</div>
-				</div>
+				</div> -->
 		<!--Chart end here -->
 		</section>
 	</div>
@@ -128,6 +128,13 @@
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footDashboard.jsp" />
 	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<!-- <script>
+		var app = angular.module('app',[]);
+		app.controller('ctrl', function($scope, $http) {
+			
+			
+	});
+</script> -->
 	
 </body>
 </html>
