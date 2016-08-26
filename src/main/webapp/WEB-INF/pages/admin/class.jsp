@@ -192,7 +192,7 @@
 							$scope.formClass = false;
 							
 							$scope.check = function(){
-								if($scope.student == false && $scope.course_status == false){
+								if($scope.student == false || $scope.course_status == false){
 									sweetAlert(
 											'Class is not available...',
 											'Course or Student is not exist!',
@@ -238,11 +238,11 @@
 										$scope.course_status = false;
 									else
 										$scope.course_status = response.data.DATA.STATUS;
-									/* alert("course "+$scope.status); */
+									/* alert("course "+$scope.course_status); */
 								}, function(response){
 									/* alert("error"); */
 								});
-							}
+							} 
 							
 
 							function getData() {
