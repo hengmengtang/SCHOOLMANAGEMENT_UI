@@ -99,135 +99,167 @@
 			</div>
 		</div>
 		<!--statistic-->
-		<div class="row">
+
 			<!--Chart start here -->
 				<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="col-md-3 col-sm-3 col-xs-3">
+						<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+					</div>
+					<div class="col-md-3 col-sm-3 col-xs-3">
+						<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+					</div>
+					<div class="col-md-3 col-sm-3 col-xs-3">
+						<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+					</div>
+					<div class="col-md-3 col-sm-3 col-xs-3">
+						<div id="chartContainer3" style="height: 300px; width: 100%;"></div>
+					</div>
+				</div>
 						<script type="text/javascript">
-						  window.onload = function () {
-						    var chart = new CanvasJS.Chart("chartContainer",
-						    {
-						      title:{
-						        text: "Score by subject in each class",
-						        fontFamily: "arial",
-						        color:"black",
-						        fontWeight: "normal"
-						      },
 						
-						      legend:{
-						        verticalAlign: "bottom",
-						        horizontalAlign: "center"
-						      },
-						      data: [
-						      {
-						        //startAngle: 45,
-						       indexLabelFontSize: 14,
-						       indexLabelFontFamily: "Garamond",
-						       indexLabelFontColor: "black",
-						       indexLabelPlacement: "outside",
-						       type: "doughnut",
-						       showInLegend: true,
-						       dataPoints: [
-								   {  y: 20, legendText:"BTB Korean", indexLabel: "BTB Korea" },
-							       {  y: 20, legendText:"BTB Web", indexLabel: "BTB Web" },
-							       {  y: 20, legendText:"BTB Java", indexLabel: "BTB Java" },
-							       {  y: 20, legendText:"PP Korean", indexLabel: "PP Korea" },
-							       {  y: 20, legendText:"PP Web", indexLabel: "PP Web" },
-							       {  y: 20, legendText:"PP Java", indexLabel: "PP Java" },
-							       {  y: 20, legendText:"SR Korean", indexLabel: "SR Korean" },
-							       {  y: 20, legendText:"SR Web", indexLabel: "SR Web" },
-							       {  y: 20, legendText:"SR Java", indexLabel: "SR Java%" },
-							       {  y: 20, legendText:"KS Korean", indexLabel: "KS Korean" },
-							       {  y: 20, legendText:"KS Web", indexLabel: "KS Web" },
-							       {  y: 20, legendText:"KS Java", indexLabel: "KS Java" }
-								]
-						     }
-						     ]
-						   });
-						
-						    chart.render();
-  							}
+							window.onload = function(){
+							    var chart = new CanvasJS.Chart("chartContainer",
+									    {
+									      title:{
+									        text: "Score by subject in each class",
+									        fontFamily: "arial",
+									        color:"black",
+									        fontWeight: "normal"
+									      },
+									
+									      legend:{
+									        verticalAlign: "bottom",
+									        horizontalAlign: "center"
+									      },
+									      data: [
+									      {
+									        //startAngle: 45,
+									       indexLabelFontSize: 14,
+									       indexLabelFontFamily: "Garamond",
+									       indexLabelFontColor: "black",
+									       indexLabelPlacement: "outside",
+									       type: "doughnut",
+									       showInLegend: true,
+									       dataPoints: [
+											   {  y: 20, legendText:"BTB Korean", indexLabel: "BTB Korea" },
+										       {  y: 20, legendText:"BTB Web", indexLabel: "BTB Web" },
+										       {  y: 20, legendText:"KS Java", indexLabel: "KS Java" }
+											]
+									     }
+									     ]
+									   });
+									
+									   chart.render();
+									   
+									   //chart 2
+									   
+									   var chart = new CanvasJS.Chart("chartContainer1",
+									    {
+									      title:{
+									        text: "Score by subject in each class",
+									        fontFamily: "arial",
+									        color:"black",
+									        fontWeight: "normal"
+									      },
+									
+									      legend:{
+									        verticalAlign: "bottom",
+									        horizontalAlign: "center"
+									      },
+									      data: [
+									      {
+									        //startAngle: 45,
+									       indexLabelFontSize: 14,
+									       indexLabelFontFamily: "Garamond",
+									       indexLabelFontColor: "black",
+									       indexLabelPlacement: "outside",
+									       type: "doughnut",
+									       showInLegend: true,
+									       dataPoints: [
+											   {  y: 20, legendText:"BTB Korean", indexLabel: "BTB Korea" },
+										       {  y: 20, legendText:"BTB Web", indexLabel: "BTB Web" },
+										       {  y: 20, legendText:"KS Java", indexLabel: "KS Java" }
+											]
+									     }
+									     ]
+									   });
+										chart.render();
+										
+										//chart 3
+										   
+										   var chart = new CanvasJS.Chart("chartContainer2",
+										    {
+										      title:{
+										        text: "Score by subject in each class",
+										        fontFamily: "arial",
+										        color:"black",
+										        fontWeight: "normal"
+										      },
+										
+										      legend:{
+										        verticalAlign: "bottom",
+										        horizontalAlign: "center"
+										      },
+										      data: [
+										      {
+										        //startAngle: 45,
+										       indexLabelFontSize: 14,
+										       indexLabelFontFamily: "Garamond",
+										       indexLabelFontColor: "black",
+										       indexLabelPlacement: "outside",
+										       type: "doughnut",
+										       showInLegend: true,
+										       dataPoints: [
+												   {  y: 20, legendText:"BTB Korean", indexLabel: "BTB Korea" },
+											       {  y: 20, legendText:"BTB Web", indexLabel: "BTB Web" },
+											       {  y: 20, legendText:"KS Java", indexLabel: "KS Java" }
+												]
+										     }
+										     ]
+										   });
+											chart.render();
+											
+											//chart 4
+											   
+											   var chart = new CanvasJS.Chart("chartContainer3",
+											    {
+											      title:{
+											        text: "Score by subject in each class",
+											        fontFamily: "arial",
+											        color:"black",
+											        fontWeight: "normal"
+											      },
+											
+											      legend:{
+											        verticalAlign: "bottom",
+											        horizontalAlign: "center"
+											      },
+											      data: [
+											      {
+											        //startAngle: 45,
+											       indexLabelFontSize: 14,
+											       indexLabelFontFamily: "Garamond",
+											       indexLabelFontColor: "black",
+											       indexLabelPlacement: "outside",
+											       type: "doughnut",
+											       showInLegend: true,
+											       dataPoints: [
+													   {  y: 20, legendText:"BTB Korean", indexLabel: "BTB Korea" },
+												       {  y: 20, legendText:"BTB Web", indexLabel: "BTB Web" },
+												       {  y: 20, legendText:"KS Java", indexLabel: "KS Java" }
+													]
+											     }
+											     ]
+											   });
+												chart.render();
+									   
+							};
  						 </script>
- 						 <div id="chartContainer" style="height: 300px; width: 100%;">
-   						 </div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<h3>Score</h3>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-2 col-sm-2 col-xs-2">
-						<p>Battambang class:</p>
-						<p>Phnom Penh class:</p>
-						<p>Siemreap class:</p>
-						<p>Kampongsom class:</p>
-					</div>
-					<div class="col-md-2 col-sm-2 col-xs-2 pull-left">
-						<p>30%</p>
-						<p>70%</p>
-						<p>90%</p>
-						<p>100%</p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 col-sm-12 col-xs-12">
-						<h3>Generation Detail</h3>
-					</div>
-				</div>
-				<div class="row" style="margin-bottom:10px;">
-				<div class="col-md-3 col-sm-3 col-xs-3 pull-center">
-					<h5>Generation 1</h5>
-				</div>
-				<div class="col-md-3 col-sm-3 col-xs-3 pull-center">
-					<h5>Generation 2</h5>
-				</div>
-				<div class="col-md-3 col-sm-3 col-xs-3 pull-center">
-					<h5>Generation 3</h5>
-				</div>
-				<div class="col-md-3 col-sm-3 col-xs-3 pull-center">
-					<h5>Generation 4</h5>
-				</div>
-			</div>
-				<div class="row" style="background-color: #fff">
-					<div class="col-md-3 col-sm-3 col-xs-3">
-						<div class="vertical-skills pull-right xs-center">
-							<ul class="list-inline">
-								<li><span class="skill" style="height:90%; background:#ff0000;"></span><span class="title">Female</span></li>
-								<li><span class="skill" style="height:85%; background:#00bbff;"></span><span class="title">Male</span></li>
-								<li><span class="skill" style="height:75%; background:#9168e5;"></span><span class="title">Total</span></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-3 col-xs-3">
-						<div class="vertical-skills pull-right xs-center">
-							<ul class="list-inline" >
-								<li><span class="skill" style="height:90%; background:#ff0000;"></span><span class="title">Female</span></li>
-								<li><span class="skill" style="height:85%; background:#00bbff;"></span><span class="title">Male</span></li>
-								<li><span class="skill" style="height:75%; background:#9168e5;"></span><span class="title">Total</span></li>
-							</ul> 
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-3 col-xs-3">
-						<div class="vertical-skills pull-right xs-center">
-							<ul class="list-inline" >
-								<li><span class="skill" style="height:90%; background:#ff0000;"></span><span class="title">Female</span></li>
-								<li><span class="skill" style="height:85%; background:#00bbff;"></span><span class="title">Male</span></li>
-								<li><span class="skill" style="height:75%; background:#9168e5;"></span><span class="title">Total</span></li>
-							</ul> 
-						</div>
-					</div>
-					<div class="col-md-3 col-sm-3 col-xs-3">
-						<div class="vertical-skills pull-right xs-center">
-							<ul class="list-inline" >
-								<li><span class="skill" style="height:90%; background:#ff0000;"></span><span class="title">Female</span></li>
-								<li><span class="skill" style="height:85%; background:#00bbff;"></span><span class="title">Male</span></li>
-								<li><span class="skill" style="height:75%; background:#9168e5;"></span><span class="title">Total</span></li>
-							</ul> 
-						</div>
-					</div>
-				</div>
+ 					<div class="row" ng-app='app' ng-controller='BarCtrl'>
+						<canvas id="bar" class="chart chart-bar"
+							chart-data="data" chart-labels="labels" chart-series="series"> 
+						</canvas>
+				 	</div>
 				<div class="row">
 					<div class="col-md-2 col-sm-2 col-xs-2">
 						<p>Generation 1:</p>
