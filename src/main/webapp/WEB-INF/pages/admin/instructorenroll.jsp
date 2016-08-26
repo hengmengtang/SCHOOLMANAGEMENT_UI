@@ -193,7 +193,7 @@
 				<div class="col-md-4">
 					<select class="form-control select" id="add-class"
 						style="display: none;" ng-model="cls" ng-disabled="!ins">
-						<option value="">Classes</option>
+						<option value="" selected>Classes</option>
 						<option ng-repeat="cls in classes">{{cls.CLASS_NAME}}</option>
 					</select>
 				</div>
@@ -201,7 +201,7 @@
 					<div class="form-group" id="add-stu" style="display: none;">
 						<select class="form-control select" id="add-subject"
 						style="display: none;" ng-model="subject" ng-disabled="!cls" ng-change="checked()">
-							<option value="">Subjects</option>
+							<option value="" selected>Subjects</option>
 							<option ng-repeat="sub in subjects">{{sub.SUBJECT_NAME}}</option>
 						</select>
 					</div>
@@ -209,7 +209,7 @@
 				<div class="col-md-4">
 					<div class="form-group" id="add-date" style="display: none;">
 						<input type="text" class="form-control"
-							placeholder="Enroll Date" id="date" ng-model="date" ng-disabled="add_date">
+							placeholder="Enroll Date" id="date" ng-model="date" ng-disabled="!subject">
 					</div>
 				</div>
 			</div>
@@ -282,7 +282,6 @@
 				getData(); 
 				clearInputControll();
 				
-				$scope.add_date = true;
 				$scope.form_enroll_instructor = false;
 				
 				$scope.enroll_instructor = function(){
@@ -304,7 +303,6 @@
 					$scope.sub_name = $scope.subject;
 					angular.forEach($scope.instructor, function(check){
 						if(check.ENGLISH_FULL_NAME == $scope.ins_name && check.CLASS_NAME == $scope.cla_name && check.SUBJECT_NAME == $scope.sub_name){
-							$scope.add_date = true;
 							$scope.cls = "";
 							$scope.ins = "";
 							$scope.subject = "";
@@ -315,7 +313,6 @@
 									)
 							return;
 						}
-						$scope.add_date = false;
 					})
 					
 					
@@ -337,6 +334,7 @@
 				};
 				
 				$scope.enroll = function(){
+					
 					$http({
 						url:'http://localhost:2222/handle-subject-to-staff-to-class',
 						method:'POST',
@@ -380,12 +378,8 @@
 				
 				function getClass() {
 					$http({
-						url : 'http://localhost:2222/api/class/get-class-by-generation-course',
-						data : {
-							"COURSE_NAME" : $scope.course,
-							"GENERATION_NAME" : $scope.gen_last
-						},
-						method : 'POST'
+						url : 'http://localhost:2222/api/class/find-all-class',
+						method : 'GET'
 						}).then(function(response) {
 							if(response.data.DATA == "")
 								$scope.classes = false;
@@ -420,7 +414,7 @@
 				
 				function clearInputControll(){
 					$('input').val("");
-					$("select").prop("selectedIndex",0);
+					$('select').prop("selectedIndex",0);
 				}
 				
 			});

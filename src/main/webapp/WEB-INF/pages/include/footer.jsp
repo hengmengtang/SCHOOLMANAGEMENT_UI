@@ -1,6 +1,6 @@
 <footer class="main-footer footerbg">
     <div class="pull-right hidden-xs">
-      <b>BTB HRD Shool Management v</b> 0.1
+      <b>K-Shool Management </b>
     </div>
      <div>All rights reserved.</div>
 </footer>

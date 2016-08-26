@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -75,12 +76,11 @@ input::-webkit-inner-spin-button {
 								Instructor </span> 
 								<!-- <input class="form-control selectpicker" placeholder="Instructor name"
 								ng-model=""  > -->
-								<select class="form-control" ng-model="instructors">
-									<option value="">Select Staff</option>
-									<option ng-repeat="ins in instructor">
-										{{ins.ENGLISH_FULL_NAME}}
-									</option>
-								</select>
+								<label class="form-control selectpicker" ng-model="instructors" disabled>
+									<sec:authorize access="isAuthenticated()">
+										<sec:authentication property="principal.username" />
+									</sec:authorize>
+								</label>
 						</div>
 					</div>
 					<div class="col-md-3 pull-left">
@@ -106,7 +106,7 @@ input::-webkit-inner-spin-button {
 						<div class="input-group pull-left">
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;"> Class </span>
-							<select class="form-control selectpicker" ng-model="classes" ng-mouseover="getClass()" ng-disabled="!instructors">
+							<select class="form-control selectpicker" ng-model="classes" ng-mouseover="getClass()" >
 								<option value="">Class</option>
 									<option ng-repeat="c in Class">{{c.CLASS_NAME}}</option>			
 							</select>
@@ -696,7 +696,7 @@ input::-webkit-inner-spin-button {
 						  }
 						}
 					}).then(function(response){
-						getStudentInClass();
+						
 					}, function(response){
 						alert("error");
 					});    */

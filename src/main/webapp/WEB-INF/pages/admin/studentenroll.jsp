@@ -101,7 +101,7 @@
 						<table class="table table-hover">
 							<thead>
 								<tr style="font-size: 16px;">
-									<th>N <sup>o</sup></th>
+									<th>StudentID</th>
 									<th ng-click="sort('ENGLIST_FULL_NAME')">Student<span
 										class="arrow1">&#x2191;&#x2193;</span></th>
 									<th ng-click="sort('CLASS_NAME')">Class<span
@@ -114,7 +114,7 @@
 							<tbody>
 								<tr 
 									dir-paginate="studentenroll in studentenrolls|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':stuname, 'CLASS_NAME':class}|itemsPerPage:select|limitTo : 20" pagination-id="student">
-									<td>{{$index+1}}</td>
+									<td>{{studentenroll.STUDENT_ID}}</td>
 									<td>{{studentenroll.ENGLISH_FULL_NAME}}</td>
 									<td>{{studentenroll.CLASS_NAME}}</td>
 									<td><center>
@@ -381,12 +381,8 @@
 
 							function getClass() {
 								$http({
-									url : 'http://localhost:2222/api/class/get-class-by-generation-course',
-									data : {
-										"COURSE_NAME" : $scope.course,
-										"GENERATION_NAME" : $scope.generation
-									},
-									method : 'POST'
+									url : 'http://localhost:2222/api/class/find-all-class',
+									method : 'GET'
 									}).then(function(response) {
 										if(response.data.DATA == "")
 											$scope.classes = false;

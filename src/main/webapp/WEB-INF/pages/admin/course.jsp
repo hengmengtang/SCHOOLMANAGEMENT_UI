@@ -36,8 +36,8 @@
 				<div class="row">
 					<!----------- pagination ------------>
 					<div class="col-md-2 pull-left">
-						<i class="fa fa-book" style="color: black;"></i> <small
-							style="color: black;"> Course</small>
+						<i class="fa fa-book" style="color: black;font-size: 18px"></i> <small
+							style="color: black; font-size: 18px">&nbsp Course</small>
 					</div>
 
 					<div class="col-md-10">

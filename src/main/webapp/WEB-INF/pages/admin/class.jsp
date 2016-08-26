@@ -45,8 +45,8 @@
 				<div class="row">
 					<!-- pagination -->
 					<div class="col-md-2 pull-left">
-						<i class="fa fa-university" style="color: black;"></i> <small
-							style="color: black;"> Class</small>
+						<i class="fa fa-university" style="color: black;font-size: 18px"></i> <small
+							style="color: black; font-size: 18px">&nbsp Class</small>
 					</div>
 
 					<div class="col-md-10">

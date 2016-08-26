@@ -39,7 +39,8 @@
 				<div class="row">
 					<!-- Title -->
 					<div class="col-md-2 pull-left">
-						<i class="fa fa-graduation-cap"></i> <small style="color: black;">Generation</small>
+						<i class="fa fa-graduation-cap" style="color: black;font-size: 18px"></i> <small
+							style="color: black; font-size: 18px">&nbsp Monthly Results</small>
 					</div>
 					<!-- End Title -->
 

@@ -76,8 +76,8 @@
 			<div class="row">
 
 				<div class="col-md-8">
-					<i class="fa fa-book" style="color: black;"></i> <small
-						style="color: black;"> Subject</small>
+					<i class="fa fa-book" style="color: black;font-size: 18px"></i> <small
+							style="color: black; font-size: 18px">&nbsp Subject</small>
 				</div>
 
 				<div class="col-md-4">
