@@ -69,8 +69,8 @@
 							</span> <select class="form-control selectionpicker" ng-model="No"
 								ng-init="No | No='No'">
 								<option value="">No</option>
-								<option>1</option>
-								<option>20</option>
+								<option>4</option>
+								<option>10</option>
 							</select>
 							<!-- End Selection -->
 						</div>
@@ -101,7 +101,7 @@
 							</thead>
 							<tbody>
 								<tr
-									dir-paginate="class in classes|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':generation, 'CLASS_NAME':search}|itemsPerPage:No|limitTo : 6">
+									dir-paginate="class in classes|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':generation, 'CLASS_NAME':search}|itemsPerPage:No">
 									<td>{{$index+1}}</td>
 									<td>{{class.CLASS_NAME}}</td>
 									<td>
@@ -238,7 +238,7 @@
 										$scope.course_status = false;
 									else
 										$scope.course_status = response.data.DATA.STATUS;
-									/* alert("course "+$scope.course_status); */
+									/* alert("course "+$scope.course_status);  */
 								}, function(response){
 									/* alert("error"); */
 								});
