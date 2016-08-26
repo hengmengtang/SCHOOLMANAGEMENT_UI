@@ -34,6 +34,40 @@
 
 	<!-- Main content -->
 	<section class="content" ng-app="app" ng-controller="ctrl">
+	<!-- Modal -->
+	  <div class="modal fade" id="myModal" role="dialog">
+	    <div class="modal-dialog">
+	    
+	      <!-- Modal content-->
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">Subject Informations</h4>
+	        </div>
+	        
+	        <div class="modal-body">
+	        	<div class="form-group row">
+			      <div class="col-sm-12">
+			        Subject Name: <input type="text" class="form-control" ng-model="updateSub" placeholder="Subject Name">
+			      </div>
+			    </div>
+			    <div class="form-group row">
+			      <div class="col-sm-12">
+			        Description: <input type="email" class="form-control" ng-model="updateDes" placeholder="Description">
+			      </div>
+			    </div>
+	        </div>
+	        
+	        <div class="modal-footer">
+	           <div class="form-group row">
+					 <div class="col-md-2">
+						<button type="button" class="btn btn-info" data-dismiss="{{dismiss}}" ng-click="update()">Update <i class="glyphicon glyphicon-refresh"></i></button>
+					</div>
+				 </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
 	<!-- Main content --> <!-- Start Container -->
 	<div class="container-fluid"
 		style="border: 2px solid green; background-color: #e0f2f2">
@@ -90,15 +124,14 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th ng-click="sort('id')">N <sup>o</sup></th>
-								<th>Subject<span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
-								<th>Description<span
-									style="color: blue; font-weight: bold;">&#x2191;&#x2193;</span></th>
+								<th >N <sup>o</sup></th>
+								<th ng-click="sort('SUBJECT_NAME')">Subject<span class="arrow1">&#x2191;&#x2193;</span></th>
+								<th>Description</th>
 								<th>Closed</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr dir-paginate="subject in subjects|orderBy:sortKey:reverse|filter:{'SUBJECT_NAME':search}|itemsPerPage:No">
+							<tr dir-paginate="subject in subjects|orderBy:sortKey:reverse|filter:{'SUBJECT_NAME':search}|itemsPerPage:No|limitTo : 6">
 								<td>{{$index+1}}</td>
 								<td>{{subject.SUBJECT_NAME}}</td>
 								<td>{{subject.DESCRIPTION}}</td>
@@ -110,6 +143,10 @@
 									<button type="button" class="btn btn-success"
 										ng-if="subject.ACTIVE==true" ng-click="finish(subject.SUBJECT_ID)">
 										<span class="glyphicon glyphicon-ban-circle"></span>
+									</button>
+									<button type="button" class="btn btn-info" data-toggle="{{toggle}}" 
+									data-target="{{target}}" ng-click="updateSubject(subject)">
+										<i class="glyphicon glyphicon-refresh"></i>
 									</button>
 								</td>
 							</tr>
@@ -123,18 +160,18 @@
 				<div style="color: black;">
 					<i class="fa fa-plus-circle" style="color: green;"></i> <span>Add
 						Subject</span>
-					<button class="pull-right btn btn-success" id="btn-sub">
+					<button class="pull-right btn btn-success" id="btn-sub" ng-click="checkStatus()">
 						<span class="glyphicon glyphicon-plus"></span>
 					</button>
 				</div>
 			</div>
 			<!-- Start Add Generation -->
-			<div class="row" style="margin: 5px;">
+			<div class="row" style="margin: 5px;" ng-show="form_add_class">
 				<div id="hide">
 					<div class="col-md-5" style="display: none;" id="add-sub">
 						<span>Subject<span class="star">*</span></span><br> <input
 							type="text" class="form-control" placeholder="Subject"
-							style="margin: 5px;" ng-model="sub" id="subject">
+							style="margin: 5px;" ng-model="sub_name" id="subject">
 					</div>
 
 					<div class="col-md-7" style="display: none;" id="des">
@@ -148,7 +185,7 @@
 				<div class="row pull-right"
 					style="margin: 0px; margin-bottom: 7px;">
 					<div id="btn" style="display: none;">
-						<button type="button" class="btn btn-success" id="btnSave">Save</button>
+						<button type="button" class="btn btn-success" id="btnSave" ng-click="submit()">Save</button>
 						<button type="button" class="btn btn-danger" id="btnCancel">Cancel</button>
 					</div>
 				</div>
@@ -160,6 +197,7 @@
 </div>
 <jsp:include page="../include/footer.jsp" />
 <jsp:include page="../include/footDashboard.jsp" />
+<jsp:include page="../include/sweetalert.jsp"/>
 
 <script
 	src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
@@ -171,81 +209,105 @@
 		app.controller('ctrl', function($scope, $http) {
 			
 			getData();
-			/* getCourseID();
-			getGeneration();
-			clearInputControll(); */
+			getSubjectID();
+			$scope.form_add_class = false;
+			
+			$scope.updateSubject = function(subject){
+				$scope.toggle = "modal";
+				$scope.target = "#myModal";
+				$scope.updateSub = subject.SUBJECT_NAME;
+				$scope.updateDes = subject.DESCRIPTION;
+			}
+			
+			$scope.update = function(){
+				
+				$scope.dismiss = "modal";
+			}
 			
 			function getData() {
 				$http({
-					url : 'http://localhost:8080/api/subject/find-all-subject',
+					url : 'http://localhost:2222/api/subject/find-all-subject',
 					method : 'GET'
 				}).then(function(response) {
 					$scope.subjects = response.data.DATA;
-					console.log($scope.subjects)
+					getClassStatus();
 				}, function(response) {
-					alert("error");
+					/* alert("error"); */
 				});
 			};
 			
-			/* function getCourseStatus() {
+			function getClassStatus() {
 				$http({
-					url : 'http://localhost:8080/api/course/find-all-course',
+					url : 'http://localhost:2222/api/class/class-status',
 					method : 'GET'
 				}).then(function(response) {
-					$scope. = response.data.DATA.STATUS;
+					if(response.data.DATA == null)
+						$scope.class_status = false;
+					else
+						$scope.class_status = response.data.DATA.ACTIVE;
 				}, function(response) {
-					alert("error");
+					/* alert("error"); */
 				});
-			}; */
+			};
 			
-			/* function getGeneration(){
-				$http({
-						url:'http://localhost:8080/api/generation/find-all-generation',
-						method:'GET'
+			$scope.checkStatus = function(){
+				if($scope.class_status == false){
+					sweetAlert(
+							  'Subject is not available...',
+							  'Class is not exist!',
+							  'error'
+							)
+					return;
+				}
+				$scope.form_add_class = true;
+			}
+			
+			$scope.submit = function(){
+				
+				$scope.status = false;
+				
+				angular.forEach($scope.subjects, function(sub){
+					if(sub.SUBJECT_NAME == $scope.sub_name){
+						sweetAlert(
+								  'Subject is not available...',
+								  'The subject already exit!',
+								  'error'
+								)
+							return $scope.status = true;
+					}
+				});
+				
+				if($scope.status == false){
+					$http({
+						url: 'http://localhost:2222/api/subject/add-subject',
+						data:{
+							 "ACTIVE": true,
+							 "DESCRIPTION": $scope.des,
+							 "SUBJECT_ID": $scope.id,
+							 "SUBJECT_NAME": $scope.sub_name
+						},
+						method: 'POST'
 					}).then(function(response){
-						$scope.generations = response.data.DATA;
+						getData();
+						getSubjectID();
+						clearInputControll();
 					}, function(response){
-						alert("error");
-					});
-			};*/
+						
+					})
+				} 
+				
+			}
 			
-			/* $scope.submit = function(){
+			function getSubjectID(){
 				$http({
-					url: 'http://localhost:8080/api/subject/add-subject',
-					data:{
-						  "ACTIVE": true,
-						  "DESCRIPTION": $scope.description,
-						  "SUBJECT_ID": "string",
-						  "SUBJECT_NAME": $scope.subject
-					},
-					method: 'POST'
-				}).then(function(response){
-					getData();
-					clearInputControll();
-				}, function(response){
-					
-				})
-			} */
-			
-			/*function getSubjectID(){
-				$http({
-						url:'http://localhost:8080/api/subject/auto-subject-id',
+						url:'http://localhost:2222/api/subject/auto-subject-id',
 						method:'GET'
 					}).then(function(response){
 						$scope.id = response.data.DATA.MAX_ID;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 			};
-			
-			$scope.finish = function(id){
-				swal({   title: "Are you sure want finish?",   text: "You want finish!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Finished!",   closeOnConfirm: false }, function(){   
-						swal("Finished!", "Finished.", "success"); 
-						alert(id);
-						
-					});
-			}
-			 */
 			 
 			$scope.sort = function(keyname){
 		        $scope.sortKey = keyname;   //set the sortKey to the param passed
@@ -270,6 +332,8 @@
 			$("#des").fadeOut("fast");
 			$("#btn").fadeOut("fast");
 			$("#hide").fadeOut("fast");
+			$('#subject').val('');
+			$('#description').val('');
 		});
 	  //--Add Course--//
 	  $( "#add-sub" ).keypress(function() {

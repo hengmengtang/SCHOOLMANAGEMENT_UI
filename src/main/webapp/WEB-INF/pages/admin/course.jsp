@@ -68,26 +68,14 @@
 							<!-- End Selection -->
 						</div>
 					</div>
-					<!--div class="col-md-3" -->
-					<div class="col-sm-3">
-
-						<div class="input-group pull-left">
-							<span class="input-group-addon"
-								style="color: white; background-color: green;">
-								Generation </span> <select class="form-control selectpicker" ng-init="searchGeneration | searchGeneration='Generation'" ng-model="searchGeneration" ng-mouseleave="getGeneration()">
-								<option value="">Generation</option>
-								<option ng-repeat="gen in generations | orderBy:'GENERATION_NAME'">{{gen.GENERATION_NAME}}</option>
-							</select>
-						</div>
-
-					</div>
-					<!-- End Selection -->
+					
 					<!-- Text Search -->
 					<div class="col-md-3">
 						<div class="input-group">
 							<span class="input-group-addon" style="background-color: green;"><i
 								class="fa fa-search" style="color: white;"></i> </span> <input
-								type="text" class="form-control" placeholder="Course" ng-model="searchCourse">
+								type="text" class="form-control" placeholder="Course" id="search_course"
+								onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');" ng-keyup="searchCourse()">
 						</div>
 					</div>
 					<!-- End Text Search -->
@@ -99,24 +87,22 @@
 						<table class="table table-hover">
 							<thead>
 									<tr>
-										<th ng-click="sort('id')">N <sup>o</sup><span style="color: blue; font-weight: bold;">&#x2191;&#x2193;</th>
-										<th>Generation</th>
-										<th>Course</th>
+										<th>N<sup>o</sup></th>
+										<th ng-click="sort('COURSE_NAME')">Course</th>
 										<th>Start Date</th>
 										<th>End Date</th>
-										<th>Finish</th>
+										<th>Closed</th>
 									</tr>
 								</thead>
 							<tbody>
-									<tr dir-paginate="course in courses|orderBy:sortKey:reverse|filter:{'COURSE_NAME':searchCourse}:{'COURSE_NAME':searchCourse}|itemsPerPage:select">
-										<td>{{course.COURSE_ID}}</td>
-										<td>3rd Generation</td>
+									<tr dir-paginate="course in courses|orderBy:sortKey:reverse|filter:{'COURSE_NAME':search_course}|itemsPerPage:select|limitTo : 6">
+										<td>{{$index+1}}</td>
 										<td>{{course.COURSE_NAME}}</td>
 										<td>{{course.COURSE_START_DATE}}</td>
 										<td>{{course.COURSE_END_DATE}}</td>
 										<td>
 											<button type="button" class="btn btn-danger"
-												ng-if="course.STATUS==false">
+												ng-if="course.STATUS==false" ng-click="active(course.COURSE_ID)">
 												<span class="glyphicon glyphicon-ok"></span>
 											</button>
 											<button type="button" class="btn btn-success"
@@ -140,7 +126,7 @@
 					</div>
 
 					<div class="pull-right">
-						<button class="pull-right btn btn-success" id="btn-plus">
+						<button class="pull-right btn btn-success" id="btn-plus" ng-click="addCourse()" data-toggle="{{modal}}" data-target="{{idmodal}}">
 							<span class="glyphicon glyphicon-plus"></span>
 						</button>
 					</div>
@@ -150,7 +136,7 @@
 
 				<!-- Start Panel-->
 				<!-- Start Add Generation -->
-				<div class="row">
+				<div class="row" ng-show="formAddCourse">
 					<div id="hide">
 						<div class="col-md-4" id="add-gen" style="display: none;">
 							<span>Course<span class="star">*</span></span> <input
@@ -181,7 +167,25 @@
 				<!-- End Row -->
 			</fieldset>
 		</div>
-		<!-- End Panel--> </section>
+		<!-- End Panel--> 
+		 <!-- Modal -->
+		  <div class="modal fade" id="idModal" role="dialog">
+		    <div class="modal-dialog">
+		    
+		      <!-- Modal content-->
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title" style=" text-decoration: underline;"><a href="/admin/generation"><u>You should create generation before create course!</a></h4>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+		      
+		    </div>
+		  </div>
+		</section>
 	</div>
 	<!-- End Main content -->
 	</div>
@@ -206,44 +210,113 @@
 		app.controller('ctrl', function($scope, $http) {
 			
 			getData();
-			getCourseID();
-			getGeneration();
 			clearInputControll();
 			
 			$scope.getGeneration = function(){
 				getData();
 			}
+			
+			$scope.searchCourse = function(){
+				$scope.search_course = $('#search_course').val();
+			}
 
 			function getData() {
 				$http({
-					url : 'http://localhost:8080/api/course/find-all-course',
+					url : 'http://localhost:2222/api/course/find-all-course',
 					method : 'GET'
 				}).then(function(response) {
 					$scope.courses = response.data.DATA;
+					getLastCourse();
+					getLastGenerationName();
+					getLastGeneration();
+					getCourseID();
+					getGeneration();
 				}, function(response) {
-					alert("error");
+					/* alert("error"); */
 				});
 			};
 			
-			/* function getCourseStatus() {
+			$scope.addCourse = function(){
+				if($scope.status == true || $scope.generation_status != true){
+					if($scope.generation_status == false){
+						$scope.modal = "modal";
+						$scope.idmodal = "#idModal";
+					} 
+					if($scope.status == true)
+						sweetAlert(
+							'Course is not available...',
+							'The last Course is available or Generation has been closed!',
+							'error'
+						);
+				}
+				else $scope.formAddCourse = true;
+			}
+			
+			function getLastCourse(){
 				$http({
-					url : 'http://localhost:8080/api/course/find-all-course',
-					method : 'GET'
-				}).then(function(response) {
-					$scope. = response.data.DATA.STATUS;
-				}, function(response) {
-					alert("error");
+					url:'http://localhost:2222/api/course/get-last-course',
+					method:'GET'
+				}).then(function(response){
+					$scope.status = response.data.DATA.STATUS;
+					$scope.course_name = response.data.DATA.COURSE_NAME;
+				}, function(response){
+					/* alert("error"); */
 				});
-			}; */
+			}
+			
+			function updateStatus(id){
+				$http({
+						url:'http://localhost:2222/api/course/change-status-course/'+id,
+						data:{
+							"COURSE_NAME": $scope.course_name,
+							"GENERATION_NAME": $scope.generation_name,
+							"SUCCESS": 0
+						},
+						method:'POST'
+					}).then(function(response){
+						getData();
+						$scope.status = false;
+					}, function(response){
+						/* alert("error"); */
+					});
+			};
 			
 			function getGeneration(){
 				$http({
-						url:'http://localhost:8080/api/generation/find-all-generation',
+						url:'http://localhost:2222/api/generation/find-all-generation',
 						method:'GET'
 					}).then(function(response){
 						$scope.generations = response.data.DATA;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
+					});
+			};
+			
+			function getLastGeneration(){
+				$http({
+						url:'http://localhost:2222/api/generation/get-generation-status-true',
+						method:'GET'
+					}).then(function(response){
+						if(response.data.DATA == null)
+							$scope.generation_status = false;
+						else
+							$scope.generation_status = response.data.DATA.STATUS;
+					}, function(response){
+						/* alert("error"); */
+					});
+			};
+			
+			function getLastGenerationName(){
+				$http({
+						url:'http://localhost:2222/api/generation/get-last-generation',
+						method:'GET'
+					}).then(function(response){
+						if(response.data.DATA == null)
+							$scope.generation_name = "";
+						else
+							$scope.generation_name = response.data.DATA.GENERATION_NAME;
+					}, function(response){
+						/* alert("error"); */
 					});
 			};
 			
@@ -255,41 +328,75 @@
 			$scope.submit = function(){
 				$scope.end_date = $('#datepicker1').val();
 				$scope.start_date = $('#datepicker2').val()
-				$http({
-					url: 'http://localhost:8080/api/course/register-course',
-					data:{
-						 "COURSE_END_DATE": $scope.end_date,
-						 "COURSE_ID": $scope.id,
-						 "COURSE_NAME": $scope.course,
-						 "COURSE_START_DATE": $scope.start_date,
-						 "STATUS": true
-					},
-					method: 'POST'
-				}).then(function(response){
-					getData();
-					clearInputControll();
-				}, function(response){
-					
-				})
+				
+				$scope.courseStatus = false;
+
+				angular.forEach($scope.courses, function(course) {
+					if (course.COURSE_NAME == $scope.course) {
+						sweetAlert('Course is not available...',
+								'The course already exit! You just click active in close action.',
+								'error')
+						return $scope.courseStatus = true;
+					}
+				});
+
+				if ($scope.courseStatus == false) {
+					$http({
+						url: 'http://localhost:2222/api/course/register-course',
+						data:{
+							 "COURSE_END_DATE": $scope.end_date,
+							 "COURSE_ID": $scope.id,
+							 "COURSE_NAME": $scope.course,
+							 "COURSE_START_DATE": $scope.start_date
+						},
+						method: 'POST'
+					}).then(function(response){
+						getData();
+						clearInputControll();
+					}, function(response){
+						
+					})
+				}
 			}
 			
 			function getCourseID(){
 				$http({
-						url:'http://localhost:8080/api/course/auto-course-id',
+						url:'http://localhost:2222/api/course/auto-course-id',
 						method:'GET'
 					}).then(function(response){
 						$scope.id = response.data.DATA.MAX_ID;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 			};
 			
 			$scope.finish = function(id){
-				swal({   title: "Are you sure want finish?",   text: "You want finish!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Finished!",   closeOnConfirm: false }, function(){   
-						swal("Finished!", "Finished.", "success"); 
-						alert(id);
+				swal({   title: "Are you sure want closed?",   text: "You want closed!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Closed!",   closeOnConfirm: false }, function(){   
+						swal("Closed!", "Closed.", "success"); 
+						updateStatus(id);
 						
 					});
+			}
+			
+			$scope.active = function(id){
+				if($scope.status == false){
+					swal({   title: "Are you sure want active?",   
+							 text: "You want active!",   
+							 type: "warning",   
+							 showCancelButton: true,  
+							 confirmButtonColor: '#009688', 
+							 confirmButtonText: "Yes, Active!", 
+							 closeOnConfirm: false }, function(){
+							 swal("Active!", "Active.", "success"); 
+							 updateStatus(id);
+						});
+				}else{
+					sweetAlert(
+							'Course is not available...',
+							'The last Course is available',
+							'error'
+						);
+				}
 			}
 			
 			function clearInputControll(){
@@ -320,12 +427,12 @@
 							$("#start-date").fadeIn("slow");
 					});
 					//--Add Class--//
-					$("#start-date").mouseleave(function() {
+					$("#start-date").change(function() {
 						if($("#datepicker1").val() != '' && $("#datepicker1").val() != null)
 							$("#end-date").fadeIn("slow");
 					});
 
-					$("#end-date").mouseleave(function() {
+					$("#end-date").change(function() {
 						if($("#datepicker2").val() != '' && $("#datepicker2").val() != null)
 							$("#btn").fadeIn("slow");
 					});
@@ -340,7 +447,6 @@
 
 				});
 		
-		$.widget.bridge('uibutton', $.ui.button);
 	</script>
 	<!--End Script-->
 </body>

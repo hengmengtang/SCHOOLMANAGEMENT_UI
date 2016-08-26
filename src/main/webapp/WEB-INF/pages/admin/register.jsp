@@ -354,7 +354,7 @@
 			});
 			
 			$('#social_id').inputmask({
-				'mask' : "(999999999)"
+				'mask' : "999999999"
 			});
 			
 		});
@@ -372,13 +372,13 @@
 			function getID() {
 
 				$http({
-					url : 'http://localhost:8080/api/student/auto-student-id',
+					url : 'http://localhost:2222/api/student/auto-student-id',
 					method : 'GET'
 				}).then(function(response) {
 					$scope.id = response.data.DATA.MAX_ID;
 					$scope.stu_id = $scope.id;
 				}, function(response) {
-					alert("error");
+					/* alert("error"); */
 				});
 			}
 			;
@@ -397,7 +397,7 @@
 						if($('#latin_fname').val() == '' && $('#latin_lname').val() == null)
 							$http(
 									{
-										url : 'http://localhost:8080/api/student/save',
+										url : 'http://localhost:2222/api/student/save',
 										data : {
 											"DATE_OF_BIRTH" : $scope.dob,
 											"EDUCATION_LEVEL" : $scope.it_year,
@@ -435,7 +435,7 @@
 								clearInputControll();
 			
 							}, function(response) {
-								alert("error");
+								/* alert("error"); */
 							});
 
 			}

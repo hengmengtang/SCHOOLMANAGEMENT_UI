@@ -1,3 +1,24 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<style>
+	.navbar-login
+	{
+	    width: 305px;
+	    padding: 10px;
+	    padding-bottom: 0px;
+	}
+	
+	.navbar-login-session
+	{
+	    padding: 10px;
+	    padding-bottom: 0px;
+	    padding-top: 0px;
+	}
+	
+	.icon-size
+	{
+	    font-size: 87px;
+	}
+</style>
 <div class="hold-transition skin-green sidebar-mini">
 	<!-- <div class="wrapper"> -->
 	<header class="main-header">
@@ -16,8 +37,112 @@
 			<a href="#" class="sidebar-toggle" data-toggle="offcanvas"
 				role="button"> <span class="sr-only">Toggle navigation</span>
 			</a>
+		<!--------  drop down menu for profile -->
+			<div class="row">
+				<div class="col-md-11 pull-left">
+					<ul class="nav navbar-nav navbar-right">
+               			<!-- <li class="dropdown"> -->
+	                    <%-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	                        <span class="glyphicon glyphicon-user"></span> 
+	                        <strong>
+	                        	 <sec:authorize access="isAuthenticated()">
+								   <sec:authentication property="principal.username" /> 
+								</sec:authorize>
+	                        </strong>
+	                        <span class="glyphicon glyphicon-chevron-down"></span>
+	                    </a>
+	                    	<!-- start sub drop down profile -->
+					             <ul class="dropdown-menu">
+			                        <li>
+			                            <div class="navbar-login">
+			                                <div class="row">
+			                                    <div class="col-lg-4">
+			                                        <p class="text-center">
+			                                            <span class="glyphicon glyphicon-user icon-size"></span>
+			                                        </p>
+			                                    </div>
+			                                    <div class="col-lg-8">
+			                                        <p class="text-left">
+			                                        	<sec:authorize access="isAuthenticated()">
+														   <sec:authentication property="principal.username" /> 
+														</sec:authorize>
+													</p>
+			                                        <p class="text-left small">
+			                                        	<sec:authorize access="isAuthenticated()">
+														   <sec:authentication property="principal.email" /> 
+														</sec:authorize>
+			                                        </p>
+			                                        <p class="text-left">
+			                                            <a href="#" class="btn btn-primary btn-block btn-sm">Show Profile</a>
+			                                        </p>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </li>
+			                        <li class="divider"></li>
+			                        <li>
+			                            <div class="navbar-login navbar-login-session">
+			                                <div class="row">
+			                                    <div class="col-lg-12">
+			                                        <p>
+			                                            <a href="/logout" class="btn btn-danger btn-block">Logout</a>
+			                                        </p>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </li>
+			                    </ul>
+		                    <!-- end sub drop down profile -->
+                		</li>
+            		</ul>
+				</div>
+			</div>
+<!--------  drop menu for profile --> --%>
+		<!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              
+               	 <span class="glyphicon glyphicon-user"></span>
+	                        <strong>
+	                        	 <sec:authorize access="isAuthenticated()">
+								   <sec:authentication property="principal.username" /> 
+								</sec:authorize>
+	                        </strong>
+	                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
+                <p class="text-center">
+			       <span class="glyphicon glyphicon-user icon-size"></span>
+			    </p>
 
-			<div class="navbar-custom-menu">
+                <p>
+					<sec:authorize access="isAuthenticated()">
+							<sec:authentication property="principal.username" />
+					</sec:authorize>
+					<small>
+						<sec:authorize access="isAuthenticated()">
+							 <sec:authentication property="principal.email" /> 
+						</sec:authorize>
+					</small>
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <!-- <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div> -->
+                <div class="pull-right">
+                  <a href="/logout" class="btn btn-default center">Log out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+			<%-- <div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
 					 <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
@@ -47,7 +172,7 @@
             </ul>
           </li>
 				</ul>
-			</div>
+			</div> --%>
 		</nav>
 	</header>
 	<!-- Left side column. contains the logo and sidebar -->
@@ -99,8 +224,10 @@
 						<li><a href="subject"><i class="fa fa-circle-o"></i>
 								Subject</a></li>
 					</ul></li>
-				<li><a href="staff"> <i class="fa fa-user"></i> <span>Staff</span>
-				</a></li>
+				
+				<!-- Staff -->
+				<!-- <li><a href="staff"> <i class="fa fa-user"></i> <span>Staff</span>
+				</a></li> -->
 				<li class="treeview"><a href="#"> <i class="fa fa-pencil-square-o"></i>
 						<span>Enroll</span> <i class="fa fa-angle-left pull-right"></i>
 				</a>
@@ -114,9 +241,10 @@
 				<li class="treeview"><a href="monthly-result"> <i class="fa fa-list-alt"></i>
 						<span>Monthly Result</span>
 				</a></li>
-				<li class="treeview"><a href="#"> <i class="fa fa-book"></i>
+				<!-- Documentation: Print Transcript and certificate -->
+				<!-- <li class="treeview"><a href="#"> <i class="fa fa-book"></i>
 						<span>Documentation</span>
-				</a></li>
+				</a></li> -->
 			</ul>
 		</section>
 	</aside>

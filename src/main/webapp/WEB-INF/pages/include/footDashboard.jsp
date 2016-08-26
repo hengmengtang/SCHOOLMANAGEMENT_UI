@@ -1,6 +1,6 @@
 <!-- jQuery 2.2.0 -->
 <script src="${pageContext.request.contextPath }/resources/plugins/jQuery/jQuery-2.2.0.min.js">
-</script>
+</script> 
 <!-- Bootstrap 3.3.6 -->
 <script src="${pageContext.request.contextPath }/resources/bootstrap/js/bootstrap.min.js"></script>
 <!-- Morris.js charts -->

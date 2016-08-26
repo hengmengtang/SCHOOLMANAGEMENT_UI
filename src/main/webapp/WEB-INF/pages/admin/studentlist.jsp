@@ -12,7 +12,6 @@
 <link
 	href="${pageContext.request.contextPath }/resources/style/customStudentList.css"
 	rel="stylesheet" />
-<script src="${pageContext.request.contextPath }/resources/bootstrapcheckbox/bootstrap-checkbox.min.js"></script>
 </head>
 <body class="bg">
 	<!-- index is menu -->
@@ -83,7 +82,7 @@
 											class="star"> * </span></label> <span
 											class="glyphicons glyphicons-user"></span> <input type="text"
 											class="form-control " placeholder="Enter ID"
-											ng-model="stu_id">
+											ng-model="stu_id" readonly>
 									</div>
 								</div>
 
@@ -103,7 +102,7 @@
 											class="glyphicons glyphicons-user"></span> <input type="text"
 											class="form-control " 
 											placeholder="Enter Your First Latin Name"
-											ng-model="latin_name">
+											ng-model="latin_name" onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<!--Radio-->
@@ -127,7 +126,8 @@
 										<label for="exampleInputPOB">Place Of Birth<span
 											class="star"> * </span></label> <input type="text"
 											class="form-control" 
-											placeholder="Place Of Birth" ng-model="pob">
+											placeholder="Place Of Birth" ng-model="pob"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<div class="row">
@@ -135,7 +135,8 @@
 										<label for="exampleInputAddress">Permanent Address<span
 											class="star"> * </span></label> <input type="text"
 											class="form-control" 
-											placeholder="Address" ng-model="address">
+											placeholder="Address" ng-model="address"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 
@@ -187,20 +188,21 @@
 								<div class="row">
 									<div class="form-group col-md-4">
 										<label for="Phone">Phone <span class="star"> *
-										</span></label> <input type="text" class="form-control" 
-											placeholder="Phone" ng-model="phone">
+										</span></label> <input type="text" class="form-control" id="phone"
+											placeholder="Phone" ng-model="phone" data-mask='"mask": "(999) 999-9999"' required>
 									</div>
 									<div class="form-group col-md-4">
 										<label for="exampleInputNationality">Nationality<span
 											class="star"> * </span></label> <input type="text"
 											class="form-control" 
-											placeholder="Nationality" ng-model="nationality">
+											placeholder="Nationality" ng-model="nationality"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 									<div class="form-group col-md-4">
 										<label for="exampleInputSocialID">Social ID<span
 											class="star"> * </span></label> <input type="text"
-											class="form-control"  placeholder="Social id"
-											ng-model="social_id">
+											class="form-control"  placeholder="Social id" id="social_id"
+											ng-model="social_id" data-mask='"mask": "(999999999)"'>
 									</div>
 								</div>
 
@@ -222,26 +224,30 @@
 											Name<span class="star"> * </span>
 										</label> <input type="text" class="form-control" 
 											placeholder="Father's Latin Name"
-											ng-model="father_latin_name">
+											ng-model="father_latin_name"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<div class="row">
 									<div class="form-group col-md-12">
 										<label for="Address">Address<span class="star">
 												* </span></label> <input type="text" class="form-control" 
-											placeholder="Address" ng-model="father_address">
+											placeholder="Address" ng-model="father_address"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<div class="row">
 									<div class="form-group col-md-6">
 										<label for="FOccupation">Occupation<span class="star">
 												* </span></label> <input type="text" class="form-control" 
-											placeholder="Father Occupation" ng-model="father_occupation">
+											placeholder="Father Occupation" ng-model="father_occupation"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 									<div class="form-group col-md-6">
 										<label for="FPhone">Father's Phone<span class="star">
 												* </span></label> <input type="text" class="form-control" 
-											placeholder="Father's Phone " ng-model="father_phone">
+											placeholder="Father's Phone " ng-model="father_phone"
+											data-mask='"mask": "(999) 999-9999"' id="fphone">
 									</div>
 
 								</div>
@@ -257,24 +263,29 @@
 											class="star"> * </span></label> <input type="text"
 											class="form-control" i
 											placeholder="Mother's Latin Name"
-											ng-model="mother_latin_name">
+											ng-model="mother_latin_name"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<div class="row">
 									<div class="form-group col-md-12">
 										<label for="FAddress">Address<span class="star">
 												* </span></label> <input type="text" class="form-control"
-											placeholder="Address" ng-model="mother_address">
+											placeholder="Address" ng-model="mother_address"
+											onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 									</div>
 								</div>
 								<div class="row">
 					              <div class="form-group col-md-6">
 					                  <label for="FOccupation">Occupation<span class="star"> * </span></label>
-					                  <input type="text" class="form-control" placeholder="Mother Occupation" ng-model="mother_occupation">
+					                  <input type="text" class="form-control" placeholder="Mother Occupation" 
+					                  ng-model="mother_occupation"
+					                  onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 					              </div>
 					              <div class="form-group col-md-6">
 					                  <label for="FPhone">Mother's Phone<span class="star"> * </span></label>
-					                  <input type="text" class="form-control" placeholder="Mother's Phone " ng-model="mother_phone">
+					                  <input type="text" class="form-control" placeholder="Mother's Phone " 
+					                  ng-model="mother_phone" data-mask='"mask": "(999) 999-9999"' id="mphone">
 					              </div>
 					           </div>
 					           <div class="row pull-right" style="margin: 7px;">
@@ -374,7 +385,7 @@
 					<div class="input-group pull-left">
 						<span class="input-group-addon"
 							style="color: white; background-color: green;"> Class
-						</span> <select class="form-control selectpicker" ng-model="searchClass" ng-init="searchClass | searchClass='Class'" ng-focus="getClass()">
+						</span> <select class="form-control selectpicker" ng-model="searchClass" ng-init="searchClass | searchClass='Class'" ng-mouseover="getClass()">
 							<option value="" selected>Class</option>
 							<option ng-repeat="class in classes | orderBy:'CLASS_NAME'">{{class.CLASS_NAME}}</option>
 						</select>
@@ -405,9 +416,9 @@
 					<table class="table table-hover">
 						<thead>
 							<tr style="font-size: 16px;">
-								<th ng-click="sort('id')">Student ID&#x2191;&#x2193;</th>
-								<th ng-click="sort('khmerName')">Khmer Name&#x2191;&#x2193;</th>
-								<th ng-click="sort('LatinName')">English Name&#x2191;&#x2193;</th>
+								<th ng-click="sort('id')">Student ID<span class="arrow1">&#x2191;&#x2193;</span></th>
+								<th ng-click="sort('khmerName')">Khmer Name<span class="arrow1">&#x2191;&#x2193;</span></th>
+								<th ng-click="sort('LatinName')">English Name<span class="arrow1">&#x2191;&#x2193;</span></th>
 								<th><center>Gender</center></th>
 								<th>Birth Date</th>
 								<th>Address</th>
@@ -416,7 +427,7 @@
 							</tr>
 						</thead>
 						<tbody>
-                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':searchStudent}|itemsPerPage:select">
+                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':searchStudent}|itemsPerPage:select|limitTo : 20">
 								<td>{{student.STUDENT_ID}}</td> 
 								<td>{{student.KHMER_FULL_NAME}}</td>
 								<td>{{student.ENGLISH_FULL_NAME}}</td>
@@ -449,17 +460,38 @@
 			</fieldset>
 			</div>
 		</section>
-		<input type="text" ng-repeat="gen in last_gen" value="{{gen.GENERATION_NAME}}" id="gen" style="display:none">
-		<input type="text" ng-repeat="cou in last_cou" value="{{cou.COURSE_NAME}}" id="course" style="display:none">
+		<!-- <input type="text" ng-repeat="gen in last_gen" value="{{gen.GENERATION_NAME}}" id="gen" style="display:none">
+		<input type="text" ng-repeat="cou in last_cou" value="{{cou.COURSE_NAME}}" id="course" style="display:none"> -->
 	</div>
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
 	<jsp:include page="../include/sweetalert.jsp"/>
+	<jsp:include page="../include/inputmask.jsp"/>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/angular.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/FileSaver.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/json-export-excel.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#phone').inputmask({
+				'mask' : "(999) 999-9999"
+			});
+			
+			$('#fphone').inputmask({
+				'mask' : "(999) 999-9999"
+			});
+			
+			$('#mphone').inputmask({
+				'mask' : "(999) 999-9999"
+			});
+			
+			$('#social_id').inputmask({
+				'mask' : "999999999"
+			});
+			
+		});
+	</script>
 	<script>
 		var app = angular.module('appListStu', ['angularUtils.directives.dirPagination','ngJsonExportExcel']);
 			app.controller('ctrlListStu', function($scope, $http){
@@ -500,25 +532,25 @@
 				}
 								
 				$scope.getClass = function(){
-					getClass($('#gen').val(), $('#course').val());
+					getClass($scope.last_gen, $scope.last_cou);
 					$scope.class2 = true;
 					$scope.class1 = false;
 				}
 				
 				function getStudentLastGen(){
 					$http({
-						url:'http://localhost:8080/api/student/get-student-in-last-generation',
+						url:'http://localhost:2222/api/student/get-student-in-last-generation',
 						method:'GET'
 					}).then(function(response){
 						$scope.students = response.data.DATA;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
 				function updateStatus(id){
 					$http({
-						url:'http://localhost:8080/api/student/updateStatus/'+id,
+						url:'http://localhost:2222/api/student/updateStatus/'+id,
 						method:'PUT'
 					}).then(function(response){
 						if($scope.searchGeneration)
@@ -526,13 +558,13 @@
 						else
 							getStudentLastGen();
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
 				function getData(){
 						$http({
-								url:'http://localhost:8080/api/student/select_student-by-generation-and-course',
+								url:'http://localhost:2222/api/student/select_student-by-generation-and-course',
 								data: {
 									"COURSE_NAME": $scope.searchCourse,
 									"GENERATION_NAME": $scope.searchGeneration
@@ -542,35 +574,35 @@
 								$scope.students = response.data.DATA;
 								getClass($scope.searchGeneration, $scope.searchCourse);
 							}, function(response){
-								alert("error");
+								/* alert("error"); */
 							});
 				};
 				
 				function getLastGeneration(){
 					$http({
-							url:'http://localhost:8080/api/generation/get-last-generation',
+							url:'http://localhost:2222/api/generation/get-last-generation',
 							method:'GET'
 						}).then(function(response){
 							$scope.last_gen = response.data.DATA.GENERATION_NAME;
 						}, function(response){
-							alert("error");
+							/* alert("error"); */
 						});
 				};
 				
 				function getLastCourse(){
 					$http({
-						url:'http://localhost:8080/api/course/get-last-course',
+						url:'http://localhost:2222/api/course/get-last-course',
 						method:'GET'
 					}).then(function(response){
-						$scope.last_cou = response.data.DATA;
+						$scope.last_cou = response.data.DATA.COURSE_NAME;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
 				function getClass(generation, course) {
 					$http({
-						url : 'http://localhost:8080/api/class/get-class-by-generation-course',
+						url : 'http://localhost:2222/api/class/get-class-by-generation-course',
 						data:{
 							"COURSE_NAME": course,
 							"GENERATION_NAME": generation
@@ -580,25 +612,25 @@
 						$scope.classes = response.data.DATA;
 						$scope.searchClass = "";
 					}, function(response) {
-						alert("error");
+						/* alert("error"); */
 					}); 
 				};
 				
 				function getGeneration(){
 					$http({
-							url:'http://localhost:8080/api/generation/find-all-generation',
+							url:'http://localhost:2222/api/generation/find-all-generation',
 							method:'GET'
 						}).then(function(response){
 							$scope.generations = response.data.DATA;
 						}, function(response){
-							alert("error");
+							/* alert("error"); */
 						});
 				};
 				
 				$scope.update = function(id){
 					
 					$http({
-						url:'http://localhost:8080/api/student/select-student-by-id/'+id,
+						url:'http://localhost:2222/api/student/select-student-by-id/'+id,
 						method:'POST'
 					}).then(function(response){
 						$scope.student = response.data.DATA;
@@ -634,7 +666,7 @@
 						$scope.mother_occupation = $scope.student.MOTHER_OCCUPATION;
 						$scope.mother_phone = $scope.student.MOTHER_PHONE;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				
@@ -649,7 +681,7 @@
 					var id = $scope.stu_id;
 					
 					$http({
-						url:'http://localhost:8080/api/student/updateById',
+						url:'http://localhost:2222/api/student/updateById',
 						data:{
 							  "DATE_OF_BIRTH": $scope.dob,
 							  "EDUCATION_LEVEL": $scope.it_year,
@@ -685,7 +717,7 @@
 						clearInputControll();	
 						getData();
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				}
 				

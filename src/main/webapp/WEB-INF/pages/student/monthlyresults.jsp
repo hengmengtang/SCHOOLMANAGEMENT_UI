@@ -7,160 +7,180 @@
 <title>HRD Student Management</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <jsp:include page="../include/headDashboard.jsp"></jsp:include>
+<script src="${pageContext.request.contextPath}/resources/angularjs/angular.min.js"></script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>	 -->
 </head>
-<body class="bg">
+<body class="bg" ng-app='myapp' ng-controller='Ctrl'>
 	<!-- index is menu -->
 	<jsp:include page="index.jsp" />
 
 	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper boxcontent" ng-app="appListStu"
-		ng-controller="ctrlListStu">
+	<div class="content-wrapper boxcontent">
 
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 		<h1>
-			<b>HRD</b> Student Score
+			Monthly Results <small>Preview</small>
 		</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Monthly Result</li>
+			<li><a href="#"><i class="fa fa-home" aria-hidden="true"></i>
+					Home</a></li>
+			<li class="active">Monthly Results</li>
 		</ol>
 		</section>
+		<!-- Main content -->
+		<section class="content">
 
-		<!-- Main content-->
-		<div class="container-fluid">
+		<div class="container-fluid"
+			style="border: 2px solid green; background-color: #e0f2f2">
 			<fieldset>
-				<!-- Main content-->
-				<section class="content">
-				<div class="container-fluid"
-					style="border: 2px solid green; background-color: #e0f2f2">
-					<div class="row">
+				<div class="row">
+					<!----------- pagination ------------>
+					<div class="col-md-2 pull-left">
+						<i class="fa fa-book" style="color: black;font-size: 18px"></i> <small
+							style="color: black; font-size: 18px">&nbsp Monthly Results</small>
+					</div>
+					<br>
+					</br>
+				<!-- 	<div class="col-md-10">
+						<ul class="pagination pull-right" style="margin-top: 2px;">
+							<dir-pagination-controls
+						       max-size="5"
+						       direction-links="true"
+						       boundary-links="true" >
+					    	</dir-pagination-controls>
+						</ul>
+					</div> -->
 
-						<div class="col-md-2 pull-left" style="font-size: 18px;">
-							<i class="fa fa-users" aria-hidden="true"></i> Student Score
-						</div>
-
-						<div class="col-md-10 pull-right" style="margin-bottom: -20px">
-							<nav class="page">
-							<ul class="pagination pull-right toptable"
-								style="margin-top: 2px;">
-								<dir-pagination-controls max-size="5" direction-links="true"
-									boundary-links="true"> </dir-pagination-controls>
-							</ul>
-							</nav>
+				</div>
+				<!-- End Row 1 -->
+				<!-- Start Row 2(Generation and Search) -->
+				<div class="row">
+					<!-- <div class="col-md-2"> -->
+					<div class="col-md-2">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;"> 
+								<i class="fa fa-align-justify"></i>
+							</span> 
+							<select class="form-control selectionpicker" ng-model="select">
+								<option value="">All</option>
+								<option>10</option>
+								<option>30</option>
+								<option>60</option>
+							</select>
+							<!-- End Selection -->
 						</div>
 					</div>
-					<!-- end pagination(Row 1) -->
+					<!--div class="col-md-3" -->
+					<div class="col-sm-3">
 
-					<!-- Start Row 2 -->
-					<div class="row" style="margin-top: 15px;">
-						<div class="col-md-2 pull-left">
-							<div class="input-group pull-left">
-								<span class="input-group-addon" style="background-color: green;">
-									<i class="fa fa-align-justify"
-									style="color: white; font-size: 20px"></i>
-								</span><select class="form-control" ng-init="select | select='5'"
-									ng-model="select">
-									<option value="">10</option>
-									<option>15</option>
-									<option>20</option>
-								</select>
-							</div>
-						</div>
-						<!-- End Selection -->
-
-						<div class="col-md-3 pull-left">
-							<div class="input-group pull-left">
-								<span class="input-group-addon"
-									style="color: white; background-color: green;">
-									Generation </span> <select class="form-control selectpicker"
-									ng-model="searchGeneration">
-									<option value=" ">Select Generation</option>
-									<option value="BTB">1st</option>
-									<option value="KSP">2nd</option>
-									<option value="SR">3rd</option>
-									<option value="PP">4th</option>
-								</select>
-							</div>
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;">
+								Generation </span> 
+							<select class="form-control selectpicker"  ng-model="Gen">
+								<option value="">Generation</option>
+								<option ng-repeat="gen in generation"  value="{{gen.GENERATION_NAME}}" ng-selected="{{gen.GENERATION_NAME === Gen}}">{{gen.GENERATION_NAME}}</option>
+							</select>
 						</div>
 
-						<div class="col-md-3 pull-left">
-							<div class="input-group pull-left">
-								<span class="input-group-addon"
-									style="color: white; background-color: green;"> Class </span> <select
-									class="form-control selectpicker" ng-model="searchClass">
-									<option value=" ">Select Class</option>
-									<option value="BTB">BTB</option>
-									<option value="KSP">KSP</option>
-									<option value="SR">SR</option>
-									<option value="PP">PP</option>
-								</select>
-							</div>
-						</div>
-						<!--Search Location-->
-						<div class="col-md-3 pull-left">
-							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1"
-									style="color: white; background-color: green;"><i
-									class="fa fa-search" aria-hidden="true"
-									style="font-size: 20px;"></i> </span> <input type="text"
-									class="form-control" placeholder="Search Student..."
-									ng-model="searchStudent"> <span class="input-group-btn">
-								</span>
-							</div>
-						</div>
 					</div>
-					<!-- End Search Location-->
-
-					<!-- End Row 2 -->
-
+					<div class="col-sm-2">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;">
+								Course </span> <select class="form-control selectpicker" ng-model="courses" >
+								<option value="">Course</option>
+								<option ng-repeat="c in course ">{{c.COURSE_NAME}}</option>
+							</select>
+						</div>
+					</div> 
+					<div class="col-sm-2">
+						<div class="input-group pull-left">
+							<span class="input-group-addon"
+								style="color: white; background-color: #00A65A;">
+								Date </span> 
+								<input type="text" placeholder="Date" id="date" class="form-control selectpicker"  ng-model="date" >
+						</div>
+						
+					</div> 
+					<!-- End Selection -->
+					<!-- Text Search -->
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon" style="background-color: #00A65A;"><i
+								class="fa fa-search" style="color: white;"></i> </span> <input
+								type="text" class="form-control" placeholder="Search Name" id="search_course"
+								onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');" ng-keypress="searchCourse()">
+						
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-danger"
+													id="print">Print</button>
+							<button type="button" class="btn btn-success"
+													id="export" ng-json-export-excel data="results" report-fields="{'INFORMATION.RANK': 'Rank', 'INFORMATION.STUDENT_NAME': 'Name',
+													'INFORMATION.GENDER ': 'Gender','INFORMATION.CLASS_NAME':'Class',
+													'JAVA': 'Java','KOREAN': 'Korean', 'WEB': 'Web','ATTENDANCE': 'Attendance', 'TOTAL':'Total'}" 
+													class="btn btn-danger" ng-click="test()">Export</button>
+						</div>
+						</div>
+						
+					</div> 
+					<!-- End Text Search -->
+				</div>
+				<!-- End Row 2 -->
+				<br><br>
+				<!-- Start Row 3 -->
+				<div class="row">
+					<div class="col-md-1 pull-left">
+						<button class="btn btn-primary" id="viewScore" ng-disabled="" ng-click="getMonthlyResult()">View Score</button>
+					</div>
+				</div>
+				<br>
 					<!-- Start Table -->
 					<div class="row" style="margin: 0px;">
 						<div class="table-responsive">
-							<table class="table table-hover">
+							<table class="table table-hover" id="printTable">
 								<thead>
 									<tr style="font-size: 16px;">
-										<th>N <sup>o</sup></th>
-										<th>Student&#x2191;&#x2193;</th>
+										<th>Rank</th>
+										<th>Student</th>
 										<th>Gender</th>
-										<th>Class&#x2191;&#x2193;</th>
-										<th>Korean&#x2191;&#x2193;</th>
-										<th>Web&#x2191;&#x2193;</th>
-										<th>Java&#x2191;&#x2193;</th>
-										<th>Total Score&#x2191;&#x2193;</th>
+										<th>Class</th>
+										<th>Java</th>
+										<th>Korean</th>
+										<th>Web</th>
+										<th>Attendance</th>
+										<th>Total Score</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr
-										dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
-										<td>{{student.STUDENT_ID}}</td>
-										<td>{{student.KHMER_FULL_NAME}}</td>
-										<td>{{student.ENGLIST_FULL_NAME}}</td>
-
+									 <tr
+										dir-paginate="re in results|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
+										<td>{{re.INFORMATION.RANK}}</td>
+										<td>{{re.INFORMATION.STUDENT_NAME}}</td>
 										<td><center>
 												<span class="label label-danger" style="font-size: 13px;"
-													ng-if="student.GENDER=='f'">{{student.GENDER |
+													ng-if="student.GENDER=='f'">{{re.INFORMATION.GENDER |
 													uppercase}}</span> <span class="label label-info"
-													style="font-size: 13px;" ng-if="student.GENDER=='m'">{{student.GENDER
+													style="font-size: 13px;" ng-if="student.GENDER=='m'">{{re.INFORMATION.GENDER
 													| uppercase}}</span>
 											</center></td>
 
-										<td>{{student.DATE_OF_BIRTH}}</td>
-										<td>{{student.PLACE_OF_BIRTH}}</td>
-										<td>{{student.EMAIL}}</td>
-									</tr>
+										<td>{{re.INFORMATION.CLASS_NAME}}</td>
+										<td>{{re.JAVA}}</td>
+										<td>{{re.KOREAN}}</td>
+										<td>{{re.WEB}}</td>
+										<td>{{re.ATTENDANCE}}</td>
+										<td>{{re.TOTAL}}</td>
+									</tr> 
 								</tbody>
 							</table>
 						</div>
-					</div>
+					</div> 
 					<!-- End Table(Row 3) -->
 				</div>
-				<div class="row pull-right" style="margin: 7px;">
-					<div id="button">
-						<input type="submit" value="Print" class="btn btn-success">
-						<input type="submit" value="Export" class="btn btn-danger">
-					</div>
-				</div>
+				
 				</section>
 		</div>
 		</fieldset>
@@ -169,9 +189,73 @@
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
-
+	<%-- <script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script> --%>
+	<script src="${pageContext.request.contextPath }/resources/angularjs/FileSaver.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/angularjs/json-export-excel.js"></script>
+	<script>	
+		function printData()
+		{
+		   var divToPrint=document.getElementById("printTable");
+		   newWin= window.open("");
+		   newWin.document.write(divToPrint.outerHTML);
+		   newWin.print();
+		   newWin.close();
+		}
+	
+		$('#print').on('click',function(){
+			printData();
+		});
+		$(function() {
+			/* initialize date picker */
+			$("#date").datepicker({ viewMode: 'years',
+		         format: 'yyyy-mm'});
+		});
+	</script>
 	<script>
-		$.widget.bridge('uibutton', $.ui.button);
+		var app = angular.module('myapp', ['ngJsonExportExcel']);
+		app.controller('Ctrl', function($scope, $http){
+		  	
+			$scope.getMonthlyResult=function(){ 
+		    	 $http({
+						url:'http://localhost:2222/api/monthly-result/monthly-result-on-month',
+						method:'POST',
+						data:{
+							 'COURSE_NAME':  $scope.courses,
+							 'DATE': $scope.date,
+							 'GENERATION_NAME': $scope.Gen
+						} 
+					}).then(function(response){ 
+						$scope.results = response.data.DATA; 
+						console.log($scope.results);
+					}, function(response){
+						 alert("error"); 
+					});			     
+		     } 
+		    findAllGen();
+		    findCourse();
+		  	function findAllGen(){
+		  		
+				$http({
+						url:'http://localhost:2222/api/generation/find-all-generation',
+						method:'GET'
+					}).then(function(response){
+						$scope.generation = response.data.DATA;
+					}, function(response){
+						alert("error");
+					}); 
+			}
+			function findCourse(){
+		  		
+				$http({
+						url:'http://localhost:2222/api/course/find-all-course',
+						method:'GET'
+					}).then(function(response){
+						$scope.course = response.data.DATA;
+					}, function(response){
+						alert("error");
+					}); 
+			}
+		});
 	</script>
 
 </body>

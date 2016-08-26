@@ -37,7 +37,8 @@ sup{
   }
 .arrow1{
   	color: green;
-  	font-size: 25px;
+  	font-size: 17px;
+    margin-left: 5px;
 }
 /* generation */
 .small-box>.inner {

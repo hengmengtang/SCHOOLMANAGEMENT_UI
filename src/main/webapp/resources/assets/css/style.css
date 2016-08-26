@@ -57,9 +57,9 @@ body {
   HOME STYLES 
     ===================================*/
 .home-sec {
-    padding-top: 10px;
+    padding-top: 15px;
     padding-bottom: 60px;
-    background: url(../img/header.JPG) no-repeat center center;
+    background: url(../img/3.JPG) no-repeat center center;
     padding: 0;
     -webkit-background-size: cover;
     background-size: cover;
@@ -69,7 +69,7 @@ body {
 
     .home-sec .overlay {
         background: rgba(38, 57, 88, 0.89);
-        min-height: 500px;
+        min-height: 650px;
     }
 
     .home-sec h1 {
@@ -138,7 +138,7 @@ h1::after {
     content: " ";
     border: solid 2px #2f9484;
     display: block;
-    width: 376px;
+    width: 0px;
     margin: 12px auto;
 }
 

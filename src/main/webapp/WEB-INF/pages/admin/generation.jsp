@@ -94,7 +94,7 @@
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th>N <sup>o</sup>&#x2191;&#x2193;</th>
+									<th>N <sup>o</sup></th>
 									<th ng-click="sort('gen_name')">Genration<span class="arrow1">&#x2191;&#x2193;</span></th>
 									<th>Start Date<span class="arrow1"></span></th>
 									<th>End Date<span class="arrow1"></span></th>
@@ -102,7 +102,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr dir-paginate="gen in generations|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':search}|itemsPerPage:No">
+								<tr dir-paginate="gen in generations|orderBy:sortKey:reverse|filter:{'GENERATION_NAME':search}|itemsPerPage:No|limitTo : 6">
 									<td>{{$index+1}}</td>
 									<td>{{gen.GENERATION_NAME}}</td>
 									<td>{{gen.GENERATION_START_DATE}}</td>
@@ -113,7 +113,7 @@
 											<span class="glyphicon glyphicon-ok"></span>
 										</button>
 										<button type="button" class="btn btn-success"
-											ng-if="gen.STATUS==true" ng-click="finish(gen.GENERATION_ID)">
+											ng-if="gen.STATUS==true" ng-click="finish()">
 											<span class="glyphicon glyphicon-ban-circle"></span>
 										</button>
 									</td>
@@ -223,12 +223,12 @@
 					});
 					
 					//--Add Class--//
-					$("#start-date").click(function() {
+					$("#start-date").change(function() {
 						if($('#startDate').val() != '' && $('#startDate').val() != null)
 							$("#end-date").fadeIn("slow");
 					});
 
-					$("#end-date").click(function() {
+					$("#end-date").change(function() {
 						if($('#endDate').val() != '' && $('#endDate').val() != null)
 							$("#button").fadeIn("slow");
 
@@ -266,19 +266,19 @@
 				 
 				function getData(){
 						$http({
-								url:'http://localhost:8080/api/generation/find-all-generation',
+								url:'http://localhost:2222/api/generation/find-all-generation',
 								method:'GET'
 							}).then(function(response){
 								$scope.generations = response.data.DATA;
 								getGenStatus();
 							}, function(response){
-								alert("error");
+								/* alert("error"); */
 							});
 				};
 				
 				$scope.add=function(){
 					$http({
-						url:'http://localhost:8080/api/generation/add-generation',
+						url:'http://localhost:2222/api/generation/add-generation',
 						method:'POST',
 						data:{
 							'STATUS': true,
@@ -297,49 +297,49 @@
 						$("#hide").fadeOut("fast");
 						$scope.formAddGeneration = false;
 					}, function(response){
-						alert("error");
+						/* alert("error"); */
 					});
 				};  
 				
 				function getGenID(){
 					$http({
-							url:'http://localhost:8080/api/generation/auto-generation-id',
+							url:'http://localhost:2222/api/generation/auto-generation-id',
 							method:'GET'
 						}).then(function(response){
 							$scope.id = response.data.DATA.MAX_ID;
 						}, function(response){
-							alert("error");
+							/* alert("error"); */
 						});
 				};
 				
 				function getGenStatus(){
 					$http({
-							url:'http://localhost:8080/api/generation/get-generation-status-true',
+							url:'http://localhost:2222/api/generation/get-generation-status-true',
 							method:'GET'
 						}).then(function(response){
 							$scope.status = response.data.DATA.STATUS;
-							console.log($scope.status)
+							/* console.log($scope.status) */
 						}, function(response){
 							
 						});
 				};
 				
-				$scope.finish = function(id){
-					swal({   title: "Are you sure want finish?",   text: "You want finish!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Finished!",   closeOnConfirm: false }, function(){   
-							swal("Finished!", "Finished.", "success"); 
-							updateStatus(id);
+				$scope.finish = function(){
+					swal({   title: "Are you sure want Closed!?",   text: "You want Closed!!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Closed!",   closeOnConfirm: false }, function(){   
+							swal("Closed!", "Closed!.", "success"); 
+							updateStatus();
 						});
 				}
 				
-				function updateStatus(id){
+			 function updateStatus(){
 					$http({
-							url:'http://localhost:8080/api/generation/change-status-true/'+id,
-							method:'PUT'
+							url:'http://localhost:2222/api/generation/close-or-open-last-generation',
+							method:'GET'
 						}).then(function(response){
 							getData();
 							$scope.status = false;
 						}, function(response){
-							alert("error");
+							/* alert("error"); */
 						});
 			};
 			
