@@ -340,8 +340,8 @@
 							style="color: white; font-size: 20px"></i>
 						</span><select class="form-control select" ng-init="select | select='No'" ng-model="select">
 							<option value="">No</option>
-							<option >3</option>
-							<option >5</option>
+							<option >10</option>
+							<option >20</option>
 						</select>
 					</div>
 				</div>
@@ -427,7 +427,7 @@
 							</tr>
 						</thead>
 						<tbody>
-                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':searchStudent}|itemsPerPage:select|limitTo : 20">
+                        	<tr dir-paginate="student in students|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':searchStudent, 'CLASS_NAME':searchClass}|itemsPerPage:select|limitTo : 20">
 								<td>{{student.STUDENT_ID}}</td> 
 								<td>{{student.KHMER_FULL_NAME}}</td>
 								<td>{{student.ENGLISH_FULL_NAME}}</td>

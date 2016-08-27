@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>kshrd.schoolmangement</groupId>
-	<artifactId>HRDSCHOOLMANGEMENT_UI</artifactId>
+	<artifactId>HRD_SMG_UI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>HRDSCHOOLMANGEMENT_UI</name>
+	<name>HRD_SMG_UI</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
