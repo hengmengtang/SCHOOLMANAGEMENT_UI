@@ -21,12 +21,12 @@ input::-webkit-inner-spin-button {
 		}
 </style> -->
 </head>
-<body class="bg">
+<body class="bg" ng-app="appAddScore" ng-controller="scoreCtrl">
 
 	<jsp:include page="index.jsp" />
 	<!-- Content Wrapper. Contains page content -->
 	<div class="content-wrapper boxcontent"
-		style="padding-left: 15px; padding-right: 15px" ng-app="appAddScore" ng-controller="scoreCtrl">
+		style="padding-left: 15px; padding-right: 15px" >
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
 		<h1>
@@ -76,11 +76,11 @@ input::-webkit-inner-spin-button {
 								Instructor </span> 
 								<!-- <input class="form-control selectpicker" placeholder="Instructor name"
 								ng-model=""  > -->
-								<label class="form-control selectpicker" ng-model="instructors" disabled>
-									<sec:authorize access="isAuthenticated()">
-										<sec:authentication property="principal.username" />
-									</sec:authorize>
-								</label>
+								<sec:authorize access="isAuthenticated()">
+									<label class="form-control selectpicker" ng-model="instructors" ng-init="instructors='<sec:authentication property="principal.username" />'" disabled>									
+											<sec:authentication property="principal.username" />							
+									</label>
+								</sec:authorize>
 						</div>
 					</div>
 					<div class="col-md-3 pull-left">
@@ -106,9 +106,9 @@ input::-webkit-inner-spin-button {
 						<div class="input-group pull-left">
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;"> Class </span>
-							<select class="form-control selectpicker" ng-model="classes" ng-mouseover="getClass()" >
+							<select class="form-control selectpicker" ng-model="classes"  >
 								<option value="">Class</option>
-									<option ng-repeat="c in Class">{{c.CLASS_NAME}}</option>			
+									<option ng-repeat="class in class_name">{{class.CLASS_NAME}}</option>			
 							</select>
 						</div>
 					</div>					
@@ -124,7 +124,7 @@ input::-webkit-inner-spin-button {
 									style="color: white; background-color: #00A65A;" > Subject </span>
 								<select class="form-control selectpicker" ng-model="subject" ng-disabled="!classes" ng-mouseover="getSubject()" >
 									<option value=" " selected >Subject</option>
-									<option ng-repeat="s in subjects">{{s.SUBJECT_NAME}}</option>
+									<option ng-repeat="sub in subjects">{{sub.SUBJECT_NAME}}</option>
 								</select>
 							</div>
 					</div>
@@ -136,7 +136,7 @@ input::-webkit-inner-spin-button {
 								style="color: white; background-color: #00A65A;"> Date
 							</span> 
 							<input class="form-control selectpicker"
-								ng-model="date | date:'yyyy-MM-dd'"   readonly>
+								ng-model="date"   readonly>
 						</div>
 					</div>
 				</div>
@@ -458,10 +458,7 @@ input::-webkit-inner-spin-button {
                 }
             };
         }]);
-		
-		
-		
-		
+
 			app.controller('scoreCtrl', function($scope, $http){
 				//author mengtang
 				//get data from table cell for update score
@@ -527,9 +524,10 @@ input::-webkit-inner-spin-button {
 						});
 				};
 				getGeneration();
+				//i changed get last course to get current course
 				function getCourse(){
 					$http({
-							url:'http://localhost:2222/api/course/get-last-course',
+							url:'http://localhost:2222/api/course/get-current-course',
 							method:'GET'
 						}).then(function(response){
 							$scope.course = response.data.DATA.COURSE_NAME;
@@ -554,27 +552,28 @@ input::-webkit-inner-spin-button {
 						});
 				};
 				getStudentInClass();
+				
+				$scope.getClass = function(){
+					getClassBy($scope.course, $scope.generation, $scope.instructors);
+				} ;
 				/* Get Class */
-				function getClassBy(course, generation, instructor){
+				function getClassBy(course,generation,instructors){
 					$http({
-						url:'http://localhost:2222/api/class/get-class-by-staff-generation-course',
+						url:"http://localhost:2222/api/class/get-class-by-staff-generation-course",
 						method:'POST',
 						data:{
 							"COURSE_NAME": course,
 							"GENERATION_NAME": generation,
-							"STAFF_NAME": instructor
+							"STAFF_NAME": instructors
 						}
 					}).then(function(response){
 						/* getData(); */ 
-						$scope.Class= response.data.DATA;  
+						$scope.class_name= response.data.DATA;  
+						//console.log($scope.class_name);
 					}, function(response){
 						/* alert("error"); */
 					});
 				};   
-				
-				$scope.getClass = function(){
-					getClassBy($scope.course, $scope.generation, $scope.instructors);
-				}
 				
 				$scope.getSubject = function(){
 					getSubjectBy($scope.course, $scope.generation, $scope.instructors, $scope.classes);
@@ -632,7 +631,7 @@ input::-webkit-inner-spin-button {
 									}
 			    			 		
 								}).then(function(response){
-									
+									alert(response.data.DATA.MESSAGE)
 								}, function(response){
 									alert("error");
 								});
@@ -643,11 +642,11 @@ input::-webkit-inner-spin-button {
 			    }
 			    $scope.getViewScore=function(){
 				    $http({
-						url:'http://localhost:2222/api/monthly-result/monthly-result-advance-course/'+$scope.generation,
+						url:'http://localhost:2222/api/monthly-result/monthly-result-advance-course/'+ $scope.generation,
 						method:'POST',
 					}).then(function(response){ 
 						$scope.viewAdvanceScore = response.data.DATA; 
-						console.log($scope.viewStuScore);
+						//console.log($scope.viewStuScore);
 					}, function(response){
 						 alert("error"); 
 					});	

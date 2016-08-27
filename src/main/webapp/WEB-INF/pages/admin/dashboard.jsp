@@ -101,6 +101,7 @@
 		<!--statistic-->
 
  					<div class="row" ng-app='app' ng-controller='BarCtrl'>
+ 						<h3 style="text-align:center;font-weight: 900;">SUMMARY STUDENT IN GENERATION AND COURSE</h3>
 						<canvas id="bar" class="chart chart-bar"
   								chart-data="data" chart-labels="labels" chart-series="series">
 						</canvas>

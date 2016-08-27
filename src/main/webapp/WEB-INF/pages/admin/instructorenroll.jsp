@@ -354,9 +354,10 @@
 					}); 
 				}; 
 				
+				//i changed get last course to get current course
 				function getLastCourse(){
 					$http({
-						url:'http://localhost:2222/api/course/get-last-course',
+						url:'http://localhost:2222/api/course/get-current-course',
 						method:'GET'
 					}).then(function(response){
 						$scope.course = response.data.DATA.COURSE_NAME;
@@ -376,9 +377,10 @@
 						});
 				};
 				
+				//i change class find class to get class that had status true
 				function getClass() {
 					$http({
-						url : 'http://localhost:2222/api/class/find-all-class',
+						url : 'http://localhost:2222/api/class/get-class-status-true',
 						method : 'GET'
 						}).then(function(response) {
 							if(response.data.DATA == "")

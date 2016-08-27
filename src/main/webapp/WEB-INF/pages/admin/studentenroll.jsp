@@ -174,9 +174,9 @@
 
 						<div class="col-md-3">
 							<select class="form-control select" id="add-class"
-								style="margin-top: 15px;" ng-mouseover="getAllClass()">
+								style="margin-top: 15px;" ng-mouseover="classAvailable()">
 								<option value="">Select Class</option>
-								<option ng-repeat="class in classes">{{class.CLASS_NAME}}</option>
+								<option ng-repeat="class in classRoom">{{class.CLASS_NAME}}</option>
 							</select>
 						</div>
 					</div>
@@ -379,6 +379,21 @@
 								$scope.stuname = $('#stuname').val();
 							}
 
+							//get class status true mengtang
+							$scope.classAvailable=function(){
+								$http({
+									url : 'http://localhost:2222/api/class/get-class-status-true',
+									method : 'GET'
+									}).then(function(response) {
+										if(response.data.DATA == "")
+											$scope.classRoom = false;
+										else
+											$scope.classRoom = response.data.DATA;
+								}, function(response) {
+									/* alert("error"); */
+								});
+							};
+							
 							function getClass() {
 								$http({
 									url : 'http://localhost:2222/api/class/find-all-class',
@@ -425,7 +440,8 @@
 							function getLastCourse() {
 								$http(
 										{
-											url : 'http://localhost:2222/api/course/get-last-course',
+											//url : 'http://localhost:2222/api/course/get-last-course',
+											url : 'http://localhost:2222/api/course/get-current-course',
 											method : 'GET'
 										})
 										.then(
@@ -479,7 +495,7 @@
 											method : 'POST'
 										}).then(function(response) {
 											getData();
-											alert(id)
+											//alert(id)
 											$scope.save = true;
 										},
 										function(
