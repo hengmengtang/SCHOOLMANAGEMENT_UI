@@ -21,7 +21,7 @@ input::-webkit-inner-spin-button {
 		}
 </style> -->
 </head>
-<body class="bg" ng-app="appAddScore" ng-controller="scoreCtrl">
+<body class="bg" ng-app="appAddScore">
 
 	<jsp:include page="index.jsp" />
 	<!-- Content Wrapper. Contains page content -->
@@ -39,9 +39,8 @@ input::-webkit-inner-spin-button {
 		</section>
 
 		<!-- Main content-->
-		<section class="content">
-		<div class="container-fluid"
-			style="border: 2px solid green; background-color: #e0f2f2">
+		<section class="content" ng-controller="scoreCtrl">
+		<div class="container-fluid" style="border: 2px solid green; background-color: #e0f2f2">
 			<fieldset>
 				<div class="row">
 					<!-- Title -->
@@ -106,7 +105,7 @@ input::-webkit-inner-spin-button {
 						<div class="input-group pull-left">
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;"> Class </span>
-							<select class="form-control selectpicker" ng-model="classes"  >
+							<select class="form-control selectpicker" ng-model="classes" ng-mouseover="getClass()">
 								<option value="">Class</option>
 									<option ng-repeat="class in class_name">{{class.CLASS_NAME}}</option>			
 							</select>
@@ -558,6 +557,7 @@ input::-webkit-inner-spin-button {
 				} ;
 				/* Get Class */
 				function getClassBy(course,generation,instructors){
+					//alert(instructors)
 					$http({
 						url:"http://localhost:2222/api/class/get-class-by-staff-generation-course",
 						method:'POST',
@@ -569,7 +569,7 @@ input::-webkit-inner-spin-button {
 					}).then(function(response){
 						/* getData(); */ 
 						$scope.class_name= response.data.DATA;  
-						//console.log($scope.class_name);
+						console.log($scope.class_name);
 					}, function(response){
 						/* alert("error"); */
 					});

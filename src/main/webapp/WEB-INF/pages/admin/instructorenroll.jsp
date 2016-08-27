@@ -297,7 +297,7 @@
 					$scope.form_enroll_instructor = true;
 				}
 				
-				$scope.checked = function(){
+				/* $scope.checked = function(){
 					$scope.ins_name = $scope.ins;
 					$scope.cla_name = $scope.cls;
 					$scope.sub_name = $scope.subject;
@@ -316,7 +316,7 @@
 					})
 					
 					
-				}
+				} */
 				
 				function getData(){
 						$http({
