@@ -9,6 +9,14 @@
 <jsp:include page="../include/headDashboard.jsp"></jsp:include>
 <script src="${pageContext.request.contextPath}/resources/angularjs/angular.min.js"></script>
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>	 -->
+<style type="text/css">
+	.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 0px 0;
+    border-radius: 4px;
+}
+</style>
 </head>
 <body class="bg" ng-app='myapp' ng-controller='Ctrl'>
 	<!-- index is menu -->
@@ -42,16 +50,6 @@
 					</div>
 					<br>
 					</br>
-				<!-- 	<div class="col-md-10">
-						<ul class="pagination pull-right" style="margin-top: 2px;">
-							<dir-pagination-controls
-						       max-size="5"
-						       direction-links="true"
-						       boundary-links="true" >
-					    	</dir-pagination-controls>
-						</ul>
-					</div> -->
-
 				</div>
 				<!-- End Row 1 -->
 				<!-- Start Row 2(Generation and Search) -->
@@ -101,7 +99,7 @@
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;">
 								Date </span> 
-								<input type="text" placeholder="Date" id="date" class="form-control selectpicker"  ng-model="date" >
+								<input type="text" placeholder="Date" id="date" class="form-control selectpicker">
 						</div>
 						
 					</div> 
@@ -111,17 +109,15 @@
 						<div class="input-group">
 							<span class="input-group-addon" style="background-color: #00A65A;"><i
 								class="fa fa-search" style="color: white;"></i> </span> <input
-								type="text" class="form-control" placeholder="Search Name" id="search_course"
-								onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');" ng-keypress="searchCourse()">
+								type="text" class="form-control" placeholder="Search Name" id="search_name"
+								onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');" ng-keyup="searchName()">
 						
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-danger"
 													id="print">Print</button>
-							<button type="button" class="btn btn-success"
-													id="export" ng-json-export-excel data="results" report-fields="{'INFORMATION.RANK': 'Rank', 'INFORMATION.STUDENT_NAME': 'Name',
+							<button type="button" class="btn btn-success" ng-json-export-excel data="results" report-fields="{'INFORMATION.RANK': 'Rank', 'INFORMATION.STUDENT_NAME': 'Name',
 													'INFORMATION.GENDER ': 'Gender','INFORMATION.CLASS_NAME':'Class',
-													'JAVA': 'Java','KOREAN': 'Korean', 'WEB': 'Web','ATTENDANCE': 'Attendance', 'TOTAL':'Total'}" 
-													class="btn btn-danger" ng-click="test()">Export</button>
+													'JAVA': 'Java','KOREAN': 'Korean', 'WEB': 'Web','ATTENDANCE': 'Attendance', 'TOTAL':'Total'}">Export</button>
 						</div>
 						</div>
 						
@@ -135,6 +131,15 @@
 					<div class="col-md-1 pull-left">
 						<button class="btn btn-primary" id="viewScore" ng-disabled="" ng-click="getMonthlyResult()">View Score</button>
 					</div>
+					<div class="col-md-10">
+						<ul class="pagination pull-right" style="margin: 0px !important; top: 0px !important;">
+							<dir-pagination-controls
+						       max-size="5"
+						       direction-links="true"
+						       boundary-links="true" >
+					    	</dir-pagination-controls>
+						</ul>
+					</div>
 				</div>
 				<br>
 					<!-- Start Table -->
@@ -145,7 +150,7 @@
 									<tr style="font-size: 16px;">
 										<th>Rank</th>
 										<th>Student</th>
-										<th>Gender</th>
+										<th><center>Gender</center></th>
 										<th>Class</th>
 										<th>Java</th>
 										<th>Korean</th>
@@ -155,15 +160,14 @@
 									</tr>
 								</thead>
 								<tbody>
-									 <tr
-										dir-paginate="re in results|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
+									 <tr dir-paginate="re in results|orderBy:sortKey:reverse|filter:{'INFORMATION.STUDENT_NAME':searchStudent}|itemsPerPage:select">
 										<td>{{re.INFORMATION.RANK}}</td>
 										<td>{{re.INFORMATION.STUDENT_NAME}}</td>
 										<td><center>
 												<span class="label label-danger" style="font-size: 13px;"
-													ng-if="student.GENDER=='f'">{{re.INFORMATION.GENDER |
+													ng-if="re.INFORMATION.GENDER=='f' || re.INFORMATION.GENDER=='F'">{{re.INFORMATION.GENDER |
 													uppercase}}</span> <span class="label label-info"
-													style="font-size: 13px;" ng-if="student.GENDER=='m'">{{re.INFORMATION.GENDER
+													style="font-size: 13px;" ng-if="re.INFORMATION.GENDER=='m' || re.INFORMATION.GENDER=='M'">{{re.INFORMATION.GENDER
 													| uppercase}}</span>
 											</center></td>
 
@@ -189,7 +193,7 @@
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
-	<%-- <script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script> --%>
+	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/FileSaver.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/json-export-excel.js"></script>
 	<script>	
@@ -206,27 +210,28 @@
 			printData();
 		});
 		$(function() {
-			/* initialize date picker */
+			
 			$("#date").datepicker({ viewMode: 'years',
 		         format: 'yyyy-mm'});
-		});
+		}); 
 	</script>
 	<script>
-		var app = angular.module('myapp', ['ngJsonExportExcel']);
+		var app = angular.module('myapp', ['angularUtils.directives.dirPagination','ngJsonExportExcel']);
 		app.controller('Ctrl', function($scope, $http){
 		  	
 			$scope.getMonthlyResult=function(){ 
+				alert($scope.courses + ', ' + $('#date').val()+', ' +$scope.Gen)
 		    	 $http({
 						url:'http://localhost:2222/api/monthly-result/monthly-result-on-month',
 						method:'POST',
 						data:{
 							 'COURSE_NAME':  $scope.courses,
-							 'DATE': $scope.date,
+							 'DATE': $('#date').val(),
 							 'GENERATION_NAME': $scope.Gen
 						} 
 					}).then(function(response){ 
 						$scope.results = response.data.DATA; 
-						console.log($scope.results);
+						//console.log($scope.results);
 					}, function(response){
 						 alert("error"); 
 					});			     
@@ -254,6 +259,10 @@
 					}, function(response){
 						alert("error");
 					}); 
+			}
+			
+			$scope.searchName = function(){
+				$scope.searchStudent = $('#search_name').val(); 
 			}
 		});
 	</script>

@@ -101,7 +101,7 @@
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;">
 								Date </span> 
-								<input type="text" placeholder="Date" id="date" class="form-control selectpicker"  ng-model="date" >
+								<input type="text" placeholder="Date" id="date" class="form-control selectpicker"  ng-model="dateview" >
 						</div>
 						
 					</div> 
@@ -117,11 +117,9 @@
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-danger"
 													id="print">Print</button>
-							<button type="button" class="btn btn-success"
-													id="export" ng-json-export-excel data="results" report-fields="{'INFORMATION.RANK': 'Rank', 'INFORMATION.STUDENT_NAME': 'Name',
+							<button type="button" class="btn btn-success" ng-json-export-excel data="results" report-fields="{'INFORMATION.RANK': 'Rank', 'INFORMATION.STUDENT_NAME': 'Name',
 													'INFORMATION.GENDER ': 'Gender','INFORMATION.CLASS_NAME':'Class',
-													'JAVA': 'Java','KOREAN': 'Korean', 'WEB': 'Web','ATTENDANCE': 'Attendance', 'TOTAL':'Total'}" 
-													class="btn btn-danger" ng-click="test()">Export</button>
+													'JAVA': 'Java','KOREAN': 'Korean', 'WEB': 'Web','ATTENDANCE': 'Attendance', 'TOTAL':'Total'}">Export</button>
 						</div>
 						</div>
 						
@@ -155,8 +153,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									 <tr
-										dir-paginate="re in results|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
+									 <tr dir-paginate="re in results|orderBy:sortKey:reverse|filter:{'KHMER_FULL_NAME':searchStudent}|itemsPerPage:select">
 										<td>{{re.INFORMATION.RANK}}</td>
 										<td>{{re.INFORMATION.STUDENT_NAME}}</td>
 										<td><center>
@@ -189,7 +186,7 @@
 	<!-- /.content-wrapper -->
 	<jsp:include page="../include/footer.jsp" />
 	<jsp:include page="../include/footDashboard.jsp" />
-	<%-- <script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script> --%>
+	<script src="${pageContext.request.contextPath }/resources/dirpagination/dirPagination.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/FileSaver.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/angularjs/json-export-excel.js"></script>
 	<script>	
@@ -205,28 +202,29 @@
 		$('#print').on('click',function(){
 			printData();
 		});
-		$(function() {
-			/* initialize date picker */
+		/* $(function() {
+			
 			$("#date").datepicker({ viewMode: 'years',
 		         format: 'yyyy-mm'});
-		});
+		}); */
 	</script>
 	<script>
-		var app = angular.module('myapp', ['ngJsonExportExcel']);
+		var app = angular.module('myapp', ['angularUtils.directives.dirPagination','ngJsonExportExcel']);
 		app.controller('Ctrl', function($scope, $http){
 		  	
 			$scope.getMonthlyResult=function(){ 
+				//alert($scope.courses + '' + $scope.dateview +'' +$scope.Gen)
 		    	 $http({
 						url:'http://localhost:2222/api/monthly-result/monthly-result-on-month',
 						method:'POST',
 						data:{
 							 'COURSE_NAME':  $scope.courses,
-							 'DATE': $scope.date,
+							 'DATE': $scope.dateview,
 							 'GENERATION_NAME': $scope.Gen
 						} 
 					}).then(function(response){ 
 						$scope.results = response.data.DATA; 
-						console.log($scope.results);
+						//console.log($scope.results);
 					}, function(response){
 						 alert("error"); 
 					});			     
