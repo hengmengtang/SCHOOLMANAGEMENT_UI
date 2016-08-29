@@ -237,12 +237,12 @@
 			};
 			
 			$scope.addCourse = function(){
-				if($scope.status == true || $scope.generation_status != true){
+				if($scope.status != true || $scope.generation_status != true){
 					if($scope.generation_status == false){
 						$scope.modal = "modal";
 						$scope.idmodal = "#idModal";
 					} 
-					if($scope.status == true)
+					if($scope.status != true)
 						sweetAlert(
 							'Course is not available...',
 							'The last Course is available or Generation has been closed!',
@@ -254,10 +254,20 @@
 			
 			function getLastCourse(){
 				$http({
-					url:'http://localhost:2222/api/course/get-last-course',
+					url:'http://localhost:2222/api/course/get-current-course',
 					method:'GET'
 				}).then(function(response){
 					$scope.status = response.data.DATA.STATUS;
+				}, function(response){
+					/* alert("error"); */
+				});
+			}
+			
+			function getLastCourse(){
+				$http({
+					url:'http://localhost:2222/api/course/get-last-course',
+					method:'GET'
+				}).then(function(response){		
 					$scope.course_name = response.data.DATA.COURSE_NAME;
 				}, function(response){
 					/* alert("error"); */

@@ -96,7 +96,7 @@
 							<thead>
 								<tr>
 									<th>N <sup>o</sup></th>
-									<th ng-click="sort('gen_name')">Genration<span class="arrow1">&#x2191;&#x2193;</span></th>
+									<th ng-click="sort('GENERATION_NAME')">Genration<span class="arrow1">&#x2191;&#x2193;</span></th>
 									<th>Start Date<span class="arrow1"></span></th>
 									<th>End Date<span class="arrow1"></span></th>
 									<th>Closed</th>

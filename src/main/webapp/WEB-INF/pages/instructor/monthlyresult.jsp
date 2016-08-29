@@ -117,11 +117,9 @@
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-danger"
 													id="print">Print</button>
-							<button type="button" class="btn btn-success"
-													id="export" ng-json-export-excel data="results" report-fields="{'INFORMATION.RANK': 'Rank', 'INFORMATION.STUDENT_NAME': 'Name',
+							<button type="button" class="btn btn-success" ng-json-export-excel data="results" report-fields="{'INFORMATION.RANK': 'Rank', 'INFORMATION.STUDENT_NAME': 'Name',
 													'INFORMATION.GENDER ': 'Gender','INFORMATION.CLASS_NAME':'Class',
-													'JAVA': 'Java','KOREAN': 'Korean', 'WEB': 'Web','ATTENDANCE': 'Attendance', 'TOTAL':'Total'}" 
-													class="btn btn-danger" ng-click="test()">Export</button>
+													'JAVA': 'Java','KOREAN': 'Korean', 'WEB': 'Web','ATTENDANCE': 'Attendance', 'TOTAL':'Total'}">Export</button>
 						</div>
 						</div>
 						

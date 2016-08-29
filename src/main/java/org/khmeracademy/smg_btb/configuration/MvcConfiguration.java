@@ -39,10 +39,10 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 	}
 */
 	
-	@Override
+	/*@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
 				.allowedMethods("GET","POST","DELETE","PUT","OPTIONS","PATCH")
 				.allowedOrigins("*");
-	}
+	}*/
 }
