@@ -416,9 +416,9 @@
 					<table class="table table-hover">
 						<thead>
 							<tr style="font-size: 16px;">
-								<th ng-click="sort('id')">Student ID<span class="arrow1">&#x2191;&#x2193;</span></th>
-								<th ng-click="sort('khmerName')">Khmer Name<span class="arrow1">&#x2191;&#x2193;</span></th>
-								<th ng-click="sort('LatinName')">English Name<span class="arrow1">&#x2191;&#x2193;</span></th>
+								<th ng-click="sort('STUDENT_ID')">Student ID<span class="arrow1">&#x2191;&#x2193;</span></th>
+								<th ng-click="sort('KHMER_FULL_NAME')">Khmer Name<span class="arrow1">&#x2191;&#x2193;</span></th>
+								<th ng-click="sort('ENGLISH_FULL_NAME')">English Name<span class="arrow1">&#x2191;&#x2193;</span></th>
 								<th><center>Gender</center></th>
 								<th>Birth Date</th>
 								<th>Address</th>

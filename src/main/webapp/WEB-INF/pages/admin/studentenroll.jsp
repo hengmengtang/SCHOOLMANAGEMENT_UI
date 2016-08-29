@@ -102,7 +102,7 @@
 							<thead>
 								<tr style="font-size: 16px;">
 									<th>StudentID</th>
-									<th ng-click="sort('ENGLIST_FULL_NAME')">Student<span
+									<th ng-click="sort('ENGLISH_FULL_NAME')">Student<span
 										class="arrow1">&#x2191;&#x2193;</span></th>
 									<th ng-click="sort('CLASS_NAME')">Class<span
 										class="arrow1">&#x2191;&#x2193;</span></th>
