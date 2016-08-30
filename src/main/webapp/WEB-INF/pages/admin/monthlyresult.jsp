@@ -88,7 +88,7 @@
 						<div class="input-group pull-left">
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;">
-								Course </span> <select class="form-control selectpicker" ng-model="courses" >
+								Course </span> <select class="form-control selectpicker" ng-model="courses" ng-disabled="!Gen">
 								<option value="">Course</option>
 								<option ng-repeat="c in course ">{{c.COURSE_NAME}}</option>
 							</select>
@@ -99,7 +99,7 @@
 							<span class="input-group-addon"
 								style="color: white; background-color: #00A65A;">
 								Date </span> 
-								<input type="text" placeholder="Date" id="date" class="form-control selectpicker">
+								<input type="text" placeholder="Date" id="date" class="form-control selectpicker" ng-disabled="!courses" ng-mouseover="inputdate()" ng-blur="getdate()">
 						</div>
 						
 					</div> 
@@ -109,15 +109,15 @@
 						<div class="input-group">
 							<span class="input-group-addon" style="background-color: #00A65A;"><i
 								class="fa fa-search" style="color: white;"></i> </span> <input
-								type="text" class="form-control" placeholder="Search Name" id="search_name"
-								onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');" ng-keyup="searchName()">
+								type="text" class="form-control" placeholder="Search Name" id="search_name" ng-keyup="searchName()"
+								onkeyup="this.value=this.value.replace(/[^A-Za-z]/g,'');">
 						
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-danger"
-													id="print">Print</button>
+													id="print" ng-disabled="print">Print</button>
 							<button type="button" class="btn btn-success" ng-json-export-excel data="results" report-fields="{'INFORMATION.RANK': 'Rank', 'INFORMATION.STUDENT_NAME': 'Name',
 													'INFORMATION.GENDER ': 'Gender','INFORMATION.CLASS_NAME':'Class',
-													'JAVA': 'Java','KOREAN': 'Korean', 'WEB': 'Web','ATTENDANCE': 'Attendance', 'TOTAL':'Total'}">Export</button>
+													'JAVA': 'Java','KOREAN': 'Korean', 'WEB': 'Web','ATTENDANCE': 'Attendance', 'TOTAL':'Total'}" ng-disabled="exports">Export</button>
 						</div>
 						</div>
 						
@@ -129,7 +129,7 @@
 				<!-- Start Row 3 -->
 				<div class="row">
 					<div class="col-md-1 pull-left">
-						<button class="btn btn-primary" id="viewScore" ng-disabled="" ng-click="getMonthlyResult()">View Score</button>
+						<button class="btn btn-primary" id="viewScore" ng-disabled="date" ng-click="getMonthlyResult()">View Score</button>
 					</div>
 					<div class="col-md-10">
 						<ul class="pagination pull-right" style="margin: 0px !important; top: 0px !important;">
@@ -160,7 +160,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									 <tr dir-paginate="re in results|orderBy:sortKey:reverse|filter:{'INFORMATION.STUDENT_NAME':searchStudent}|itemsPerPage:select">
+									 <tr dir-paginate="re in results | orderBy:sortKey:reverse | itemsPerPage:select | filter:{'INFORMATION': {'STUDENT_NAME': searchStudent}}">
 										<td>{{re.INFORMATION.RANK}}</td>
 										<td>{{re.INFORMATION.STUDENT_NAME}}</td>
 										<td><center>
@@ -209,16 +209,15 @@
 		$('#print').on('click',function(){
 			printData();
 		});
-		$(function() {
-			
-			$("#date").datepicker({ viewMode: 'years',
-		         format: 'yyyy-mm'});
-		}); 
+		
 	</script>
 	<script>
 		var app = angular.module('myapp', ['angularUtils.directives.dirPagination','ngJsonExportExcel']);
 		app.controller('Ctrl', function($scope, $http){
 		  	
+			$scope.print = true;
+			$scope.exports = true;
+			$scope.date = true;
 			$scope.getMonthlyResult=function(){ 
 				alert($scope.courses + ', ' + $('#date').val()+', ' +$scope.Gen)
 		    	 $http({
@@ -230,8 +229,11 @@
 							 'GENERATION_NAME': $scope.Gen
 						} 
 					}).then(function(response){ 
-						$scope.results = response.data.DATA; 
-						//console.log($scope.results);
+						if(response.data.DATA != "" || response.data.DATA != null){
+							$scope.results = response.data.DATA; 
+							$scope.print = false;
+							$scope.exports = false;
+						}				
 					}, function(response){
 						 alert("error"); 
 					});			     
@@ -264,6 +266,18 @@
 			$scope.searchName = function(){
 				$scope.searchStudent = $('#search_name').val(); 
 			}
+			
+			$scope.inputdate = function() {
+				$(function() {
+					$("#date").datepicker({ viewMode: 'years',
+				         format: 'yyyy-mm'});
+				}); 
+			}
+				
+			$scope.getdate = function(){
+				if($('#date').val() != "" && $('#date').val() != null)
+					$scope.date = false;
+			}	
 		});
 	</script>
 
