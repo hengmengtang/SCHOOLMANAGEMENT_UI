@@ -119,7 +119,7 @@ public class SchoolManagementController {
 
 	@RequestMapping(value = { "/student/monthlyresults" })
 	public String monthlyresults() {
-		return "/student/monthlyresults";
+		return "/student/monthlyresult";
 	}
 
 	@RequestMapping(value = { "/student/dashboard" })
