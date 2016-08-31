@@ -388,7 +388,7 @@
 					});
 			}
 			
-			$scope.active = function(id){
+			/* $scope.active = function(id){
 				if($scope.status == false){
 					swal({   title: "Are you sure want active?",   
 							 text: "You want active!",   
@@ -407,7 +407,7 @@
 							'error'
 						);
 				}
-			}
+			} */
 			
 			function clearInputControll(){
 				$('input').val("");
