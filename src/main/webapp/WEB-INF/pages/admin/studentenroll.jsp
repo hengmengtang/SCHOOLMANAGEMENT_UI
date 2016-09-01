@@ -113,7 +113,7 @@
 							</thead>
 							<tbody>
 								<tr 
-									dir-paginate="studentenroll in studentenrolls|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':stuname, 'CLASS_NAME':class}|itemsPerPage:select|limitTo : 20" pagination-id="student">
+									dir-paginate="studentenroll in studentenrolls|orderBy:sortKey:reverse|filter:{'ENGLISH_FULL_NAME':stuname, 'CLASS_NAME':clas}|itemsPerPage:select|limitTo : 20" pagination-id="student">
 									<td>{{studentenroll.STUDENT_ID}}</td>
 									<td>{{studentenroll.ENGLISH_FULL_NAME}}</td>
 									<td>{{studentenroll.CLASS_NAME}}</td>
@@ -396,7 +396,7 @@
 							
 							function getClass() {
 								$http({
-									url : 'http://localhost:2222/api/class/find-all-class',
+									url : 'http://localhost:2222/api/class/get-class-status-true',
 									method : 'GET'
 									}).then(function(response) {
 										if(response.data.DATA == "")

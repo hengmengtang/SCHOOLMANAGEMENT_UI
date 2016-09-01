@@ -519,13 +519,13 @@
 						});
 				}
 				
-				$scope.active = function(id){
+				/* $scope.active = function(id){
 					swal({   title: "Are you sure want to be active?",   text: "You want to student be active!",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, Active!",   closeOnConfirm: false }, function(){   
 							swal("Active!", "Record has been active.", "success"); 
 							updateStatus(id);
 							
 						});
-				}
+				} */
 				
 				$scope.searchStuName = function(){
 					$scope.searchStudent = $('#searchStudent').val(); 

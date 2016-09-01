@@ -219,7 +219,7 @@
 			$scope.exports = true;
 			$scope.date = true;
 			$scope.getMonthlyResult=function(){ 
-				alert($scope.courses + ', ' + $('#date').val()+', ' +$scope.Gen)
+				/* alert($scope.courses + ', ' + $('#date').val()+', ' +$scope.Gen) */
 		    	 $http({
 						url:'http://localhost:2222/api/monthly-result/monthly-result-on-month',
 						method:'POST',
